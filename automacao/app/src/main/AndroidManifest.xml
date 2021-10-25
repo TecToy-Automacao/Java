@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.tectoy.tectoysunmi">
+
+    <uses-permission android:name="android.permission.BLUETOOTH"  />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:name="BaseApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.PrinterInfoActivity"
+            android:parentActivityName=".activity.SettingActivity"/>
+        <activity
+            android:name=".activity.QrActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.BarCodeActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.TextActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.BitmapActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.TableActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.AllActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.BufferActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.BlackLabelActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.LcdActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.LabelActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.ScannerActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.LedActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+    </application>
+
+</manifest>
