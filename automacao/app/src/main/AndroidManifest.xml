@@ -58,6 +58,12 @@
             android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.LedActivity"
             android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.Paygo"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.MSitef"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.CancelamentoActivity"
+            android:parentActivityName=".activity.MainActivity"/>
     </application>
 
 </manifest>

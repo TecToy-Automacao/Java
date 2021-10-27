@@ -18,6 +18,8 @@
     <string name="function_label">Teste de Etiqueta</string>
     <string name="function_scanner">Scanner</string>
     <string name="function_led">Luz de Led</string>
+    <string name="function_paygo">PayGo</string>
+    <string name="function_m_Sitef">M-Sitef</string>
 
     <!--titles-->
     <string name="setting_title">Configuração</string>
@@ -32,6 +34,7 @@
     <string name="blackline_title">Black Label</string>
     <string name="lcd_title">Lcd Teste</string>
     <string name="label_title">Label Teste</string>
+    <string name="label_paygo">PayGo</string>
 
     <!--text-->
     <string name="printer_serial_num">Número de série</string>
@@ -150,4 +153,66 @@
     <string name="text_print">欢迎光临(Simplified Chinese)\n歡迎光臨（traditional chinese）\nWelcome(English)\n어서 오세요.(Korean)\nいらっしゃいませ(Japanese)\nWillkommen in der(Germany)\nSouhaits de bienvenue(France)\nยินดีต้อนรับสู่(Thai)\nДобро пожаловать(Russian)\nBenvenuti a(Italian)\nvítejte v(Czech)\nBEM - vindo Ao Brasil(Portutuese)\nمرحبا بكم في(Arabic)\n</string>
     <!--table explain-->
     <string name="table_instruction">Especificações: A mesa de impressão Bluetooth pode fornecer apenas exemplos e teste de impressão. Métodos específicos podem se referir ao conjunto de instruções da Epson.  </string>
+
+
+    <string name="tipo_pagamento">Tipo Pagamento</string>
+    <string name="nao_definido">Não Definido</string>
+    <string name="credito">Crédito</string>
+    <string name="debito">Débito</string>
+    <string name="carteira_digital">Carteira Digital</string>
+    <string name="tipo_parcelamento">Tipo parcelamento</string>
+    <string name="a_vista">A vista</string>
+    <string name="emissor">Emissor</string>
+    <string name="parcelas">Parcelas</string>
+    <string name="adquirete">Adquirete</string>
+    <string name="confirmacao_manual">Confirmação Manual</string>
+    <string name="via_loja_e_cliente">Via Loja e Cliente</string>
+    <string name="via_completa">Via Completa</string>
+    <string name="interface_alternativa">Interface Alternativa</string>
+    <string name="pagar">Pagar</string>
+    <string name="administrativo">Administrativo</string>
+    <string name="cancelamento">Cancelamento</string>
+    <string name="ultima_transao">Última Transação</string>
+
+    <string-array name="tipo_pagamento">
+        <item>Não Definido</item>
+        <item>Crédito</item>
+        <item>Débito</item>
+        <item>Carteira Digital</item>
+    </string-array>
+
+    <string-array name="tipo_parcelamento">
+        <item>Não Definido</item>
+        <item>À Vista</item>
+        <item>Emissor</item>
+        <item>Estabelecimento</item>
+    </string-array>
+
+    <string-array name="adquirentes_habilitados">
+        <item>PROVEDOR DESCONHECIDO</item>
+        <item>LIBERCARD</item>
+        <item>ELAVON</item>
+        <item>CIELO</item>
+        <item>RV</item>
+        <item>BIN</item>
+        <item>FDCORBAN</item>
+        <item>REDE</item>
+        <item>INFOCARDS</item>
+        <item>CREDSYSTEM</item>
+        <item>NDDCARD</item>
+        <item>VERO</item>
+        <item>GLOBAL</item>
+        <item>GAX</item>
+        <item>STONE</item>
+        <item>DMCARD</item>
+        <item>CTF</item>
+        <item>TICKETLOG</item>
+        <item>GETNET</item>
+        <item>VCMAIS</item>
+        <item>SAFRA</item>
+        <item>PAGSEGURO</item>
+        <item>CONDUCTOR</item>
+    </string-array>
+
+
 </resources>
