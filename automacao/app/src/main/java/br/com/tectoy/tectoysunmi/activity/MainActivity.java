@@ -4,13 +4,18 @@ import static br.com.tectoy.tectoysunmi.R.drawable.test;
 import static br.com.tectoy.tectoysunmi.R.drawable.test1;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -27,22 +32,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sunmi.extprinterservice.ExtPrinterService;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.threadhelp.ThreadPoolManageer;
+import br.com.tectoy.tectoysunmi.utils.KTectoySunmiPrinter;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.HintOneBtnDialog;
 
 public class MainActivity extends AppCompatActivity {
 
+    int height= 0;
     HintOneBtnDialog mHintOneBtnDialog;
     boolean run;
     public static boolean isK1 = false;
     public static boolean isVertical = false;
-
+    private ExtPrinterService extPrinterService = null;
+    public static KTectoySunmiPrinter kPrinterPresenter;
 
     private final DemoDetails[] demos = {
             new DemoDetails(R.string.function_all, R.drawable.function_all,
@@ -84,11 +94,37 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;// Largura da tela
-        int height = dm.heightPixels;// Largura da tela
+        height = dm.heightPixels;// Largura da tela
         isVertical = height > width;
         isK1 = isHaveCamera() && isVertical;
 
+        if (isK1 = true && height > 1856){
+            connectKPrintService();
+        }
     }
+    // Coneção Impressão K2
+
+    private void connectKPrintService() {
+        Intent intent = new Intent();
+        intent.setPackage("com.sunmi.extprinterservice");
+        intent.setAction("com.sunmi.extprinterservice.PrinterService");
+        bindService(intent, connService, Context.BIND_AUTO_CREATE);
+    }
+    private ServiceConnection connService = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            extPrinterService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            extPrinterService = ExtPrinterService.Stub.asInterface(service);
+            kPrinterPresenter = new KTectoySunmiPrinter(MainActivity.this, extPrinterService);
+        }
+    };
+
+    // Modulo de Verificação do Device
     public boolean isHaveCamera() {
         HashMap<String, UsbDevice> deviceHashMap = ((UsbManager) getSystemService(Activity.USB_SERVICE)).getDeviceList();
         for (Map.Entry entry : deviceHashMap.entrySet()) {
@@ -102,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
     private void setupRecyclerView() {
         final GridLayoutManager layoutManage = new GridLayoutManager(this, 2);
         RecyclerView mRecyclerView = findViewById(R.id.worklist);
@@ -148,25 +185,51 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, demoDetails.activityClass));
                         }
                         if(demoDetails.titleId == R.string.function_all){
-                               // TesteCompleto();
-if (isK1){
-    System.out.println("true");
-}else {
-    System.out.println("false");
-}
-
+                        if (isK1 = true && height > 1856){
+                            try {
+                                KTesteCompleto();
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                        TesteCompleto();
+                        }
                         }
                         if(demoDetails.titleId == R.string.cut_paper){
-                            TectoySunmiPrint.getInstance().cutpaper();
+                            if (isK1 = true && height > 1856){
+                                try {
+                                    kPrinterPresenter.cut();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                TectoySunmiPrint.getInstance().cutpaper();
+                            }
                         }
                         if(demoDetails.titleId == R.string.function_threeline){
-                            TectoySunmiPrint.getInstance().print3Line();
+                            if (isK1 = true && height > 1856){
+                                try {
+                                    kPrinterPresenter.printline(5);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                TectoySunmiPrint.getInstance().print3Line();
+                            }
                         }
                         if(demoDetails.titleId == R.string.function_cash){
                             TectoySunmiPrint.getInstance().openCashBox();
                         }
                         if(demoDetails.titleId == R.string.function_status){
-                            TectoySunmiPrint.getInstance().showPrinterStatus(MainActivity.this);
+                            if (isK1 = true && height > 1856){
+                                try {
+                                    kPrinterPresenter.status();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                TectoySunmiPrint.getInstance().showPrinterStatus(MainActivity.this);
+                            }
                         }
                         if(demoDetails.titleId == R.string.function_multi){
                             if(mHintOneBtnDialog  == null){
@@ -207,7 +270,69 @@ if (isK1){
         }
         return true;
     }
+    // Teste Completo Do K2
+    public void KTesteCompleto() throws RemoteException {
 
+        // Alinhamento
+        kPrinterPresenter.bold(false);
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("Alinhamento\n");
+        kPrinterPresenter.text("--------------------------------\n");
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.text("TecToy Automação\n");
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("TecToy Automação\n");
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.text("TecToy Automação\n");
+        kPrinterPresenter.printline(2);
+
+        // Formas de impressão
+
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("Formas de Impressão\n");
+        kPrinterPresenter.text("--------------------------------\n");
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.bold(true);
+        kPrinterPresenter.text("TecToy Automação\n");
+
+
+        // Barcode
+
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("BarCode\n");
+        kPrinterPresenter.text("--------------------------------\n");
+
+        // QrCode
+
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("QrCode\n");
+        kPrinterPresenter.text("--------------------------------\n");
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.qrCode("www.tectoyautomacao.com.br", 8, 0);
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.qrCode("www.tectoyautomacao.com.br", 8, 0);
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.qrCode("www.tectoyautomacao.com.br", 8, 0);
+
+        // Imagem
+
+
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("Imagem\n");
+        kPrinterPresenter.text("--------------------------------\n");
+
+        // Tabelas
+
+
+        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.text("Tabelas\n");
+        kPrinterPresenter.text("--------------------------------\n");
+
+        kPrinterPresenter.printline(10);
+        kPrinterPresenter.cut();
+
+    }
+    // Teste Completo dos Demais Devices
     public void TesteCompleto() {
 
 

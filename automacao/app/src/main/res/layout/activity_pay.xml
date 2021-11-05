@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/arrow"
             android:gravity="right|center_vertical"
-            android:text="R$ 0,00"
+            android:hint="R$ 0,00"
+            android:inputType="number"
             android:textColor="@color/gray"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -53,13 +54,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/arrow"
+            android:inputType="number"
             android:gravity="right|center_vertical"
-            android:text="1"
+            android:hint="1"
             android:textColor="@color/gray"
             android:textSize="14sp"/>
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/wordtipopagamento"
+        android:id="@+id/tipo"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:gravity="center_vertical"
@@ -68,20 +71,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tipo Pagamento"
+            android:text="Tipo de Pagamento"
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
         <Spinner
             android:id="@+id/spTipoPagamento"
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:gravity="right"
-            android:spinnerMode="dialog"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
+            android:drawableRight="@drawable/arrow"
+            android:gravity="center"
+            android:layout_gravity="right|center_vertical"
+            android:text="Não Definido"
+            android:textColor="@color/gray"
+            android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/wordadquirentes"
@@ -108,7 +111,7 @@
             android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/wordtipoParcelamento"
+        android:id="@+id/p"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:gravity="center_vertical"

@@ -1,9 +1,18 @@
 package br.com.tectoy.tectoysunmi.activity;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +23,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import com.sunmi.extprinterservice.ExtPrinterService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import br.com.tectoy.tectoysunmi.R;
+import br.com.tectoy.tectoysunmi.utils.KTectoySunmiPrinter;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.EditTextDialog;
@@ -26,9 +41,15 @@ import sunmi.sunmiui.dialog.ListDialog;
  * @author Geovani Santos
  */
 public class BarCodeActivity extends BaseActivity {
+
     private TextView mTextView1, mTextView2, mTextView3, mTextView4, mTextView5, mTextView6;
     private ImageView mImageView;
     private int encode, position;
+    public static boolean isK1 = false;
+    public static boolean isVertical = false;
+    private ExtPrinterService extPrinterService = null;
+    public static KTectoySunmiPrinter kPrinterPresenter;
+    int height= 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +57,16 @@ public class BarCodeActivity extends BaseActivity {
         setContentView(R.layout.activity_barcode);
         setMyTitle(R.string.barcode_title);
         setBack();
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;// Largura da tela
+        height = dm.heightPixels;// Largura da tela
+        isVertical = height > width;
+        isK1 = isHaveCamera() && isVertical;
 
+        if (isK1 = true && height > 1856){
+            connectKPrintService();
+        }
         encode = 8;
         position = 1;
         mTextView1 = findViewById(R.id.bc_text_content);
@@ -153,19 +183,33 @@ public class BarCodeActivity extends BaseActivity {
         int width = Integer.parseInt(mTextView4.getText().toString());
 
         if (mTextView6.getText().toString() == "Não") {
-            TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
-            TectoySunmiPrint.getInstance().printText("BarCode\n");
-            TectoySunmiPrint.getInstance().printText("--------------------------------\n");
-            TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
-            TectoySunmiPrint.getInstance().feedPaper();
+            if (isK1 = true && height > 1856){
+                kPrinterPresenter.aling(1);
+                kPrinterPresenter.text("BarCode\n");
+                kPrinterPresenter.text("--------------------------------\n");
+                kPrinterPresenter.barcode(text, encode, height, width, position);
+            }else {
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                TectoySunmiPrint.getInstance().printText("BarCode\n");
+                TectoySunmiPrint.getInstance().printText("--------------------------------\n");
+                TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
+                //TectoySunmiPrint.getInstance().feedPaper();
+            }
         }else {
-            TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
-            TectoySunmiPrint.getInstance().printText("BarCode\n");
-            TectoySunmiPrint.getInstance().printText("--------------------------------\n");
-            TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
-            TectoySunmiPrint.getInstance().print3Line();
-            TectoySunmiPrint.getInstance().feedPaper();
-            TectoySunmiPrint.getInstance().cutpaper();
+            if (isK1 = true && height > 1856){
+                kPrinterPresenter.aling(1);
+                kPrinterPresenter.text("BarCode\n");
+                kPrinterPresenter.text("--------------------------------\n");
+                kPrinterPresenter.barcode(text, encode, height, width, position);
+                kPrinterPresenter.cut();
+            }else {
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                TectoySunmiPrint.getInstance().printText("BarCode\n");
+                TectoySunmiPrint.getInstance().printText("--------------------------------\n");
+                TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
+                TectoySunmiPrint.getInstance().feedPaper();
+                TectoySunmiPrint.getInstance().cutpaper();
+            }
         }
     }
 
@@ -224,4 +268,36 @@ public class BarCodeActivity extends BaseActivity {
 
         dialog.show();
     }
+    public boolean isHaveCamera() {
+        HashMap<String, UsbDevice> deviceHashMap = ((UsbManager) getSystemService(Activity.USB_SERVICE)).getDeviceList();
+        for (Map.Entry entry : deviceHashMap.entrySet()) {
+            UsbDevice usbDevice = (UsbDevice) entry.getValue();
+            if (!TextUtils.isEmpty(usbDevice.getInterface(0).getName()) && usbDevice.getInterface(0).getName().contains("Orb")) {
+                return true;
+            }
+            if (!TextUtils.isEmpty(usbDevice.getInterface(0).getName()) && usbDevice.getInterface(0).getName().contains("Astra")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void connectKPrintService() {
+        Intent intent = new Intent();
+        intent.setPackage("com.sunmi.extprinterservice");
+        intent.setAction("com.sunmi.extprinterservice.PrinterService");
+        bindService(intent, connService, Context.BIND_AUTO_CREATE);
+    }
+    private ServiceConnection connService = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            extPrinterService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            extPrinterService = ExtPrinterService.Stub.asInterface(service);
+            kPrinterPresenter = new KTectoySunmiPrinter(BarCodeActivity.this, extPrinterService);
+        }
+    };
 }

@@ -20,12 +20,12 @@ interface IStateLamp {
      */
     void controlLamp(in int status, in String lamp);
     /**
-     * 功能：控制单个报警灯循环 显示
+     * 功能：Controlar uma única exibição de ciclo da lâmpada de alarme
      * 参数：
-     * [in]status       状态，0开始循环，1停止循环
-     * [in]lightTime    报警灯亮时间，单位：毫秒(ms)
-         * [in]putoutTime   报警灯灭时间，单位：毫秒(ms)
-     * [in]lamp         Led灯，参数：
+     * [in]status       Estado, 0 inicia o ciclo, 1 interrompe o ciclo
+     * [in]lightTime    Tempo aceso da luz do alarme, unidade: milissegundos (ms)
+         * [in]putoutTime   Tempo de desligamento da lâmpada do alarme, unidade: milissegundos (ms)
+     * [in]lamp         Led灯，parâmetro：
      *                      "Led-1"
      *                      "Led-2"
      *                      "Led-3"

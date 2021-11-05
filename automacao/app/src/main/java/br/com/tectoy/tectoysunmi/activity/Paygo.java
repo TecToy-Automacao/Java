@@ -44,7 +44,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 public class Paygo extends BaseActivity {
     TextView mTexto;
     EditText valor_operacao, n_parcelas;
-    Spinner tipo_pagamento, tipo_parcelamento, adquirente;
+    Spinner  tipo_pagamento, tipo_parcelamento, adquirente;
     CheckBox cb_manual, cb_loj_cli, cb_completa, cb_alternatia;
     Button btn_pagar, btn_cancelar, btn_adm;
 
@@ -72,6 +72,7 @@ public class Paygo extends BaseActivity {
         setContentView(R.layout.activity_paygo);
         setMyTitle(R.string.label_paygo);
         setBack();
+
         mTexto = findViewById(R.id.textView9);
         valor_operacao = findViewById(R.id.txtValorOperacao);
         n_parcelas = findViewById(R.id.txtParcelas);
@@ -86,17 +87,15 @@ public class Paygo extends BaseActivity {
         btn_cancelar = findViewById(R.id.btnCancelamento);
         btn_pagar = findViewById(R.id.btnPagar);
 
+
         ArrayAdapter adapter_pagamento = ArrayAdapter.createFromResource(this, R.array.tipo_pagamento, R.layout.spinner_item);
         tipo_pagamento.setAdapter(adapter_pagamento);
 
-        ArrayAdapter adapter_parcelamento = ArrayAdapter.createFromResource(this, R.array.tipo_parcelamento, R.layout.spinner_item);
-        tipo_parcelamento.setAdapter(adapter_parcelamento);
 
-        ArrayAdapter adapter_adquirentes = ArrayAdapter.createFromResource(this, R.array.adquirentes_habilitados, R.layout.spinner_item);
-        adquirente.setAdapter(adapter_adquirentes);
         //maskTextEdits();
         eventClick();
         iniPayGoInterface(false);
+
 
     }
 
@@ -321,8 +320,8 @@ public class Paygo extends BaseActivity {
 
         }
 
-        if (!adquirente.getSelectedItem().toString().equals("PROVEDOR DESCONHECIDO")) {
-            mEntradaTransacao.informaNomeProvedor(adquirente.getSelectedItem().toString());
+        if (!adquirente.toString().equals("PROVEDOR DESCONHECIDO")) {
+            mEntradaTransacao.informaNomeProvedor(adquirente.toString());
         }
 
         mEntradaTransacao.informaCodigoMoeda("986"); // Real
@@ -516,16 +515,16 @@ public class Paygo extends BaseActivity {
             Log.d(DEBUG_TAG, "Transação Pendente foi CONFIRMADO_MANUAL .");
             mConfirmacao.informaStatusTransacao(StatusTransacao.CONFIRMADO_MANUAL);
             mTransacoes.resolvePendencia(mSaidaTransacao.obtemDadosTransacaoPendente(), mConfirmacao);
-            // trataComprovante();
-            // dialog2.show();
+             trataComprovante();
+             dialog2.show();
         });
 
         confirmaOperacao.setNegativeButton("Cancelar", (dialog, which) -> {
             Log.d(DEBUG_TAG, "Transação Pendente foi DESFEITO_ERRO_IMPRESSAO_AUTOMATICO .");
             mConfirmacao.informaStatusTransacao(StatusTransacao.DESFEITO_ERRO_IMPRESSAO_AUTOMATICO);
             mTransacoes.confirmaTransacao(mConfirmacao);
-            // trataComprovante();
-            // dialog2.show();
+             trataComprovante();
+             dialog2.show();
         });
 
         confirmaOperacao.setNegativeButton("Não", null);

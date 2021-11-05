@@ -992,13 +992,14 @@ public class TectoySunmiPrint {
      *  例子中并不能适用所有标签纸，实际使用时注意要自适配标签纸大小，可通过调节字体大小，内容位置等方式
      */
     private void printLabelContent() throws RemoteException {
-        sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, WoyouConsts.ENABLE);
+        sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE, WoyouConsts.ENABLE);
         sunmiPrinterService.lineWrap(1, null);
         sunmiPrinterService.setAlignment(0, null);
         sunmiPrinterService.printText("Mercadoria         Leite de soja\n", null);
-        sunmiPrinterService.printText("Data de validade         12-13  14时\n", null);
-        sunmiPrinterService.printBarCode("{C1234567890123456",  8, 90, 2, 2, null);
+        sunmiPrinterService.printText("Data de validade:  23/12/2021\n", null);
+        sunmiPrinterService.printBarCode("{C1234567890123456",  8, 60, 2, 2, null);
         sunmiPrinterService.lineWrap(1, null);
+        sunmiPrinterService.setPrinterStyle(WoyouConsts.DISABLE, WoyouConsts.DISABLE);
     }
 
 

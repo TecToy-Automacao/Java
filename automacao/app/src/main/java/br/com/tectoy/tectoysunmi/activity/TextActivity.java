@@ -1,8 +1,17 @@
 package br.com.tectoy.tectoysunmi.activity;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Rect;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -17,11 +26,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 
+import com.sunmi.extprinterservice.ExtPrinterService;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.BluetoothUtil;
 import br.com.tectoy.tectoysunmi.utils.ESCUtil;
+import br.com.tectoy.tectoysunmi.utils.KTectoySunmiPrinter;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.ListDialog;
@@ -36,8 +50,13 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
     private LinearLayout mLayout, mLinearLayout;
     private int record;
     private boolean isBold, isUnderLine;
+    public static boolean isK1 = false;
+    int height = 0;
+    public static boolean isVertical = false;
+    private ExtPrinterService extPrinterService = null;
+    public static KTectoySunmiPrinter kPrinterPresenter;
 
-    private String[] mStrings = new String[]{"CP437", "CP850", "CP860", "CP863", "CP865", "CP857", "CP737", "CP928", "Windows-1252", "CP866", "CP852", "CP858", "CP874", "Windows-775", "CP855", "CP862", "CP864", "GB18030", "BIG5", "KSC5601", "utf-8"};
+    private String[] mStrings = new String[]{"CP437", "CP850", "CP860", "CP863", "CP865", "CP857", "CP737", "Windows-1252", "CP866", "CP852", "CP858", "CP874", "CP855", "CP862", "CP864", "GB18030", "BIG5", "KSC5601", "utf-8"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +64,16 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
         setContentView(R.layout.activity_text);
         setMyTitle(R.string.text_title);
         setBack();
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;// Largura da tela
+        height = dm.heightPixels;// Largura da tela
+        isVertical = height > width;
+        isK1 = isHaveCamera() && isVertical;
 
+        if (isK1 = true && height > 1856){
+            connectKPrintService();
+        }
         record = 17;
         isBold = false;
         isUnderLine = false;
@@ -104,12 +132,17 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
 
         float size = Integer.parseInt(mTextView2.getText().toString());
 
-        TectoySunmiPrint.getInstance().printStyleBold(isBold);
-        TectoySunmiPrint.getInstance().printStyleUnderLine(isUnderLine);
-
-        TectoySunmiPrint.getInstance().printTextWithSize(content, size);
-        TectoySunmiPrint.getInstance().feedPaper();
-
+        if (isK1 = true && height > 1856){
+            kPrinterPresenter.bold(isBold);
+            kPrinterPresenter.text(content);
+            kPrinterPresenter.cut();
+        }else {
+            TectoySunmiPrint.getInstance().printStyleBold(isBold);
+            TectoySunmiPrint.getInstance().printStyleUnderLine(isUnderLine);
+            TectoySunmiPrint.getInstance().printTextWithSize(content, size);
+            TectoySunmiPrint.getInstance().feedPaper();
+            TectoySunmiPrint.getInstance().cutpaper();
+        }
     }
 
     private void printByBluTooth(String content) {
@@ -266,4 +299,36 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
                 break;
         }
     }
+    public boolean isHaveCamera() {
+        HashMap<String, UsbDevice> deviceHashMap = ((UsbManager) getSystemService(Activity.USB_SERVICE)).getDeviceList();
+        for (Map.Entry entry : deviceHashMap.entrySet()) {
+            UsbDevice usbDevice = (UsbDevice) entry.getValue();
+            if (!TextUtils.isEmpty(usbDevice.getInterface(0).getName()) && usbDevice.getInterface(0).getName().contains("Orb")) {
+                return true;
+            }
+            if (!TextUtils.isEmpty(usbDevice.getInterface(0).getName()) && usbDevice.getInterface(0).getName().contains("Astra")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void connectKPrintService() {
+        Intent intent = new Intent();
+        intent.setPackage("com.sunmi.extprinterservice");
+        intent.setAction("com.sunmi.extprinterservice.PrinterService");
+        bindService(intent, connService, Context.BIND_AUTO_CREATE);
+    }
+    private ServiceConnection connService = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            extPrinterService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            extPrinterService = ExtPrinterService.Stub.asInterface(service);
+            kPrinterPresenter = new KTectoySunmiPrinter(TextActivity.this, extPrinterService);
+        }
+    };
 }

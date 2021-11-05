@@ -1,8 +1,18 @@
 package br.com.tectoy.tectoysunmi.activity;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,8 +20,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.sunmi.extprinterservice.ExtPrinterService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.BluetoothUtil;
+import br.com.tectoy.tectoysunmi.utils.KTectoySunmiPrinter;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.EditTextDialog;
@@ -29,15 +45,27 @@ public class QrActivity extends BaseActivity {
     private int print_num = 0;
     private int print_size = 8;
     private int error_level = 3;
-
-
+    public static boolean isK1 = false;
+    public static boolean isVertical = false;
+    private ExtPrinterService extPrinterService = null;
+    public static KTectoySunmiPrinter kPrinterPresenter;
+    int height= 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
         setMyTitle(R.string.qr_title);
         setBack();
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;// Largura da tela
+        height = dm.heightPixels;// Largura da tela
+        isVertical = height > width;
+        isK1 = isHaveCamera() && isVertical;
 
+        if (isK1 = true && height > 1856){
+            connectKPrintService();
+        }
         mImageView = findViewById(R.id.qr_image);
         mTextView1 = findViewById(R.id.qr_text_content);
         mTextView2 = findViewById(R.id.qr_text_num);
@@ -170,20 +198,71 @@ public class QrActivity extends BaseActivity {
             mImageView.setImageDrawable(new BitmapDrawable(bitmap));
         }
         if (mTextView6.getText().toString() == "Não") {
-            TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
-            TectoySunmiPrint.getInstance().printText("QrCode\n");
-            TectoySunmiPrint.getInstance().printText("--------------------------------\n");
-            TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
-            TectoySunmiPrint.getInstance().print3Line();
-            TectoySunmiPrint.getInstance().feedPaper();
+            if (isK1 = true && height > 1856){
+                kPrinterPresenter.aling(1);
+                kPrinterPresenter.text("QrCode\n");
+                kPrinterPresenter.text("--------------------------------\n");
+                kPrinterPresenter.qrCode(mTextView1.getText().toString(), print_size, error_level);
+                kPrinterPresenter.printline(5);
+                kPrinterPresenter.cut();
+            }else {
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                TectoySunmiPrint.getInstance().printText("QrCode\n");
+                TectoySunmiPrint.getInstance().printText("--------------------------------\n");
+                TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
+                TectoySunmiPrint.getInstance().print3Line();
+                TectoySunmiPrint.getInstance().feedPaper();
+            }
         }else {
-            TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
-            TectoySunmiPrint.getInstance().printText("QrCode\n");
-            TectoySunmiPrint.getInstance().printText("--------------------------------\n");
-            TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
-            TectoySunmiPrint.getInstance().print3Line();
-            TectoySunmiPrint.getInstance().feedPaper();
-            TectoySunmiPrint.getInstance().cutpaper();
+            if (isK1 = true && height > 1856){
+                kPrinterPresenter.aling(1);
+                kPrinterPresenter.text("QrCode\n");
+                kPrinterPresenter.text("--------------------------------\n");
+                kPrinterPresenter.qrCode(mTextView1.getText().toString(), print_size, error_level);
+                kPrinterPresenter.printline(5);
+                kPrinterPresenter.cut();
+            }else {
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                TectoySunmiPrint.getInstance().printText("QrCode\n");
+                TectoySunmiPrint.getInstance().printText("--------------------------------\n");
+                TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
+                TectoySunmiPrint.getInstance().print3Line();
+                TectoySunmiPrint.getInstance().feedPaper();
+                TectoySunmiPrint.getInstance().cutpaper();
+            }
         }
     }
+    public boolean isHaveCamera() {
+        HashMap<String, UsbDevice> deviceHashMap = ((UsbManager) getSystemService(Activity.USB_SERVICE)).getDeviceList();
+        for (Map.Entry entry : deviceHashMap.entrySet()) {
+            UsbDevice usbDevice = (UsbDevice) entry.getValue();
+            if (!TextUtils.isEmpty(usbDevice.getInterface(0).getName()) && usbDevice.getInterface(0).getName().contains("Orb")) {
+                return true;
+            }
+            if (!TextUtils.isEmpty(usbDevice.getInterface(0).getName()) && usbDevice.getInterface(0).getName().contains("Astra")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void connectKPrintService() {
+        Intent intent = new Intent();
+        intent.setPackage("com.sunmi.extprinterservice");
+        intent.setAction("com.sunmi.extprinterservice.PrinterService");
+        bindService(intent, connService, Context.BIND_AUTO_CREATE);
+    }
+    private ServiceConnection connService = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            extPrinterService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            extPrinterService = ExtPrinterService.Stub.asInterface(service);
+            kPrinterPresenter = new KTectoySunmiPrinter(QrActivity.this, extPrinterService);
+        }
+    };
+
 }
