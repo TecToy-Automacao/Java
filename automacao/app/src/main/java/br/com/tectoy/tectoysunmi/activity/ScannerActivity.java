@@ -6,6 +6,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import br.com.tectoy.tectoysunmi.R;
 public class ScannerActivity extends AppCompatActivity {
 
@@ -17,7 +18,6 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
-
         scrollView = findViewById(R.id.scrollView);
         tvNote = findViewById(R.id.tv_note);
         initScanner();

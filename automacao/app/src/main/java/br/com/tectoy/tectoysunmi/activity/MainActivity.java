@@ -82,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
             new DemoDetails(R.string.cut_paper, R.drawable.function_cortar, null),
             new DemoDetails(R.string.function_scanner, R.drawable.function_scanner, ScannerActivity.class),
             new DemoDetails(R.string.function_led, R.drawable.function_led, LedActivity.class),
-            new DemoDetails(R.string.function_paygo, R.drawable.function_payment, MSitef.class)
+            new DemoDetails(R.string.function_paygo, R.drawable.function_payment, MSitef.class),
+            new DemoDetails(R.string.function_paygo, R.drawable.function_payment, ScanActivity.class)
+
 
     };
 
