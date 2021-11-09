@@ -126,14 +126,13 @@ public class BitmapActivity extends BaseActivity {
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printBitmap(bitmap);
                 TectoySunmiPrint.getInstance().print3Line();
-                TectoySunmiPrint.getInstance().feedPaper();
+
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("Imagem\n");
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printBitmap(bitmap);
                 TectoySunmiPrint.getInstance().print3Line();
-                TectoySunmiPrint.getInstance().feedPaper();
                 TectoySunmiPrint.getInstance().cutpaper();
             }
         }

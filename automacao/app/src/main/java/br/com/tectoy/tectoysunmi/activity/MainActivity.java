@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -54,38 +56,38 @@ public class MainActivity extends AppCompatActivity {
     private ExtPrinterService extPrinterService = null;
     public static KTectoySunmiPrinter kPrinterPresenter;
 
+
+
     private final DemoDetails[] demos = {
             new DemoDetails(R.string.function_all, R.drawable.function_all,
                     null),
             new DemoDetails(R.string.function_qrcode, R.drawable.function_qr,
-                    QrActivity.class),
+                    null),
             new DemoDetails(R.string.function_barcode, R.drawable.function_barcode,
-                    BarCodeActivity.class),
+                    null),
             new DemoDetails(R.string.function_text, R.drawable.function_text,
-                    TextActivity.class),
+                    null),
             new DemoDetails(R.string.function_tab, R.drawable.function_tab,
-                    TableActivity.class),
+                    null),
             new DemoDetails(R.string.function_pic, R.drawable.function_pic,
-                    BitmapActivity.class),
+                    null),
             new DemoDetails(R.string.function_threeline, R.drawable.function_threeline,
                     null),
             new DemoDetails(R.string.function_cash, R.drawable.function_cash,
                     null),
             new DemoDetails(R.string.function_lcd, R.drawable.function_lcd,
-                    LcdActivity.class),
+                    null),
             new DemoDetails(R.string.function_status, R.drawable.function_status,
                     null),
             new DemoDetails(R.string.function_blackline, R.drawable.function_blackline,
-                    BlackLabelActivity.class),
+                    null),
             new DemoDetails(R.string.function_label, R.drawable.function_label,
-                    LabelActivity.class),
+                    null),
             new DemoDetails(R.string.cut_paper, R.drawable.function_cortar, null),
-            new DemoDetails(R.string.function_scanner, R.drawable.function_scanner, ScannerActivity.class),
-            new DemoDetails(R.string.function_led, R.drawable.function_led, LedActivity.class),
+            new DemoDetails(R.string.function_scanner, R.drawable.function_scanner, null),
+            new DemoDetails(R.string.function_led, R.drawable.function_led, null),
             new DemoDetails(R.string.function_paygo, R.drawable.function_payment, MSitef.class),
-            new DemoDetails(R.string.function_paygo, R.drawable.function_payment, ScanActivity.class)
-
-
+            new DemoDetails(R.string.function_scan, R.drawable.function_scanner, null)
     };
 
     @Override
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         height = dm.heightPixels;// Largura da tela
         isVertical = height > width;
         isK1 = isHaveCamera() && isVertical;
-
+        String deviceName = getDeviceName();
         if (isK1 = true && height > 1856){
             connectKPrintService();
         }
@@ -125,6 +127,37 @@ public class MainActivity extends AppCompatActivity {
             kPrinterPresenter = new KTectoySunmiPrinter(MainActivity.this, extPrinterService);
         }
     };
+
+    public static String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            return capitalize(model);
+        }
+        return capitalize(manufacturer) + " " + model;
+    }
+
+    private static String capitalize(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return str;
+        }
+        char[] arr = str.toCharArray();
+        boolean capitalizeNext = true;
+
+        StringBuilder phrase = new StringBuilder();
+        for (char c : arr) {
+            if (capitalizeNext && Character.isLetter(c)) {
+                phrase.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+                continue;
+            } else if (Character.isWhitespace(c)) {
+                capitalizeNext = true;
+            }
+            phrase.append(c);
+        }
+
+        return phrase.toString();
+    }
 
     // Modulo de Verificação do Device
     public boolean isHaveCamera() {
@@ -187,41 +220,77 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, demoDetails.activityClass));
                         }
                         if(demoDetails.titleId == R.string.function_all){
-                        if (isK1 = true && height > 1856){
-                            try {
-                                KTesteCompleto();
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini") || getDeviceName().equals("SUNMI D2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
+                            }else {
+                                if (isK1 = true && height > 1856) {
+                                    try {
+                                        KTesteCompleto();
+                                    } catch (RemoteException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    TesteCompleto();
+
+                                }
                             }
-                        }else {
-                        TesteCompleto();
-                        }
                         }
                         if(demoDetails.titleId == R.string.cut_paper){
-                            if (isK1 = true && height > 1856){
-                                try {
-                                    kPrinterPresenter.cut();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                            if(getDeviceName().equals("SUNMI T2s") || getDeviceName().equals("SUNMI K2") || getDeviceName().equals("SUNMI K2_MINI") || getDeviceName().equals("SUNMI T2mini")){
+                                if (isK1 = true && height > 1856) {
+                                    try {
+                                        kPrinterPresenter.cut();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    TectoySunmiPrint.getInstance().cutpaper();
                                 }
                             }else {
-                                TectoySunmiPrint.getInstance().cutpaper();
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
                             }
                         }
                         if(demoDetails.titleId == R.string.function_threeline){
-                            if (isK1 = true && height > 1856){
-                                try {
-                                    kPrinterPresenter.printline(5);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI D2mini") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
                             }else {
-                                TectoySunmiPrint.getInstance().print3Line();
+                                if (isK1 = true && height > 1856) {
+                                    try {
+                                        kPrinterPresenter.printline(5);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    TectoySunmiPrint.getInstance().print3Line();
+                                }
                             }
                         }
                         if(demoDetails.titleId == R.string.function_cash){
-                            TectoySunmiPrint.getInstance().openCashBox();
-                        }
+                            if(getDeviceName().equals("SUNMI D2s")){
+                                TectoySunmiPrint.getInstance().openCashBox();
+                            }else {
+                                                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println(getDeviceName().toString());
+                            }
+                            }
                         if(demoDetails.titleId == R.string.function_status){
                             if (isK1 = true && height > 1856){
                                 try {
@@ -247,6 +316,144 @@ public class MainActivity extends AppCompatActivity {
                             run = true;
                             multiPrint();
                         }
+                        if(demoDetails.titleId == R.string.function_led){
+                            if(getDeviceName().equals("SUNMI K2_MINI") || getDeviceName().equals("SUNMI K2")){
+                                Intent intent = new Intent(MainActivity.this, LedActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                        }
+                        if(demoDetails.titleId == R.string.function_scan){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini") || getDeviceName().equals("SUNMI V2_PRO")){
+                                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                        }
+                        if(demoDetails.titleId == R.string.function_lcd){
+                            if(getDeviceName().equals("SUNMI T2mini")){
+                                Intent intent = new Intent(MainActivity.this, LcdActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                        }
+                        if(demoDetails.titleId == R.string.function_blackline){
+                            if(getDeviceName().equals("SUNMI V2_PRO")){
+                                Intent intent = new Intent(MainActivity.this, BlackLabelActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_label){
+                            if(getDeviceName().equals("SUNMI V2_PRO")){
+                                Intent intent = new Intent(MainActivity.this, LabelActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_scanner){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }else {
+                                Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_barcode){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI D2mini") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
+                            }else {
+                                Intent intent = new Intent(MainActivity.this, BarCodeActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_qrcode){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini") || getDeviceName().equals("SUNMI D2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
+                            }else {
+                                Intent intent = new Intent(MainActivity.this, QrActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_text){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI D2mini") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
+                            }else {
+                                Intent intent = new Intent(MainActivity.this, TextActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_tab){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI D2mini") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
+                            }else {
+                                Intent intent = new Intent(MainActivity.this, TableActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        if (demoDetails.titleId == R.string.function_pic){
+                            if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI D2mini") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini")){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Função Não Disponivel No Device";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                System.out.println("Passo Aqui");
+                            }else {
+                                Intent intent = new Intent(MainActivity.this, BitmapActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        //SUNMI V2_PRO
                     }
                 });
             }

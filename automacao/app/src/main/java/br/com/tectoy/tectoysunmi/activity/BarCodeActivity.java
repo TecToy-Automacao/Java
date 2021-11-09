@@ -193,7 +193,6 @@ public class BarCodeActivity extends BaseActivity {
                 TectoySunmiPrint.getInstance().printText("BarCode\n");
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
-                //TectoySunmiPrint.getInstance().feedPaper();
             }
         }else {
             if (isK1 = true && height > 1856){
@@ -207,7 +206,6 @@ public class BarCodeActivity extends BaseActivity {
                 TectoySunmiPrint.getInstance().printText("BarCode\n");
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
-                TectoySunmiPrint.getInstance().feedPaper();
                 TectoySunmiPrint.getInstance().cutpaper();
             }
         }

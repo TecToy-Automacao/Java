@@ -140,7 +140,6 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
             TectoySunmiPrint.getInstance().printStyleBold(isBold);
             TectoySunmiPrint.getInstance().printStyleUnderLine(isUnderLine);
             TectoySunmiPrint.getInstance().printTextWithSize(content, size);
-            TectoySunmiPrint.getInstance().feedPaper();
             TectoySunmiPrint.getInstance().cutpaper();
         }
     }

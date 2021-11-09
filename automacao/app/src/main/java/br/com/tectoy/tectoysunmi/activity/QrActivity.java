@@ -211,7 +211,7 @@ public class QrActivity extends BaseActivity {
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
                 TectoySunmiPrint.getInstance().print3Line();
-                TectoySunmiPrint.getInstance().feedPaper();
+
             }
         }else {
             if (isK1 = true && height > 1856){
@@ -227,7 +227,6 @@ public class QrActivity extends BaseActivity {
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
                 TectoySunmiPrint.getInstance().print3Line();
-                TectoySunmiPrint.getInstance().feedPaper();
                 TectoySunmiPrint.getInstance().cutpaper();
             }
         }

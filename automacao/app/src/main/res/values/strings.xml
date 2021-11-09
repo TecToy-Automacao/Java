@@ -17,6 +17,7 @@
     <string name="function_status">Status</string>
     <string name="function_label">Teste de Etiqueta</string>
     <string name="function_scanner">Scanner</string>
+    <string name="function_scan">Scanner Leitor</string>
     <string name="function_led">Luz de Led</string>
     <string name="function_paygo">PayGo</string>
     <string name="function_m_Sitef">M-Sitef</string>
