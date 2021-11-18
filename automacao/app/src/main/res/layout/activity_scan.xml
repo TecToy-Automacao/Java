@@ -11,6 +11,30 @@
     android:showDividers="middle|end|beginning">
 
     <LinearLayout
+        android:id="@+id/tipo_papel"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de Papel"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/txt_tipo_papel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow"
+            android:gravity="right|center_vertical"
+            android:text="Cupom"
+            android:textColor="@color/gray"
+            android:textSize="14sp"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/charcter_set"
         android:layout_width="match_parent"
         android:layout_height="54dp"

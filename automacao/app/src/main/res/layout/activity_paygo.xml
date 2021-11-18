@@ -120,7 +120,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spTipoPagamento" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/txtParcelas"
+        android:id="@+id/edt_parcelas"
         android:layout_width="140dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
@@ -176,7 +176,7 @@
             android:text="@string/confirmacao_manual"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtParcelas" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_parcelas" />
 
         <CheckBox
             android:id="@+id/cbViaDif"
@@ -186,7 +186,7 @@
             android:text="@string/via_loja_e_cliente"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtParcelas" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_parcelas" />
     </LinearLayout>
 
     <LinearLayout

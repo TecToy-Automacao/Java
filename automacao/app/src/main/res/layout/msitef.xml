@@ -36,6 +36,31 @@
             android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/wordip"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IP Servidor"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/edt_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow"
+            android:inputType="number"
+            android:gravity="right|center_vertical"
+            android:hint="1"
+            android:textColor="@color/gray"
+            android:textSize="14sp"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/wordparcelas"
         android:layout_width="match_parent"
         android:layout_height="54dp"
@@ -87,30 +112,6 @@
             android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/wordadquirentes"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adquirente"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:id="@+id/spAdiquirente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/arrow"
-            android:gravity="right|center_vertical"
-            android:text="Não Definido"
-            android:textColor="@color/gray"
-            android:textSize="14sp"/>
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/p"
         android:layout_width="match_parent"
         android:layout_height="54dp"
@@ -134,68 +135,7 @@
             android:textColor="@color/gray"
             android:textSize="14sp"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@color/white1"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirmação Manual"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <CheckBox
-            android:id="@+id/cbConfirManual"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Via Completa"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <CheckBox
-            android:id="@+id/cbViaReduzida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@color/white1"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Via Loja e Cliente"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <CheckBox
-            android:id="@+id/cbViaDif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Interface Alternativa"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <CheckBox
-            android:id="@+id/cbInterfaceAlternativa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -235,6 +175,19 @@
             android:background="@color/text"
             android:gravity="center"
             android:text="Cancelar"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/btnRepressao"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/text"
+            android:gravity="center"
+            android:text="Reimpressão"
             android:textColor="@color/white"
             android:textSize="18sp"/>
     </LinearLayout>

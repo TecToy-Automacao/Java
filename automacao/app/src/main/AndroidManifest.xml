@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH"  />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.NFC" />
+
 
     <application
         android:largeHeap="true"
@@ -19,9 +21,14 @@
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <data android:mimeType="text/plain" />
+
             </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity
             android:name=".activity.SettingActivity"
@@ -60,11 +67,15 @@
             android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.Paygo"
             android:parentActivityName=".activity.MainActivity"/>
-        <activity android:name=".activity.MSitef"
-            android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.ScanActivity"
             android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.CancelamentoActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.NfcActivity"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.Msitef"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.ExemploNFCIdRW.NfcExemplo"
             android:parentActivityName=".activity.MainActivity"/>
     </application>
 

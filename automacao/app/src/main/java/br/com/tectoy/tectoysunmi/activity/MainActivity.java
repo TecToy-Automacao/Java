@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.tectoy.tectoysunmi.R;
+import br.com.tectoy.tectoysunmi.activity.ExemploNFCIdRW.NfcExemplo;
 import br.com.tectoy.tectoysunmi.threadhelp.ThreadPoolManageer;
 import br.com.tectoy.tectoysunmi.utils.KTectoySunmiPrinter;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
@@ -86,8 +87,11 @@ public class MainActivity extends AppCompatActivity {
             new DemoDetails(R.string.cut_paper, R.drawable.function_cortar, null),
             new DemoDetails(R.string.function_scanner, R.drawable.function_scanner, null),
             new DemoDetails(R.string.function_led, R.drawable.function_led, null),
-            new DemoDetails(R.string.function_paygo, R.drawable.function_payment, MSitef.class),
-            new DemoDetails(R.string.function_scan, R.drawable.function_scanner, null)
+            new DemoDetails(R.string.function_paygo, R.drawable.function_payment, Paygo.class),
+            new DemoDetails(R.string.function_scan, R.drawable.function_scanner, null),
+            new DemoDetails(R.string.function_nfc, R.drawable.function_nfc, NfcExemplo.class),
+            new DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, Msitef.class)
+
     };
 
     @Override

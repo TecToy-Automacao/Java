@@ -18,18 +18,20 @@ import androidx.annotation.Nullable;
 import com.sunmi.scanner.IScanInterface;
 
 import br.com.tectoy.tectoysunmi.R;
+import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.ListDialog;
 
 public class ScanActivity extends BaseActivity {
 
-    TextView mBtn, charcter_set_content, prompt_mode_scan, scan_mode_content, scan_trigger_content;
+    TextView mBtn,txt_tipo_papel, charcter_set_content, prompt_mode_scan, scan_mode_content, scan_trigger_content;
     private  IScanInterface scanInterface;
     private TextView tvNote;
     private ScrollView scrollView;
     private int error_level = 3;
+    private String txt = "Cupom";
     private SunmiScanner sunmiScanner;
-
+    private String teste;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,27 @@ public class ScanActivity extends BaseActivity {
         prompt_mode_scan = findViewById(R.id.prompt_mode_scan);
         scan_mode_content = findViewById(R.id.scan_mode_content);
         scan_trigger_content = findViewById(R.id.scan_trigger_content);
+        txt_tipo_papel = findViewById(R.id.txt_tipo_papel);
+
+
+        findViewById(R.id.tipo_papel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] el = new String[]{"Cupom", "Etiqueta"};
+                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivity.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
+                listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+                        txt_tipo_papel.setText(el[position]);
+                        txt = el[position];
+                        error_level = position;
+                        listDialog.cancel();
+                    }
+                });
+                listDialog.show();
+            }
+        });
+
 
         findViewById(R.id.charcter_set).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +141,7 @@ public class ScanActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     scanInterface.scan();
+
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -159,6 +183,15 @@ public class ScanActivity extends BaseActivity {
             @Override
             public void onScanData(String data, SunmiScanner.DATA_DISCRIBUTE_TYPE type) {
                 append("Tipo de Dado:" + type + "\nCodigo:" + data + "\n");
+
+                if (txt.equals("Cupom")){
+                    TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                    TectoySunmiPrint.getInstance().printBarCode(data, TectoySunmiPrint.BarCodeModels_EAN13, 162, 2,
+                            TectoySunmiPrint.BarCodeTextPosition_ABAIXO_DO_CODIGO_DE_BARRAS);
+                    TectoySunmiPrint.getInstance().print3Line();
+                }else {
+                    TectoySunmiPrint.getInstance().printOneLabel();
+                }
             }
 
             @Override

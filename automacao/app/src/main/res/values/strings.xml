@@ -18,10 +18,25 @@
     <string name="function_label">Teste de Etiqueta</string>
     <string name="function_scanner">Scanner</string>
     <string name="function_scan">Scanner Leitor</string>
+    <string name="function_nfc">NFC</string>
     <string name="function_led">Luz de Led</string>
     <string name="function_paygo">PayGo</string>
     <string name="function_m_Sitef">M-Sitef</string>
-
+    <string name="aproxime_o_cart_o_da_leitora">Aproxime o cartão da leitora.</string>
+    <string name="message_write_error">Erro ao gravar informação!</string>
+    <string name="message_write_success">Sucesso ao gravar informação!</string>
+    <string name="message_write_progress">Gravando informação..</string>
+    <string name="message_tag_detected">Cartão lido com sucesso!</string>
+    <string name="message_read_tag">Leitura do Cartão NFC</string>
+    <string name="message_read">Aproxime o cartão</string>
+    <string name="message_write_tag">Gravar Cartão</string>
+    <string name="message_write_read_tag">Gravar/Ler Cartão</string>
+    <string name="message_tap_tag">Toque na tag NFC no seu dispositivo!</string>
+    <string name="message_format_tag">Formatar Cartão</string>
+    <string name="gravar_no_cart_o">Gravar no Cartão</string>
+    <string name="ler_cart_o">Ler Cartão</string>
+    <string name="formatar_cart_o">Formatar Cartão</string>
+    <string name="teste_leitura_grava_o">Teste Leitura/Gravação</string>
     <!--titles-->
     <string name="setting_title">Configuração</string>
     <string name="info_title">Informação da impressora</string>

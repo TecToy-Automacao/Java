@@ -3,18 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/drawable/arrow.xml" value="0.2203125" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_all.xml" value="0.13949275362318841" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_cancelamento.xml" value="0.25" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_info.xml" value="0.15625" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_lcd.xml" value="0.15625" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_led.xml" value="0.15625" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_ledK2.xml" value="0.12092391304347826" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_ledk.xml" value="0.12092391304347826" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_main.xml" value="0.1272644927536232" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_nfc.xml" value="0.25" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_pay.xml" value="0.33" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_paygo.xml" value="0.33" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_qr.xml" value="0.33" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_scan.xml" value="0.33" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_scanner.xml" value="0.1068840579710145" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/activity_text.xml" value="0.1272644927536232" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/fragment_forceteste.xml" value="0.18070652173913043" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/fragment_formata.xml" value="0.18070652173913043" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/fragment_gravacao.xml" value="0.18070652173913043" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/fragment_leitura.xml" value="0.18070652173913043" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/msitef.xml" value="0.25" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/nfcexemplo.xml" value="0.18070652173913043" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/nfcexemplogedi.xml" value="0.18070652173913043" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/nfcexemploid.xml" value="0.18070652173913043" />
         <entry key="..\:/Projeto/Java/automacao/app/src/main/res/layout/spinner_item.xml" value="0.1" />
+        <entry key="..\:/Projeto/Java/automacao/app/src/main/res/xml/nfc_tech_filter.xml" value="0.1" />
         <entry key="..\:/Projeto/Java/tectoyexemplo/app/src/main/res/drawable/account_line.xml" value="0.2203125" />
         <entry key="..\:/Projeto/Java/tectoyexemplo/app/src/main/res/drawable/btn_setting.xml" value="0.2203125" />
         <entry key="..\:/Projeto/Java/tectoyexemplo/app/src/main/res/layout/activity_all.xml" value="0.22" />

@@ -39,7 +39,7 @@ public class LcdActivity extends BaseActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         //No scaling
         options.inScaled = false;
-        //Make the bitmap have the current device's dpi
+
         options.inDensity = getResources().getDisplayMetrics().densityDpi;
 
         TectoySunmiPrint.getInstance().sendPicToLcd(BitmapFactory.decodeResource(getResources(),

@@ -42,12 +42,13 @@ import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 
 public class Paygo extends BaseActivity {
+
     TextView mTexto;
     EditText valor_operacao, n_parcelas;
-    Spinner  tipo_pagamento, tipo_parcelamento, adquirente;
+    TextView tipo_parcelamento, adquirente;
     CheckBox cb_manual, cb_loj_cli, cb_completa, cb_alternatia;
     Button btn_pagar, btn_cancelar, btn_adm;
-
+    Spinner tipo_pagamento;
 
     private static final String DEBUG_TAG = MainActivity.class.getName();
 
@@ -66,16 +67,19 @@ public class Paygo extends BaseActivity {
 
     private TectoySunmiPrint tectoySunmiPrint;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paygo);
+        setContentView(R.layout.activity_pay);
         setMyTitle(R.string.label_paygo);
         setBack();
 
+
+
         mTexto = findViewById(R.id.textView9);
         valor_operacao = findViewById(R.id.txtValorOperacao);
-        n_parcelas = findViewById(R.id.txtParcelas);
+        n_parcelas = findViewById(R.id.edt_parcelas);
         tipo_pagamento = findViewById(R.id.spTipoPagamento);
         tipo_parcelamento = findViewById(R.id.spTipoParcelamento);
         adquirente = findViewById(R.id.spAdiquirente);
@@ -87,23 +91,12 @@ public class Paygo extends BaseActivity {
         btn_cancelar = findViewById(R.id.btnCancelamento);
         btn_pagar = findViewById(R.id.btnPagar);
 
-
         ArrayAdapter adapter_pagamento = ArrayAdapter.createFromResource(this, R.array.tipo_pagamento, R.layout.spinner_item);
         tipo_pagamento.setAdapter(adapter_pagamento);
 
-
-        //maskTextEdits();
         eventClick();
         iniPayGoInterface(false);
-
-
-    }
-
-    private void maskTextEdits() {
-        valor_operacao.addTextChangedListener(new MoneyTextWatcher(valor_operacao));
-        valor_operacao.setText("500");
-    }
-
+        }
     private final Runnable resultadoOperacacao = new Runnable() {
         @Override
         public void run() {
@@ -113,7 +106,6 @@ public class Paygo extends BaseActivity {
             mensagem = null;
         }
     };
-
     private void traduzResultadoOperacao(int resultado) {
 
         boolean confirmaOperacaoManual = false;
@@ -210,24 +202,24 @@ public class Paygo extends BaseActivity {
             caixaMensagem.setMessage(mensagem);
         }
 
-        AlertDialog alert = caixaMensagem.create();
-        alert.setCancelable(true);
-        alert.setCanceledOnTouchOutside(true);
+        //AlertDialog alert = caixaMensagem.create();
+        //alert.setCancelable(true);
+       // alert.setCanceledOnTouchOutside(true);
 
         if (resultado == 0) {
 
             if (confirmaOperacaoManual) {
-                confirmaOperacao(alert);
+               // confirmaOperacao(alert);
             } else {
                 trataComprovante();
-                alert.show();
+               // alert.show();
             }
 
         } else {
             if (existeTransacaoPendente){
-                existeTransacaoPendente(alert);
+              //  existeTransacaoPendente(alert);
             }else{
-                alert.show();
+              //  alert.show();
             }
 
         }
@@ -287,19 +279,19 @@ public class Paygo extends BaseActivity {
             mEntradaTransacao.informaValorTotal(valorOperacao);
         }
 
-        if (tipo_pagamento.getSelectedItem().toString() == "Não Definido") {
+        if (tipo_pagamento.toString() == "Não Definido") {
             mEntradaTransacao.informaModalidadePagamento(ModalidadesPagamento.PAGAMENTO_CARTAO);
             mEntradaTransacao.informaTipoCartao(Cartoes.CARTAO_DESCONHECIDO);
 
-        } else if (tipo_pagamento.getSelectedItem().toString() == "Crédito") {
+        } else if (tipo_pagamento.toString() == "Crédito") {
             mEntradaTransacao.informaModalidadePagamento(ModalidadesPagamento.PAGAMENTO_CARTAO);
             mEntradaTransacao.informaTipoCartao(Cartoes.CARTAO_CREDITO);
 
-        } else if (tipo_pagamento.getSelectedItem().toString() == "Débito") {
+        } else if (tipo_pagamento.toString() == "Débito") {
             mEntradaTransacao.informaModalidadePagamento(ModalidadesPagamento.PAGAMENTO_CARTAO);
             mEntradaTransacao.informaTipoCartao(Cartoes.CARTAO_DEBITO);
 
-        } else if (tipo_pagamento.getSelectedItem().toString() == "Carteira Digital") {
+        } else if (tipo_pagamento.toString() == "Carteira Digital") {
             mEntradaTransacao.informaModalidadePagamento(ModalidadesPagamento.PAGAMENTO_CARTEIRA_VIRTUAL);
             mEntradaTransacao.informaTipoCartao(Cartoes.CARTAO_VOUCHER);
         }
@@ -320,7 +312,7 @@ public class Paygo extends BaseActivity {
 
         }
 
-        if (!adquirente.toString().equals("PROVEDOR DESCONHECIDO")) {
+        if (adquirente.toString() == "PROVEDOR DESCONHECIDO") {
             mEntradaTransacao.informaNomeProvedor(adquirente.toString());
         }
 
@@ -436,8 +428,11 @@ public class Paygo extends BaseActivity {
                 //printer.getStatusImpressora();
                 //if (printer.isImpressoraOK()) {
                 if (true) {
+                    TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                    TectoySunmiPrint.getInstance().printStyleBold(true);
                     TectoySunmiPrint.getInstance().printText(finalCupom);
                     TectoySunmiPrint.getInstance().print3Line();
+                    TectoySunmiPrint.getInstance().cutpaper();
                     mTexto.setText(finalCupom);
                     //printer.imprimeTexto(finalCupom);
                     //printer.avancaLinha(150);
@@ -515,16 +510,16 @@ public class Paygo extends BaseActivity {
             Log.d(DEBUG_TAG, "Transação Pendente foi CONFIRMADO_MANUAL .");
             mConfirmacao.informaStatusTransacao(StatusTransacao.CONFIRMADO_MANUAL);
             mTransacoes.resolvePendencia(mSaidaTransacao.obtemDadosTransacaoPendente(), mConfirmacao);
-             trataComprovante();
-             dialog2.show();
+            // trataComprovante();
+            // dialog2.show();
         });
 
         confirmaOperacao.setNegativeButton("Cancelar", (dialog, which) -> {
             Log.d(DEBUG_TAG, "Transação Pendente foi DESFEITO_ERRO_IMPRESSAO_AUTOMATICO .");
             mConfirmacao.informaStatusTransacao(StatusTransacao.DESFEITO_ERRO_IMPRESSAO_AUTOMATICO);
             mTransacoes.confirmaTransacao(mConfirmacao);
-             trataComprovante();
-             dialog2.show();
+            // trataComprovante();
+            // dialog2.show();
         });
 
         confirmaOperacao.setNegativeButton("Não", null);
