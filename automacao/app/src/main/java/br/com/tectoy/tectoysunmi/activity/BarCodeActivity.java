@@ -200,7 +200,7 @@ public class BarCodeActivity extends BaseActivity {
                 kPrinterPresenter.text("BarCode\n");
                 kPrinterPresenter.text("--------------------------------\n");
                 kPrinterPresenter.barcode(text, encode, height, width, position);
-                kPrinterPresenter.cut();
+                kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("BarCode\n");

@@ -3,6 +3,7 @@ package br.com.tectoy.tectoysunmi.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.os.RemoteException;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,11 +43,16 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
     public static int BarCodeTextPosition_ACIMA_DO_CODIGO_DE_BARRAS_BARCODE = 1;
     public static int BarCodeTextPosition_ABAIXO_DO_CODIGO_DE_BARRAS = 2;
     public static int BarCodeTextPosition_ACIMA_E_ABAIXO_DO_CODIGO_DE_BARRAS = 3;
+
+    // Cutter’s paper cutting
+    public static int FULL_CUTTING = 0;
+    public static int HALF_CUTTING = 1;
+    public static int CUTTING_PAPER_FEED = 2;
+
+
     public int sunmiPrinter = CheckSunmiPrinter;
     private SunmiPrinterService sunmiPrinterService;
     private ExtPrinterService extPrinterService = null;
-
-
 
 
     public KTectoySunmiPrinter(Context context, ExtPrinterService printerService) {
@@ -56,68 +62,78 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
 
 
     // Status
-    public void status(){
+    public int getStatus() {
+
+        int res = -1;
         try {
-            mPrinter.getPrinterStatus();
-        } catch (Exception e){
+            res = mPrinter.getPrinterStatus();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
+        return res;
+
     }
+
     // BarCode
-    public void barcode(String texto, int tipo, int weight, int height, int hripos){
+    public void barcode(String texto, int tipo, int weight, int height, int hripos) {
         try {
             mPrinter.printBarCode(texto, tipo, weight, height, hripos);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Alinhamento
-    public void aling(int aling){
+    public void aling(int aling) {
         try {
             mPrinter.setAlignMode(aling);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     // Texto
-    public void text(String texto){
+    public void text(String texto) {
         try {
             mPrinter.printText(texto);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     // Avança Linha
-    public void printline(int n){
+    public void printline(int n) {
         try {
             mPrinter.lineWrap(n);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     // Cortar Papel
-    public void cut(){
+    public void cut(int cutter_mode, int advance_lines) {
         try {
-            mPrinter.cutPaper(1,1);
+            mPrinter.cutPaper(cutter_mode, advance_lines);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     // Negrito
-    public void bold(boolean boo){
+    public void bold(boolean boo) {
         try {
             if (boo) {
                 mPrinter.sendRawData(boldOn());
-            }else {
+            } else {
                 mPrinter.sendRawData(boldOff());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     // QrCode
-    public void qrCode(String texto, int size, int error){
+    public void qrCode(String texto, int size, int error) {
         try {
             mPrinter.printQrCode(texto, size, error);
         } catch (Exception e) {
@@ -125,12 +141,40 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
         }
     }
 
-    public void print() {
+//    public void print() {
+//
+//        try {
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-        try {
-        } catch (Exception e) {
-            e.printStackTrace();
+    public String traduzStatusImpressora(int status) {
+
+        String result = "Interface é muito baixa para implementar ";
+
+        switch (status) {
+            case 0:
+                result = "Impressora está funcionando";
+                break;
+            case 1:
+                result = "A impressora está com a tampa aberta";
+                break;
+            case 2:
+                result = "Impressora sem papel";
+                break;
+            case 3:
+                result = "A impressora vai ficar sem papel";
+                break;
+            case 4:
+                result = "Impressora está superaquecendo";
+                break;
+            default:
+                result = "A impressora está offline ou o serviço de impressão não foi conectado ao impressora";
+                break;
         }
+
+        return result;
     }
 
     private Bitmap scaleImage(Bitmap bitmap1) {
@@ -153,6 +197,7 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
         result[2] = 0xF;
         return result;
     }
+
     private byte[] boldOff() {
         byte[] result = new byte[3];
         result[0] = ESC;

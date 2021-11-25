@@ -30,7 +30,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.ListDialog;
 
-public class Msitef extends BaseActivity {
+public class MSitef extends BaseActivity {
 
 
     Button btn_pagar, btn_adm, btn_cancelar, btn_reimpressao;
@@ -104,7 +104,7 @@ public class Msitef extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String[] mStrings = new String[]{getResources().getString(R.string.nao_definido), getResources().getString(R.string.credito), getResources().getString(R.string.debito), getResources().getString(R.string.carteira_digital)};
-                final ListDialog listDialog = DialogCreater.createListDialog(Msitef.this, getResources().getString(R.string.array_qrcode), getResources().getString(R.string.cancel), mStrings);
+                final ListDialog listDialog = DialogCreater.createListDialog(MSitef.this, getResources().getString(R.string.array_qrcode), getResources().getString(R.string.cancel), mStrings);
                 listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {

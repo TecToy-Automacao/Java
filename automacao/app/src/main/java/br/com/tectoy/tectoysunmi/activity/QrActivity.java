@@ -204,7 +204,7 @@ public class QrActivity extends BaseActivity {
                 kPrinterPresenter.text("--------------------------------\n");
                 kPrinterPresenter.qrCode(mTextView1.getText().toString(), print_size, error_level);
                 kPrinterPresenter.printline(5);
-                kPrinterPresenter.cut();
+                kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("QrCode\n");
@@ -220,7 +220,7 @@ public class QrActivity extends BaseActivity {
                 kPrinterPresenter.text("--------------------------------\n");
                 kPrinterPresenter.qrCode(mTextView1.getText().toString(), print_size, error_level);
                 kPrinterPresenter.printline(5);
-                kPrinterPresenter.cut();
+                kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("QrCode\n");

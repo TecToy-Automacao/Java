@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             new DemoDetails(R.string.function_paygo, R.drawable.function_payment, Paygo.class),
             new DemoDetails(R.string.function_scan, R.drawable.function_scanner, null),
             new DemoDetails(R.string.function_nfc, R.drawable.function_nfc, NfcExemplo.class),
-            new DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, Msitef.class),
+            new DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, MSitef.class),
             new DemoDetails(R.string.display, R.drawable.telas, DisplayActivity.class)
     };
     private VideoDisplay videoDisplay = null;
@@ -262,7 +262,12 @@ public class MainActivity extends AppCompatActivity {
                             if(getDeviceName().equals("SUNMI T2s") || getDeviceName().equals("SUNMI K2") || getDeviceName().equals("SUNMI K2_MINI") || getDeviceName().equals("SUNMI T2mini")){
                                 if (isK1 = true && height > 1856) {
                                     try {
-                                        kPrinterPresenter.cut();
+                                        kPrinterPresenter.printline(15);
+                                        kPrinterPresenter.cut(KTectoySunmiPrinter.FULL_CUTTING, 10);
+                                        kPrinterPresenter.printline(15);
+                                        kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
+                                        kPrinterPresenter.printline(15);
+                                        kPrinterPresenter.cut(KTectoySunmiPrinter.CUTTING_PAPER_FEED, 10);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -312,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                         if(demoDetails.titleId == R.string.function_status){
                             if (isK1 = true && height > 1856){
                                 try {
-                                    kPrinterPresenter.status();
+                                    Toast.makeText(getApplicationContext(), kPrinterPresenter.traduzStatusImpressora(kPrinterPresenter.getStatus()), Toast.LENGTH_LONG ).show();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -556,7 +561,7 @@ public class MainActivity extends AppCompatActivity {
         kPrinterPresenter.text("--------------------------------\n");
 
         kPrinterPresenter.printline(10);
-        kPrinterPresenter.cut();
+        kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
 
     }
     // Teste Completo dos Demais Devices

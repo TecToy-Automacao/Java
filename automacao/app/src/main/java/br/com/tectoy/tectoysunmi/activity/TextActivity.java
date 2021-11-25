@@ -135,7 +135,7 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
         if (isK1 = true && height > 1856){
             kPrinterPresenter.bold(isBold);
             kPrinterPresenter.text(content);
-            kPrinterPresenter.cut();
+            kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
         }else {
             TectoySunmiPrint.getInstance().printStyleBold(isBold);
             TectoySunmiPrint.getInstance().printStyleUnderLine(isUnderLine);
