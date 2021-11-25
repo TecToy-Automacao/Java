@@ -6,11 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,13 +27,17 @@ import java.util.regex.Pattern;
 
 import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
+import sunmi.sunmiui.dialog.DialogCreater;
+import sunmi.sunmiui.dialog.ListDialog;
 
-public class Msitef extends BaseActivity{
+public class Msitef extends BaseActivity {
 
 
     Button btn_pagar, btn_adm, btn_cancelar, btn_reimpressao;
     EditText edt_valor, edt_ip, edt_parcelas;
-    Spinner edt_tipo;
+    TextView edt_tipo;
+    CheckBox chc_usb, chc_blu;
+    Boolean usb, blu;
 
     private final String API_VERSION = "1.04";
 
@@ -56,6 +63,7 @@ public class Msitef extends BaseActivity{
     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("pos7api://pos7"));
 
     Venda venda = new Venda();
+    String teste;
 
     private TectoySunmiPrint tectoySunmiPrint;
     private Random r = new Random();
@@ -71,6 +79,7 @@ public class Msitef extends BaseActivity{
 
     ///  Defines tef
     private static int REQ_CODE = 4321;
+    Gson gson = new Gson();
 
 
 
@@ -79,43 +88,78 @@ public class Msitef extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.msitef);
 
+        chc_blu = findViewById(R.id.chc_blu);
+        chc_usb = findViewById(R.id.chc_USB);
         edt_valor = findViewById(R.id.txtValorOperacao);
         edt_ip = findViewById(R.id.edt_ip);
         edt_parcelas = findViewById(R.id.edt_parcelas);
         btn_pagar = findViewById(R.id.btnPagar);
         btn_adm = findViewById(R.id.btnAdministrativo);
-        btn_cancelar = findViewById(R.id.btnRepressao);
+        btn_adm.setVisibility(View.GONE);
+        btn_cancelar = findViewById(R.id.btnCancelamento);
+        btn_reimpressao = findViewById(R.id.btnRepressao);
         edt_tipo = findViewById(R.id.spTipoPagamento);
+
+        findViewById(R.id.tipo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] mStrings = new String[]{getResources().getString(R.string.nao_definido), getResources().getString(R.string.credito), getResources().getString(R.string.debito), getResources().getString(R.string.carteira_digital)};
+                final ListDialog listDialog = DialogCreater.createListDialog(Msitef.this, getResources().getString(R.string.array_qrcode), getResources().getString(R.string.cancel), mStrings);
+                listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+                        edt_tipo.setText(mStrings[position]);
+                        teste = mStrings[position];
+                        listDialog.cancel();
+                        System.out.println(edt_tipo);
+                        System.out.println("teste");
+                    }
+                });
+                listDialog.show();
+            }
+        });
+        btn_reimpressao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acao = "reimpressao";
+                execulteSTefReimpressao();
+            }
+        });
         btn_pagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 acao = "venda";
-            //    if (Mask.unmask(edt_valor.getText().toString()).equals("000")) {
-                    System.out.println("O valor de venda digitado deve ser maior que 0");
-             //   } else {
-                    if (edt_parcelas.getText().toString().isEmpty() || edt_parcelas.getText().toString().equals("0")) {
-                  //  } else {
                         execulteSTefVenda();
-                //    }
-                }
             }
         });
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acao = "cancelamento";
+                execulteSTefCancelamento();
+            }
+        });
+
     }
+
         // Faz Transação
         private void execulteSTefVenda() {
             Intent intentSitef = new Intent("br.com.softwareexpress.sitef.msitef.ACTIVITY_CLISITEF");
             intentSitef.putExtra("empresaSitef", "00000000");
-            intentSitef.putExtra("enderecoSitef", edt_ip.getText().toString().replaceAll("\\s+", ""));
+            intentSitef.putExtra("enderecoSitef", "172.17.102.96");
             intentSitef.putExtra("operador", "0001");
             intentSitef.putExtra("data", "20200324");
             intentSitef.putExtra("hora", "130358");
             intentSitef.putExtra("numeroCupom", op);
-
-//            intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
+            intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
             intentSitef.putExtra("CNPJ_CPF", "03654119000176");
             intentSitef.putExtra("comExterna", "0");
-
-            if (edt_tipo.equals("Credito")) {
+            if (chc_usb.isChecked()){
+             intentSitef.putExtra("pinpadMac", "00:00:00:00:00:00");
+            }
+            if(teste.equals("Não Definido")){
+                intentSitef.putExtra("modalidade", "0");
+            } else if ("Crédito".equals(teste)) {
                 intentSitef.putExtra("modalidade", "3");
                 if (edt_parcelas.getText().toString().equals("0") || edt_parcelas.getText().toString().equals("1")) {
                     intentSitef.putExtra("transacoesHabilitadas", "26");
@@ -124,78 +168,63 @@ public class Msitef extends BaseActivity{
                     intentSitef.putExtra("transacoesHabilitadas", "27");
                 }
                 intentSitef.putExtra("numParcelas", edt_parcelas.getText().toString());
-            }
-
-            if (edt_tipo.equals("Debito")) {
+            } else if ("Débito".equals(teste)) {
                 intentSitef.putExtra("modalidade", "2");
-                intentSitef.putExtra("transacoesHabilitadas", "16");
+                //intentSitef.putExtra("transacoesHabilitadas", "16");
+            } else if ("Carteira Digital".equals(teste)) {
             }
-
             intentSitef.putExtra("isDoubleValidation", "0");
             intentSitef.putExtra("caminhoCertificadoCA", "ca_cert_perm");
             startActivityForResult(intentSitef, REQ_CODE);
         }
     private void execulteSTefCancelamento() {
         Intent intentSitef = new Intent("br.com.softwareexpress.sitef.msitef.ACTIVITY_CLISITEF");
-
         intentSitef.putExtra("empresaSitef", "00000000");
-        intentSitef.putExtra("enderecoSitef", edt_ip.getText().toString().replaceAll("\\s+", ""));
+        intentSitef.putExtra("enderecoSitef", "172.17.102.96");
         intentSitef.putExtra("operador", "0001");
         intentSitef.putExtra("data", currentDateTimeString);
         intentSitef.putExtra("hora", currentDateTimeStringT);
         intentSitef.putExtra("numeroCupom", op);
-
-      //  intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
+        intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
         intentSitef.putExtra("CNPJ_CPF", "03654119000176");
         intentSitef.putExtra("comExterna", "0");
-
         intentSitef.putExtra("modalidade", "200");
-
         intentSitef.putExtra("isDoubleValidation", "0");
         intentSitef.putExtra("caminhoCertificadoCA", "ca_cert_perm");
-
         startActivityForResult(intentSitef, REQ_CODE);
     }
     private void execulteSTefFuncoes() {
         Intent intentSitef = new Intent("br.com.softwareexpress.sitef.msitef.ACTIVITY_CLISITEF");
 
         intentSitef.putExtra("empresaSitef", "00000000");
-        intentSitef.putExtra("enderecoSitef", edt_ip.getText().toString().replaceAll("\\s+", ""));
+        intentSitef.putExtra("enderecoSitef", "172.17.102.96");
         intentSitef.putExtra("operador", "0001");
         intentSitef.putExtra("data", currentDateTimeString);
         intentSitef.putExtra("hora", currentDateTimeStringT);
         intentSitef.putExtra("numeroCupom", op);
-
-       // intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
+        intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
         intentSitef.putExtra("CNPJ_CPF", "03654119000176");
         intentSitef.putExtra("comExterna", "0");
-
         intentSitef.putExtra("isDoubleValidation", "0");
         intentSitef.putExtra("caminhoCertificadoCA", "ca_cert_perm");
         intentSitef.putExtra("modalidade", "110");
         intentSitef.putExtra("restricoes", "transacoesHabilitadas=16;26;27");
-
         startActivityForResult(intentSitef, REQ_CODE);
     }
     private void execulteSTefReimpressao() {
         Intent intentSitef = new Intent("br.com.softwareexpress.sitef.msitef.ACTIVITY_CLISITEF");
-
         intentSitef.putExtra("empresaSitef", "00000000");
-        intentSitef.putExtra("enderecoSitef", edt_ip.getText().toString().replaceAll("\\s+", ""));
+        intentSitef.putExtra("enderecoSitef", "172.17.102.96");
         intentSitef.putExtra("operador", "0001");
         intentSitef.putExtra("data", "20200324");
         intentSitef.putExtra("hora", "130358");
         intentSitef.putExtra("numeroCupom", op);
-
-      //  intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
+        intentSitef.putExtra("valor", Mask.unmask(edt_valor.getText().toString()));
         intentSitef.putExtra("CNPJ_CPF", "03654119000176");
         intentSitef.putExtra("comExterna", "0");
-
         intentSitef.putExtra("modalidade", "114");
-
         intentSitef.putExtra("isDoubleValidation", "0");
         intentSitef.putExtra("caminhoCertificadoCA", "ca_cert_perm");
-
         startActivityForResult(intentSitef, REQ_CODE);
     }
     boolean validaIp(String ipserver) {
@@ -211,27 +240,73 @@ public class Msitef extends BaseActivity{
     private void maskTextEdits() {
         edt_valor.addTextChangedListener(new MoneyTextWatcher(edt_valor));
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            RetornoMsiTef retornoSitef = null;
+            if (data == null)
+                return;
+
+            try {
+                retornoSitef = gson.fromJson(respSitefToJson(data), RetornoMsiTef.class);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (requestCode == REQ_CODE && resultCode == RESULT_OK) {
+                if (retornoSitef.getCodResp().equals("0")) {
+                    String impressao = "";
+                    // Verifica se tem algo pra imprimir
+                    if (!retornoSitef.textoImpressoCliente().isEmpty()) {
+                        impressao += retornoSitef.textoImpressoCliente();
+                    }
+                    if (!retornoSitef.textoImpressoEstabelecimento().isEmpty()) {
+                        impressao += "\n\n-----------------------------     \n";
+                        impressao += retornoSitef.textoImpressoEstabelecimento();
+                    }
+                    if (!impressao.isEmpty() && acao.equals("reimpressao")) {
+                        dialogImpressao(impressao, 17);
+                    }
+                }
+                // Verifica se ocorreu um erro durante venda ou cancelamento
+                if (acao.equals("venda") || acao.equals("cancelamento")) {
+                    if (retornoSitef.getCodResp().isEmpty() || !retornoSitef.getCodResp().equals("0") || retornoSitef.getCodResp() == null) {
+                        //dialodTransacaoNegadaMsitef(retornoSitef);
+                    } else {
+                        dialodTransacaoAprovadaMsitef(retornoSitef);
+                    }
+                }
+            } else {
+                // ocorreu um erro
+                if (acao.equals("venda") || acao.equals("cancelamento")) {
+                    //dialodTransacaoNegadaMsitef(retornoSitef);
+                }
+            }
+    }
 
     private void dialodTransacaoAprovadaMsitef(RetornoMsiTef retornoMsiTef) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         StringBuilder cupom = new StringBuilder();
-        cupom.append("CODRESP: " + retornoMsiTef.getCodResp() + "\n");
-        cupom.append("COMP_DADOS_CONF: " + retornoMsiTef.getCompDadosConf() + "\n");
-        cupom.append("CODTRANS: " + retornoMsiTef.getCodTrans() + "\n");
-        cupom.append("CODTRANS (Name): " + retornoMsiTef.getNameTransCod() + "\n");
-        cupom.append("VLTROCO: " + retornoMsiTef.getvlTroco() + "\n");
-        cupom.append("REDE_AUT: " + retornoMsiTef.getRedeAut() + "\n");
-        cupom.append("BANDEIRA: " + retornoMsiTef.getBandeira() + "\n");
-        cupom.append("NSU_SITEF: " + retornoMsiTef.getNSUSitef() + "\n");
-        cupom.append("NSU_HOST: " + retornoMsiTef.getNSUHOST() + "\n");
-        cupom.append("COD_AUTORIZACAO: " + retornoMsiTef.getCodAutorizacao() + "\n");
-        cupom.append("NUM_PARC: " + retornoMsiTef.getParcelas() + "\n");
+        StringBuilder teste = new StringBuilder();
+
+        cupom.append("Via Cliente \n" + retornoMsiTef.getVIA_CLIENTE() + "\n");
+        teste.append("Via Estabelecimento \n" + retornoMsiTef.getVIA_ESTABELECIMENTO() + "\n");
+
         alertDialog.setTitle("Ação executada com sucesso");
         alertDialog.setMessage(cupom.toString());
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Não existe nenhuma ação
+                TectoySunmiPrint.getInstance().setSize(20);
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                TectoySunmiPrint.getInstance().printStyleBold(true);
+                TectoySunmiPrint.getInstance().printText(cupom.toString());
+                TectoySunmiPrint.getInstance().print3Line();
+
+                TectoySunmiPrint.getInstance().feedPaper();
+                TectoySunmiPrint.getInstance().printText(teste.toString());
+                TectoySunmiPrint.getInstance().print3Line();
+
+                TectoySunmiPrint.getInstance().cutpaper();
             }
         });
         alertDialog.show();
@@ -253,50 +328,52 @@ public class Msitef extends BaseActivity{
         json.put("VIA_CLIENTE", data.getStringExtra("VIA_CLIENTE"));
         return json.toString();
     }
-    private void dialogImpressaoGPOS(String texto, int size) {
+    private void dialogImpressao(String texto, int size) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         StringBuilder cupom = new StringBuilder();
-        cupom.append("Deseja realizar a impressão pela aplicação ?");
-        alertDialog.setTitle("Realizar Impressão");
-        alertDialog.setMessage(cupom.toString());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        TectoySunmiPrint.getInstance().printText(texto);
+        //cupom.append("Deseja realizar a impressão pela aplicação ?");
+       // alertDialog.setTitle("Realizar Impressão");
+        //alertDialog.setMessage(cupom.toString());
+        //alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+         //   @Override
+          //  public void onClick(DialogInterface dialogInterface, int i) {
 
-                String textoEstabelecimento = "";
-                String textoCliente = "";
+          //      String textoEstabelecimento = "";
+           //     String textoCliente = "";
 
-                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_LEFT);
-                TectoySunmiPrint.getInstance().setSize(size);
-                TectoySunmiPrint.getInstance().printStyleBold(true);
-                try {
-                    TectoySunmiPrint.getInstance().printerStatus();
-                    if (true) {
-                        if (true) {
-                            textoEstabelecimento = texto.substring(0, texto.indexOf("\f"));
-                            textoCliente = texto.substring(texto.indexOf("\f"));
-                         //   TectoySunmiPrint.getInstance().printText(textoEstabelecimento);
-                            TectoySunmiPrint.getInstance().print3Line();
-                           // TectoySunmiPrint.getInstance().printText(textoCliente);
-                        } else {
-                       //     TectoySunmiPrint.getInstance().printText(texto);
-                        }
-                        TectoySunmiPrint.getInstance().print3Line();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            //    TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_LEFT);
+             //   TectoySunmiPrint.getInstance().setSize(size);
+             //   TectoySunmiPrint.getInstance().printStyleBold(true);
 
-            }
+            //    try {
+            //        TectoySunmiPrint.getInstance().printerStatus();
+            //        if (true) {
+             //           if (true) {
+              //              textoEstabelecimento = texto.substring(0, texto.indexOf("\f"));
+               //             textoCliente = texto.substring(texto.indexOf("\f"));
+                 //           TectoySunmiPrint.getInstance().printText(textoEstabelecimento);
+                 //           TectoySunmiPrint.getInstance().print3Line();
+                 //           TectoySunmiPrint.getInstance().printText(textoCliente);
+                 //       } else {
+                 //           TectoySunmiPrint.getInstance().printText(texto);
+                 //       }
+                 //       TectoySunmiPrint.getInstance().print3Line();
+                 //   }
+               // } catch (Exception e) {
+              //      e.printStackTrace();
+              //  }
 
-        });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //        não executa nada
-            }
-        });
-        alertDialog.show();
+          //  }
+
+      // });
+      //  alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+      //      @Override
+       //     public void onClick(DialogInterface dialogInterface, int i) {
+       //         //        não executa nada
+       ////     }
+       // });
+       // alertDialog.show();
     }
 }
 

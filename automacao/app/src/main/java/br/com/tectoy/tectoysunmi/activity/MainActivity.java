@@ -4,6 +4,7 @@ import static br.com.tectoy.tectoysunmi.R.drawable.test;
 import static br.com.tectoy.tectoysunmi.R.drawable.test1;
 
 import android.app.Activity;
+import android.app.Presentation;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +14,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.media.MediaRouter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -90,10 +94,11 @@ public class MainActivity extends AppCompatActivity {
             new DemoDetails(R.string.function_paygo, R.drawable.function_payment, Paygo.class),
             new DemoDetails(R.string.function_scan, R.drawable.function_scanner, null),
             new DemoDetails(R.string.function_nfc, R.drawable.function_nfc, NfcExemplo.class),
-            new DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, Msitef.class)
-
+            new DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, Msitef.class),
+            new DemoDetails(R.string.display, R.drawable.telas, DisplayActivity.class)
     };
-
+    private VideoDisplay videoDisplay = null;
+    private ScreenManager screenManager = ScreenManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
         String deviceName = getDeviceName();
         if (isK1 = true && height > 1856){
             connectKPrintService();
+        }
+        MediaRouter mediaRouter = (MediaRouter) this.getSystemService(Context.MEDIA_ROUTER_SERVICE);
+        MediaRouter.RouteInfo route = mediaRouter.getSelectedRoute(1);
+        if (route != null) {
+            Display presentationDisplay = route.getPresentationDisplay();
+            if (presentationDisplay != null) {
+                Presentation presentation = new VideoDisplay(this, presentationDisplay, Environment.getExternalStorageDirectory().getPath() + "/video_01.mp4");
+              presentation.show();
+            }
         }
     }
     // Coneção Impressão K2

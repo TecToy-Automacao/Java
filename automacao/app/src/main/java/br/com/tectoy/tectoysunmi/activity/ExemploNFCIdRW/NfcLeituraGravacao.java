@@ -663,11 +663,8 @@ public final class NfcLeituraGravacao {
      *
      * */
     public String geraString() {
-
         UUID uuid = UUID.randomUUID();
         String myRandom = uuid.toString();
-
         return myRandom.substring(0, 30);
-
     }
 }

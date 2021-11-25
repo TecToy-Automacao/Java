@@ -103,6 +103,7 @@
     <string name="content_form">Conteúdo</string>
     <string name="weight_form">weight%</string>
     <string name="cut_paper">Cortar Papel</string>
+    <string name="display">Display</string>
     <string name="cut_paper_sim">Sim</string>
     <string name="cut_paper_nao">Não</string>
     <string name="align_form">Alinhamento</string>
@@ -189,6 +190,7 @@
     <string name="administrativo">Administrativo</string>
     <string name="cancelamento">Cancelamento</string>
     <string name="ultima_transao">Última Transação</string>
+
 
     <string-array name="tipo_pagamento">
         <item>Não Definido</item>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:divider="@drawable/account_line"
+    android:dividerPadding="1dp"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="20dp"
+    android:showDividers="middle|end|beginning">
+
+    <TextView
+        android:id="@+id/btn_display"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/text"
+        android:gravity="center"
+        android:text="Exibir Video"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+</LinearLayout>

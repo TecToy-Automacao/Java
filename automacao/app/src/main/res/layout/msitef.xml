@@ -31,6 +31,7 @@
             android:drawableRight="@drawable/arrow"
             android:gravity="right|center_vertical"
             android:hint="R$ 0,00"
+            android:textColorHint="@color/white"
             android:inputType="number"
             android:textColor="@color/gray"
             android:textSize="14sp"/>
@@ -56,8 +57,9 @@
             android:drawableRight="@drawable/arrow"
             android:inputType="number"
             android:gravity="right|center_vertical"
-            android:hint="1"
-            android:textColor="@color/gray"
+            android:hint="172.17.102.96"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
@@ -82,6 +84,7 @@
             android:inputType="number"
             android:gravity="right|center_vertical"
             android:hint="1"
+            android:textColorHint="@color/white"
             android:textColor="@color/gray"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -100,7 +103,7 @@
             android:textColor="@color/white"
             android:textSize="18sp"/>
 
-        <Spinner
+        <TextView
             android:id="@+id/spTipoPagamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,6 +137,37 @@
             android:text="À Vista"
             android:textColor="@color/gray"
             android:textSize="14sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/white1"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USB"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/chc_USB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bluetooth"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/chc_blu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout

@@ -43,6 +43,6 @@ public class LcdActivity extends BaseActivity {
         options.inDensity = getResources().getDisplayMetrics().densityDpi;
 
         TectoySunmiPrint.getInstance().sendPicToLcd(BitmapFactory.decodeResource(getResources(),
-                R.drawable.mini, options));
+                R.drawable.tectoy, options));
     }
 }

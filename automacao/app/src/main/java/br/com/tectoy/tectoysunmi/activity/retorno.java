@@ -72,6 +72,8 @@ class RetornoMsiTef {
     public String getCodResp (){return this.CODRESP;}
     public String getRedeAut (){return this.REDE_AUT;}
     public String getBandeira (){return this.BANDEIRA;}
+    public String getVIA_CLIENTE (){return this.VIA_CLIENTE;}
+    public String getVIA_ESTABELECIMENTO (){return  this.VIA_ESTABELECIMENTO;}
 
 }
 
