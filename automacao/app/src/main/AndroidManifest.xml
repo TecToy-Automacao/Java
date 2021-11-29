@@ -75,7 +75,7 @@
             android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.NfcActivity"
             android:parentActivityName=".activity.MainActivity"/>
-        <activity android:name=".activity.Msitef"
+        <activity android:name=".activity.MSitef"
             android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.ExemploNFCIdRW.NfcExemplo"
             android:parentActivityName=".activity.MainActivity"/>

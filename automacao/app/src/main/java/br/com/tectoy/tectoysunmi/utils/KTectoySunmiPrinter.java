@@ -91,7 +91,14 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void printBitmap(Bitmap bitmap, int mode) {
 
+        try {
+            mPrinter.printBitmap(bitmap, mode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     // Texto
     public void text(String texto) {
         try {

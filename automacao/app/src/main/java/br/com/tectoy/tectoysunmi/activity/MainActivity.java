@@ -552,7 +552,19 @@ public class MainActivity extends AppCompatActivity {
         kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("Imagem\n");
         kPrinterPresenter.text("--------------------------------\n");
-
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inTargetDensity = 160;
+        options.inDensity = 160;
+        Bitmap bitmap1 = null;
+        if (bitmap1 == null) {
+            bitmap1 = BitmapFactory.decodeResource(getResources(), test1, options);
+            bitmap1 = scaleImage(bitmap1);
+        }
+        kPrinterPresenter.printBitmap(bitmap1,  0);
+        kPrinterPresenter.aling(0);
+        kPrinterPresenter.printBitmap(bitmap1,  0);
+        kPrinterPresenter.aling(2);
+        kPrinterPresenter.printBitmap(bitmap1,  0);
         // Tabelas
 
 

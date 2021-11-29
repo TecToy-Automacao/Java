@@ -57,7 +57,7 @@
             android:drawableRight="@drawable/arrow"
             android:inputType="number"
             android:gravity="right|center_vertical"
-            android:hint="172.17.102.96"
+            android:hint="192.168.15.6"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:textSize="14sp"/>
