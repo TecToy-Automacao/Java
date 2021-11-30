@@ -35,11 +35,10 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
     public static int BarCodeModels_ITF = 5;
     public static int BarCodeModels_CODABAR = 6;
     public static int BarCodeModels_CODE93 = 7;
-    public static int BarCodeModels_CODE128A = 8;
-    public static int BarCodeModels_CODE128B = 9;
-    public static int BarCodeModels_CODE128C = 10;
+    public static int BarCodeModels_CODE128 = 8;
+
     // Text Position
-    public static int BarCodeTextPosition_INFORME_UM_TEXTO = 0;
+    public static int BarCodeTextPosition_NAO_IMPRIMIR = 0;
     public static int BarCodeTextPosition_ACIMA_DO_CODIGO_DE_BARRAS_BARCODE = 1;
     public static int BarCodeTextPosition_ABAIXO_DO_CODIGO_DE_BARRAS = 2;
     public static int BarCodeTextPosition_ACIMA_E_ABAIXO_DO_CODIGO_DE_BARRAS = 3;
@@ -73,6 +72,13 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
         return res;
 
     }
+    public void setSize(){
+        try{
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     // BarCode
     public void barcode(String texto, int tipo, int weight, int height, int hripos) {
@@ -84,7 +90,7 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
     }
 
     // Alinhamento
-    public void aling(int aling) {
+    public void setAlign(int aling) {
         try {
             mPrinter.setAlignMode(aling);
         } catch (Exception e) {
@@ -107,18 +113,26 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    // Avança Linha
-    public void printline(int n) {
+    public void printBarcode(String code, int type, int width, int height, int hriPos){
         try {
-            mPrinter.lineWrap(n);
+          //  mPrinter.printBarCode(code, type, width, height, hriPos);
+            byte[] barcode = ESCUtil.getPrintBarCode(code, type, width, height, hriPos);
+            mPrinter.sendRawData(barcode);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    // Avança Linha
+    public void print3Line() {
+        try {
+            mPrinter.lineWrap(3);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Cortar Papel
-    public void cut(int cutter_mode, int advance_lines) {
+    public void cutpaper(int cutter_mode, int advance_lines) {
         try {
             mPrinter.cutPaper(cutter_mode, advance_lines);
         } catch (Exception e) {
@@ -127,7 +141,7 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
     }
 
     // Negrito
-    public void bold(boolean boo) {
+    public void printStyleBold(boolean boo) {
         try {
             if (boo) {
                 mPrinter.sendRawData(boldOn());
@@ -140,21 +154,29 @@ public class KTectoySunmiPrinter extends AppCompatActivity {
     }
 
     // QrCode
-    public void qrCode(String texto, int size, int error) {
+    public void printQr(String texto, int size, int error) {
         try {
             mPrinter.printQrCode(texto, size, error);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    public void printDoubleQRCode(String texto1, String texto2, int modulesize, int errorlevel) {
+        try {
+            byte[] qrCode = ESCUtil.getPrintDoubleQRCode(texto1, texto2, modulesize, errorlevel);
+            mPrinter.sendRawData(qrCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void printTable(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign){
+        try {
+            mPrinter.printColumnsText(colsTextArr, colsWidthArr, colsAlign);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
-//    public void print() {
-//
-//        try {
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public String traduzStatusImpressora(int status) {
 

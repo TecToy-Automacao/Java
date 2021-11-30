@@ -262,12 +262,12 @@ public class MainActivity extends AppCompatActivity {
                             if(getDeviceName().equals("SUNMI T2s") || getDeviceName().equals("SUNMI K2") || getDeviceName().equals("SUNMI K2_MINI") || getDeviceName().equals("SUNMI T2mini")){
                                 if (isK1 = true && height > 1856) {
                                     try {
-                                        kPrinterPresenter.printline(15);
-                                        kPrinterPresenter.cut(KTectoySunmiPrinter.FULL_CUTTING, 10);
-                                        kPrinterPresenter.printline(15);
-                                        kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
-                                        kPrinterPresenter.printline(15);
-                                        kPrinterPresenter.cut(KTectoySunmiPrinter.CUTTING_PAPER_FEED, 10);
+                                        kPrinterPresenter.print3Line();
+                                        kPrinterPresenter.cutpaper(KTectoySunmiPrinter.FULL_CUTTING, 10);
+                                        kPrinterPresenter.print3Line();
+                                        kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
+                                        kPrinterPresenter.print3Line();
+                                        kPrinterPresenter.cutpaper(KTectoySunmiPrinter.CUTTING_PAPER_FEED, 10);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                             }else {
                                 if (isK1 = true && height > 1856) {
                                     try {
-                                        kPrinterPresenter.printline(5);
+                                        kPrinterPresenter.print3Line();
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -506,50 +506,59 @@ public class MainActivity extends AppCompatActivity {
     public void KTesteCompleto() throws RemoteException {
 
         // Alinhamento
-        kPrinterPresenter.bold(false);
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.printStyleBold(false);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("Alinhamento\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.printline(2);
+        kPrinterPresenter.print3Line();
 
         // Formas de impressão
 
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("Formas de Impressão\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_LEFT);
-        kPrinterPresenter.bold(true);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.printStyleBold(true);
         kPrinterPresenter.text("TecToy Automação\n");
 
 
         // Barcode
 
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("BarCode\n");
         kPrinterPresenter.text("--------------------------------\n");
-
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 0);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 2);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 1);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 3);
+        kPrinterPresenter.print3Line();
         // QrCode
 
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("QrCode\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
-        kPrinterPresenter.qrCode("www.tectoyautomacao.com.br", 8, 0);
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_LEFT);
-        kPrinterPresenter.qrCode("www.tectoyautomacao.com.br", 8, 0);
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_RIGTH);
-        kPrinterPresenter.qrCode("www.tectoyautomacao.com.br", 8, 0);
-
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.printDoubleQRCode("www.tectoyautomacao.com.br","tectoy", 7, 1);
         // Imagem
 
 
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("Imagem\n");
         kPrinterPresenter.text("--------------------------------\n");
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -561,19 +570,64 @@ public class MainActivity extends AppCompatActivity {
             bitmap1 = scaleImage(bitmap1);
         }
         kPrinterPresenter.printBitmap(bitmap1,  0);
-        kPrinterPresenter.aling(0);
+        kPrinterPresenter.setAlign(0);
         kPrinterPresenter.printBitmap(bitmap1,  0);
-        kPrinterPresenter.aling(2);
+        kPrinterPresenter.setAlign(2);
         kPrinterPresenter.printBitmap(bitmap1,  0);
         // Tabelas
 
 
-        kPrinterPresenter.aling(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.text("Tabelas\n");
         kPrinterPresenter.text("--------------------------------\n");
+        String[] prod = new String[3];
+        int[] width = new int[3];
+        int[] align = new int[3];
 
-        kPrinterPresenter.printline(10);
-        kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
+        width[0] = 100;
+        width[1] = 50;
+        width[2] = 50;
+
+        align[0] = kPrinterPresenter.Alignment_LEFT;
+        align[1] = kPrinterPresenter.Alignment_CENTER;
+        align[2] = kPrinterPresenter.Alignment_RIGTH;
+
+        prod[0] = "Produto 001";
+        prod[1] = "10 und";
+        prod[2] = "3,98";
+        kPrinterPresenter.printTable(prod, width, align);
+
+        prod[0] = "Produto 002";
+        prod[1] = "10 und";
+        prod[2] = "3,98";
+        kPrinterPresenter.printTable(prod, width, align);
+
+
+        prod[0] = "Produto 003";
+        prod[1] = "10 und";
+        prod[2] = "3,98";
+        kPrinterPresenter.printTable(prod, width, align);
+
+
+        prod[0] = "Produto 004";
+        prod[1] = "10 und";
+        prod[2] = "3,98";
+        kPrinterPresenter.printTable(prod, width, align);
+
+
+        prod[0] = "Produto 005";
+        prod[1] = "10 und";
+        prod[2] = "3,98";
+        kPrinterPresenter.printTable(prod, width, align);
+
+        prod[0] = "Produto 006";
+        prod[1] = "10 und";
+        prod[2] = "3,98";
+        kPrinterPresenter.printTable(prod, width, align);
+
+
+        kPrinterPresenter.print3Line();
+        kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
 
     }
     // Teste Completo dos Demais Devices

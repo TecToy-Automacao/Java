@@ -199,28 +199,27 @@ public class QrActivity extends BaseActivity {
         }
         if (mTextView6.getText().toString() == "Não") {
             if (isK1 = true && height > 1856){
-                kPrinterPresenter.aling(1);
+                kPrinterPresenter.setAlign(1);
                 kPrinterPresenter.text("QrCode\n");
                 kPrinterPresenter.text("--------------------------------\n");
-                kPrinterPresenter.qrCode(mTextView1.getText().toString(), print_size, error_level);
-                kPrinterPresenter.printline(5);
-                kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
+                kPrinterPresenter.printQr(mTextView1.getText().toString(), print_size, error_level);
+                kPrinterPresenter.print3Line();
+                kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("QrCode\n");
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printQr(mTextView1.getText().toString(), print_size, error_level);
                 TectoySunmiPrint.getInstance().print3Line();
-
             }
         }else {
             if (isK1 = true && height > 1856){
-                kPrinterPresenter.aling(1);
+                kPrinterPresenter.setAlign(1);
                 kPrinterPresenter.text("QrCode\n");
                 kPrinterPresenter.text("--------------------------------\n");
-                kPrinterPresenter.qrCode(mTextView1.getText().toString(), print_size, error_level);
-                kPrinterPresenter.printline(5);
-                kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
+                kPrinterPresenter.printQr(mTextView1.getText().toString(), print_size, error_level);
+                kPrinterPresenter.print3Line();
+                kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("QrCode\n");

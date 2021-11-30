@@ -184,10 +184,10 @@ public class BarCodeActivity extends BaseActivity {
 
         if (mTextView6.getText().toString() == "Não") {
             if (isK1 = true && height > 1856){
-                kPrinterPresenter.aling(1);
+                kPrinterPresenter.setAlign(1);
                 kPrinterPresenter.text("BarCode\n");
                 kPrinterPresenter.text("--------------------------------\n");
-                kPrinterPresenter.barcode(text, encode, height, width, position);
+                kPrinterPresenter.printBarcode(text, encode, height, height, position);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("BarCode\n");
@@ -196,11 +196,11 @@ public class BarCodeActivity extends BaseActivity {
             }
         }else {
             if (isK1 = true && height > 1856){
-                kPrinterPresenter.aling(1);
+                kPrinterPresenter.setAlign(1);
                 kPrinterPresenter.text("BarCode\n");
                 kPrinterPresenter.text("--------------------------------\n");
-                kPrinterPresenter.barcode(text, encode, height, width, position);
-                kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
+                kPrinterPresenter.printBarcode(text, encode, height, height, position);
+                kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("BarCode\n");

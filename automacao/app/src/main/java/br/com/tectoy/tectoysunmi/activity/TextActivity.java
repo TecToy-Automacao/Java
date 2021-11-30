@@ -133,9 +133,9 @@ public class TextActivity extends BaseActivity implements CompoundButton.OnCheck
         float size = Integer.parseInt(mTextView2.getText().toString());
 
         if (isK1 = true && height > 1856){
-            kPrinterPresenter.bold(isBold);
+            kPrinterPresenter.printStyleBold(isBold);
             kPrinterPresenter.text(content);
-            kPrinterPresenter.cut(KTectoySunmiPrinter.HALF_CUTTING, 10);
+            kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
         }else {
             TectoySunmiPrint.getInstance().printStyleBold(isBold);
             TectoySunmiPrint.getInstance().printStyleUnderLine(isUnderLine);
