@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnCfe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:text="Imprime CFe (SAT)"
+        app:layout_constraintBottom_toTopOf="@+id/btnVendeSAT"
+        app:layout_constraintEnd_toEndOf="@+id/btnVendeSAT"
+        app:layout_constraintTop_toBottomOf="@+id/btnImprimi" />
+
+    <Button
+        android:id="@+id/btnCfgSAT"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="10dp"
+        android:text="Configura SAT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btnCfg"
+        app:layout_constraintTop_toBottomOf="@+id/btnVendeSAT" />
+
+    <Button
+        android:id="@+id/btnVendeSAT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="12dp"
+        android:text="Faz venda SAT"
+        app:layout_constraintBottom_toTopOf="@+id/btnCfgSAT"
+        app:layout_constraintEnd_toEndOf="@+id/btnCfgSAT"
+        app:layout_constraintTop_toBottomOf="@+id/btnCfe"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnImprimi"
+        android:layout_width="375dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Imprime Texto Livre"
+        app:layout_constraintBottom_toTopOf="@+id/btnDanfe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <Button
+        android:id="@+id/btnCancNFCE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp"
+        android:text="Cancelar Venda"
+        app:layout_constraintBottom_toTopOf="@+id/btnCfg"
+        app:layout_constraintStart_toStartOf="@+id/btnCfg"
+        app:layout_constraintTop_toBottomOf="@+id/btnVendeNFCE" />
+
+    <Button
+        android:id="@+id/btnVendeNFCE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp"
+        android:clickable="false"
+        android:text="Faz venda NFCE"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancNFCE"
+        app:layout_constraintStart_toStartOf="@+id/btnCancNFCE"
+        app:layout_constraintTop_toBottomOf="@+id/btnDanfe" />
+
+    <Button
+        android:id="@+id/btnDanfe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:text="Imprime DANFe (NFCe)"
+        app:layout_constraintBottom_toTopOf="@+id/btnVendeNFCE"
+        app:layout_constraintStart_toStartOf="@+id/btnVendeNFCE"
+        app:layout_constraintTop_toBottomOf="@+id/btnImprimi" />
+
+    <Button
+        android:id="@+id/btnCfg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Configura NFCE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCancNFCE" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="129dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="8dp"
+        android:text="Versão DMF: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtVersao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtVersao"
+        android:layout_width="95dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="16dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="1dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitEnd"
+        android:src="@drawable/logotipo_itfast"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="https://www.itfast.com.br"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="@+id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        tools:ignore="ExtraText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
