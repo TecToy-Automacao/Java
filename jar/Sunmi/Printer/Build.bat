@@ -32,6 +32,11 @@ ECHO ** SDK Android em: %SDK_DIR%
 SET ANDROID_JAR=%SDK_DIR%\platforms\android-32\android.jar
 if NOT EXIST "%ANDROID_JAR%" goto erro_android_jar
 
+:clean
+ECHO ** Removendo compilaçoes anteriores
+rmdir /s/q com\
+rmdir /s/q woyou\
+
 :compile
 ECHO ** Compilando 
 %JAVAC% -verbose -cp %ANDROID_JAR% -d . ICallback.java IWoyouService.java Printer.java
@@ -82,4 +87,5 @@ ECHO.
 ECHO ***************** ABORTADO COM ERROS *******************
 
 :fim
+ECHO.
 cd %DIR_ATUAL%
