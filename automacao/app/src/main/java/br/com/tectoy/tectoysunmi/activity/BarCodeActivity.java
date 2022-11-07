@@ -188,11 +188,13 @@ public class BarCodeActivity extends BaseActivity {
                 kPrinterPresenter.text("BarCode\n");
                 kPrinterPresenter.text("--------------------------------\n");
                 kPrinterPresenter.printBarcode(text, encode, height, height, position);
+                TectoySunmiPrint.getInstance().print3Line();
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("BarCode\n");
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
+                TectoySunmiPrint.getInstance().print3Line();
             }
         }else {
             if (isK1 = true && height > 1856){
@@ -201,11 +203,13 @@ public class BarCodeActivity extends BaseActivity {
                 kPrinterPresenter.text("--------------------------------\n");
                 kPrinterPresenter.printBarcode(text, encode, height, height, position);
                 kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10);
+                TectoySunmiPrint.getInstance().print3Line();
             }else {
                 TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
                 TectoySunmiPrint.getInstance().printText("BarCode\n");
                 TectoySunmiPrint.getInstance().printText("--------------------------------\n");
                 TectoySunmiPrint.getInstance().printBarCode(text, encode, height, width, position);
+                TectoySunmiPrint.getInstance().print3Line();
                 TectoySunmiPrint.getInstance().cutpaper();
             }
         }

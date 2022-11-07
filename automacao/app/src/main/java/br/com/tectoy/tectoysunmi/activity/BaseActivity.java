@@ -78,9 +78,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (actionBar != null) {
 
             if (TectoySunmiPrint.getInstance().sunmiPrinter == TectoySunmiPrint.NoSunmiPrinter) {
-                actionBar.setSubtitle("sem impressora");
+                actionBar.setSubtitle("Sem Impressora");
             } else if (TectoySunmiPrint.getInstance().sunmiPrinter == TectoySunmiPrint.CheckSunmiPrinter) {
-                actionBar.setSubtitle("Conectado");
+                actionBar.setSubtitle("Conectando Impressora");
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -88,7 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                 }, 2000);
             } else if (TectoySunmiPrint.getInstance().sunmiPrinter == TectoySunmiPrint.FoundSunmiPrinter) {
-                actionBar.setSubtitle("");
+                actionBar.setSubtitle("Impressora Conectada");
             } else {
                 TectoySunmiPrint.getInstance().initSunmiPrinterService(this);
             }

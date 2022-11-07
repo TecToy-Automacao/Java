@@ -197,7 +197,7 @@ public class TectoySunmiPrint {
         }
 
         try {
-            sunmiPrinterService.lineWrap(3, null);
+            sunmiPrinterService.lineWrap(5, null);
         } catch (RemoteException e) {
             handleRemoteException(e);
         }
