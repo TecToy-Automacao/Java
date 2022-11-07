@@ -22,7 +22,7 @@ public class BitmapActivity extends BaseActivity {
     ImageView mImageView;
     TextView mTextView1, mTextView6;
     LinearLayout ll, ll1, ll2;
-    Bitmap bitmap, bitmap1;
+    Bitmap bitmap;
     CheckBox mCheckBox1, mCheckBox2;
 
     int mytype;
@@ -89,16 +89,11 @@ public class BitmapActivity extends BaseActivity {
         options.inTargetDensity = 160;
         options.inDensity = 160;
         if (bitmap == null) {
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test, options);
+            bitmap = scaleImage(BitmapFactory.decodeResource(getResources(), R.drawable.test, options));
 
         }
 
-        if (bitmap1 == null) {
-            bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.test1, options);
-            bitmap1 = scaleImage(bitmap1);
-        }
-
-        mImageView.setImageDrawable(new BitmapDrawable(bitmap1));
+        mImageView.setImageDrawable(new BitmapDrawable(bitmap));
 
     }
 
