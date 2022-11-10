@@ -83,129 +83,119 @@ class QrActivity : BaseActivity(){
         mTextView5 = binding.qrAlignInfo
         mTextView6 = binding.cutPaperInfo
 
-        binding.qrContent.setOnClickListener (object : View.OnClickListener{
-                lateinit var mDialog:EditTextDialog
-                override fun onClick(v: View?) {
-                    mDialog = DialogCreater.createEditTextDialog(this@QrActivity,
-                    resources.getString(R.string.cancel),
-                    resources.getString(R.string.confirm) ,
-                    resources.getString(R.string.input_qrcode),
-                    { mDialog.cancel() }, {
-                        mTextView1.text = mDialog.editText.text
-                        mDialog.cancel()
-                    }, null)
-                    mDialog.setHintText("www.tectoysunmi.com.br")
-                    mDialog.show()
+        binding.qrContent.setOnClickListener {
+            lateinit var mDialog:EditTextDialog
+            mDialog = DialogCreater.createEditTextDialog(this@QrActivity,
+                resources.getString(R.string.cancel),
+                resources.getString(R.string.confirm) ,
+                resources.getString(R.string.input_qrcode),
+                { mDialog.cancel() }, {
+                    mTextView1.text = mDialog.editText.text
+                    mDialog.cancel()
+                }, null)
+            mDialog.setHintText("www.tectoysunmi.com.br")
+            mDialog.show()
+        }
+
+        binding.qrNum.setOnClickListener {
+            val mStrings:Array<String> = arrayOf<String>(resources.getString(R.string.single),resources.getString(R.string.twice))
+            val listDialog:ListDialog = DialogCreater.createListDialog(this@QrActivity,
+                resources.getString(R.string.array_qrcode),
+                resources.getString(R.string.cancel),
+                mStrings)
+            listDialog.setItemClickListener { position ->
+                if(!BluetoothUtil.isBlueToothPrinter){
+                    Toast.makeText(this@QrActivity, R.string.toast_7, Toast.LENGTH_LONG).show()
+                }  else {
+                    mTextView3.text = "7"
+                    print_size = 7
                 }
+                mTextView2.text = mStrings[position]
+                print_num = position
+                listDialog.cancel()
             }
-        )
+            listDialog.show()
+        }
 
-        binding.qrNum.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                val mStrings:Array<String> = arrayOf<String>(resources.getString(R.string.single),resources.getString(R.string.twice))
-                val listDialog:ListDialog = DialogCreater.createListDialog(this@QrActivity,
-                    resources.getString(R.string.array_qrcode),
-                    resources.getString(R.string.cancel),
-                    mStrings)
-                listDialog.setItemClickListener (object : ListDialog.ItemClickListener{
-                    var pt:Int = 0
-                    override fun OnItemClick(position: Int) {
-                        pt =position
-                        if(!BluetoothUtil.isBlueToothPrinter){
-                            Toast.makeText(this@QrActivity, R.string.toast_7, Toast.LENGTH_LONG).show()
-                            pt = 0
-                        }  else {
-                            mTextView3.text = "7"
-                            print_size = 7
-                        }
-                        mTextView2.text = mStrings[pt]
-                        print_num = pt
-                        listDialog.cancel()
+
+        binding.qrSize.setOnClickListener {
+            val listDialog: ListDialog = DialogCreater.createListDialog(
+                this@QrActivity,
+                resources.getString(R.string.size_qrcode),
+                resources.getString(R.string.cancel),
+                arrayOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+            )
+            listDialog.setItemClickListener(object : ListDialog.ItemClickListener {
+                var pt: Int = 0
+                override fun OnItemClick(position: Int) {
+                    pt = position
+                    pt += 1
+                    if (print_num == 1 && mTextView3.text.toString().toInt() > 7) {
+                        Toast.makeText(this@QrActivity, R.string.toast_8, Toast.LENGTH_LONG).show()
+                        pt = 7
                     }
-                })
-                listDialog.show()
+                    mTextView3.text = "" + pt
+                    print_size = position
+                    listDialog.cancel()
+                }
+            })
+            listDialog.show()
+        }
+
+        binding.qrEl.setOnClickListener {
+            val el: Array<String> = arrayOf(
+                "Correção L (7%)",
+                "Correção M (15%)",
+                "Correção Q (25%)",
+                "Correção H (30%)"
+            )
+            val listDialog: ListDialog = DialogCreater.createListDialog(
+                this@QrActivity,
+                resources.getString(R.string.error_qrcode),
+                resources.getString(R.string.cancel), el
+            )
+            listDialog.setItemClickListener { position ->
+                mTextView4.text = el[position]
+                error_level = position
+                listDialog.cancel()
             }
-        })
+            listDialog.show()
+        }
 
-        binding.qrSize.setOnClickListener (object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                val listDialog:ListDialog = DialogCreater.createListDialog(this@QrActivity,
-                    resources.getString(R.string.size_qrcode),
-                    resources.getString(R.string.cancel),
-                    arrayOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"))
-                    listDialog.setItemClickListener(object : ListDialog.ItemClickListener{
-                        var pt:Int = 0
-                        override fun OnItemClick(position: Int) {
-                            pt = position
-                            pt+=1
-                            if(print_num==1 && mTextView3.text.toString().toInt() > 7){
-                                Toast.makeText(this@QrActivity, R.string.toast_8, Toast.LENGTH_LONG ).show()
-                                pt = 7
-                            }
-                            mTextView3.text = ""+pt
-                            print_size = position
-                            listDialog.cancel()
-                        }
-                    })
-                    listDialog.show()
+        binding.cutPaperInfo.setOnClickListener {
+            val cut: Array<String> = arrayOf("Sim", "Não")
+            val listDialog: ListDialog = DialogCreater.createListDialog(
+                this@QrActivity,
+                resources.getString(R.string.error_qrcode),
+                resources.getString(R.string.cancel), cut
+            )
+            listDialog.setItemClickListener(object : ListDialog.ItemClickListener {
+                override fun OnItemClick(position: Int) {
+                    mTextView6.text = cut[position]
+                    error_level = position
+                    listDialog.cancel()
+                }
+            })
+            listDialog.show()
+        }
+
+        binding.qrAlign.setOnClickListener {
+            val pos: Array<String> = arrayOf(
+                resources.getString(R.string.align_left),
+                resources.getString(R.string.align_mid),
+                resources.getString(R.string.align_right)
+            )
+            val listDialog: ListDialog = DialogCreater.createListDialog(
+                this@QrActivity,
+                resources.getString(R.string.align_form),
+                resources.getString(R.string.cancel), pos
+            )
+            listDialog.setItemClickListener { position ->
+                mTextView5.text = pos[position]
+                listDialog.cancel()
             }
-
-        })
-
-        binding.qrEl.setOnClickListener (object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                val el:Array<String> = arrayOf("Correção L (7%)", "Correção M (15%)", "Correção Q (25%)", "Correção H (30%)")
-                val listDialog:ListDialog = DialogCreater.createListDialog(this@QrActivity,
-                    resources.getString(R.string.error_qrcode),
-                    resources.getString(R.string.cancel),el
-                )
-                listDialog.setItemClickListener (object : ListDialog.ItemClickListener{
-                    override fun OnItemClick(position: Int) {
-                        mTextView4.text = el[position]
-                        error_level = position
-                        listDialog.cancel()
-                    }
-
-                })
-                listDialog.show()
-            }
-        })
-
-        binding.cutPaperInfo.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                val cut:Array<String> = arrayOf("Sim","Não")
-                val listDialog:ListDialog = DialogCreater.createListDialog(this@QrActivity,
-                    resources.getString(R.string.error_qrcode),
-                    resources.getString(R.string.cancel),cut
-                )
-                listDialog.setItemClickListener(object : ListDialog.ItemClickListener{
-                    override fun OnItemClick(position: Int) {
-                        mTextView6.text = cut[position]
-                        error_level = position
-                        listDialog.cancel()
-                    }
-                })
-                listDialog.show()
-            }
-        })
-
-        binding.qrAlign.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                val pos:Array<String> = arrayOf(resources.getString(R.string.align_left),
-                    resources.getString(R.string.align_mid),
-                    resources.getString(R.string.align_right))
-                val listDialog:ListDialog = DialogCreater.createListDialog(this@QrActivity,
-                        resources.getString(R.string.align_form),
-                        resources.getString(R.string.cancel), pos)
-                listDialog.setItemClickListener(object : ListDialog.ItemClickListener{
-                    override fun OnItemClick(position: Int) {
-                        mTextView5.text = pos[position]
-                        listDialog.cancel()
-                    }
-                })
-                listDialog.show()
-            }
-        })
+            listDialog.show()
+        }
     }
 
     fun onClick(v:View?){
