@@ -34,6 +34,11 @@ import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.EditTextDialog;
 import sunmi.sunmiui.dialog.ListDialog;
 
+/**
+ * Exemplo de impressão de um código QR em Kotlin
+ *
+ * @author adevan-neves-santos
+ */
 class QrActivity : BaseActivity(){
     private lateinit var mImageView:ImageView
     private lateinit var mTextView1:TextView
@@ -185,7 +190,7 @@ class QrActivity : BaseActivity(){
         })
 
         binding.qrAlign.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
+            override fun onClick(v: View?) {
                 val pos:Array<String> = arrayOf(resources.getString(R.string.align_left),
                     resources.getString(R.string.align_mid),
                     resources.getString(R.string.align_right))
@@ -203,7 +208,48 @@ class QrActivity : BaseActivity(){
         })
     }
 
+    fun onClick(v:View?){
+        //Preciso criar um bitmap e colocar a imagem dele o texto de mTextView
+        //Solução em Kotlin : https://stackoverflow.com/questions/9978884/bitmapdrawable-deprecated-alternative
+        val bitmap:Bitmap = BitmapUtil.generateBitmap(mTextView1.text.toString(), 9, 700, 700)
+        if(bitmap!=null){
+            mImageView.setImageDrawable(BitmapDrawable(this.resources,bitmap))
+        }
+        //Solução em Kotlin
 
+        if(mTextView6.text.toString() == "Não"){
+            if(isK1 && height > 1856){
+                kPrinterPresenter.setAlign(1)
+                kPrinterPresenter.text("QrCode\n")
+                kPrinterPresenter.text("--------------------------------\n")
+                kPrinterPresenter.printQr(mTextView1.text.toString(), print_size, error_level)
+                kPrinterPresenter.print3Line()
+                kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10)
+            } else {
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER)
+                TectoySunmiPrint.getInstance().printText("QrCode\n")
+                TectoySunmiPrint.getInstance().printText("--------------------------------\n")
+                TectoySunmiPrint.getInstance().printQr(mTextView1.text.toString(), print_size, error_level)
+                TectoySunmiPrint.getInstance().print3Line()
+            }
+        } else {
+            if (isK1 && height > 1856){
+                kPrinterPresenter.setAlign(1)
+                kPrinterPresenter.text("QrCode\n")
+                kPrinterPresenter.text("--------------------------------\n")
+                kPrinterPresenter.printQr(mTextView1.text.toString(), print_size, error_level)
+                kPrinterPresenter.print3Line()
+                kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10)
+            } else {
+                TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER);
+                TectoySunmiPrint.getInstance().printText("QrCode\n");
+                TectoySunmiPrint.getInstance().printText("--------------------------------\n");
+                TectoySunmiPrint.getInstance().printQr(mTextView1.text.toString(), print_size, error_level)
+                TectoySunmiPrint.getInstance().print3Line()
+                TectoySunmiPrint.getInstance().cutpaper()
+            }
+        }
+    }
 
     private fun isHaveCamera() : Boolean{
         val deviceHashMap : HashMap<String, UsbDevice> = (getSystemService(Activity.USB_SERVICE) as UsbManager).deviceList
@@ -219,7 +265,7 @@ class QrActivity : BaseActivity(){
         return false
     }
 
-    fun connectKPrintService(){
+    private fun connectKPrintService(){
         var intent:Intent = Intent()
         intent.`package` = "com.sunmi.extprinterservice"
         intent.action = "com.sunmi.extprinterservice.PrinterService"
