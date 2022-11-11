@@ -14,7 +14,15 @@ import br.com.tectoy.tectoysunmi.utils.ESCUtil
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint
 
 
-
+/**
+ *
+ * Imprimir todo o conteúdo por esc cmd
+ * Código em java
+ *   @author Geovani Santos
+ *   
+ * Código em Kotlin
+ *   @author Felipe Peres
+ */
 class AllActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding : ActivityAllBinding
 
