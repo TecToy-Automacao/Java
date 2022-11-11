@@ -19,7 +19,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint
  * Imprimir todo o conteúdo por esc cmd
  * Código em java
  *   @author Geovani Santos
- *   
+ *
  * Código em Kotlin
  *   @author Felipe Peres
  */
@@ -33,12 +33,12 @@ class AllActivity : BaseActivity(), View.OnClickListener {
         setMyTitle(R.string.all_title)
         setBack()
 
-        binding.multiOne.setOnClickListener{this}
-        binding.multiTwo.setOnClickListener{this}
-        binding.multiThree.setOnClickListener{this}
-        binding.multiFour.setOnClickListener{this}
-        binding.multiFive.setOnClickListener{this}
-        binding.multiSix.setOnClickListener{this}
+        binding.multiOne.setOnClickListener{this.binding.multiOne}
+        binding.multiTwo.setOnClickListener{this.binding.multiTwo}
+        binding.multiThree.setOnClickListener{this.binding.multiTwo}
+        binding.multiFour.setOnClickListener{this.binding.multiFour}
+        binding.multiFive.setOnClickListener{this.binding.multiFive}
+        binding.multiSix.setOnClickListener{this.binding.multiSix}
     }
 
     /**
