@@ -21,7 +21,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
  * Imprimir todo o conteúdo por esc cmd
  *   @author Geovani Santos
  */
-public class AllActivity extends BaseActivity implements View.OnClickListener {
+public class AllActivityJava extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

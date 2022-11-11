@@ -143,6 +143,7 @@ class BarCodeActivity : BaseActivity()  {
             listDialog.show()
         }
     }
+
     //Imprimir
     fun onClick(v:View?){
         val text:String = binding.bcTextContent.text.toString()
