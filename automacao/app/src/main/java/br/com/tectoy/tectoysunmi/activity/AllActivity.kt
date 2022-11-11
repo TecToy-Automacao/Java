@@ -1,6 +1,5 @@
 package br.com.tectoy.tectoysunmi.activity
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
@@ -13,11 +12,11 @@ import br.com.tectoy.tectoysunmi.utils.BluetoothUtil
 import br.com.tectoy.tectoysunmi.utils.BytesUtil
 import br.com.tectoy.tectoysunmi.utils.ESCUtil
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint
-import java.io.ByteArrayInputStream
 
 
-class AllActivity : BaseActivity() {
-    lateinit var binding : ActivityAllBinding
+
+class AllActivity : BaseActivity(), View.OnClickListener {
+    private lateinit var binding : ActivityAllBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +92,7 @@ class AllActivity : BaseActivity() {
         }
     }
 
-    fun onClick(v : View?){
+    override fun onClick(v : View?){
         lateinit var rv : ByteArray
         when(v?.id){
             binding.multiOne.id   -> rv = BytesUtil.getBaiduTestBytes()
