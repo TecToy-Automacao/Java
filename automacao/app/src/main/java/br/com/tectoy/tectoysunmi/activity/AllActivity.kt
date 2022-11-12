@@ -77,12 +77,16 @@ class AllActivity : BaseActivity(), View.OnClickListener {
         rv = BytesUtil.byteMerger(rv, BytesUtil.wordData())
 
         val ascii = ByteArray(96)
-        ascii.forEach { 0x20 + it }
+        for(i in ascii){
+            ascii[ascii.indexOf(i)] = (ascii.indexOf(i) + 0x20).toByte()
+        }
 
         ascii[95] = 0x0A
         rv = BytesUtil.byteMerger(rv, ascii)
         val tabs = CharArray(116)
-        tabs.forEach { 0x2500 + it.code.toByte() }
+        for(i in tabs){
+            tabs[tabs.indexOf(i)] = (tabs.indexOf(i) + 0x2500).toChar()
+        }
         val test = String(tabs)
 
         try{
