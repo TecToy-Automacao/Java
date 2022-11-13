@@ -50,7 +50,7 @@ class LedActivity:BaseActivity() {
         isK1 = isHaveCamera() && isVertical
 
         if(isK1 && height > 1856){
-            setContentView(R.layout.activity_ledk)
+            setContentView(bindingK.root)
 
             bindingK.btnAzulclaro.setOnClickListener {
                 try {
@@ -100,27 +100,48 @@ class LedActivity:BaseActivity() {
                     e.printStackTrace()
                 }
             }
+
+            bindingK.btnVermelho.setOnClickListener {
+                try {
+                    mService?.closeAllLamp();
+                    mService?.controlLamp(0,"Led-1")
+
+                }catch (e:RemoteException){
+                    e.printStackTrace()
+                }
+            }
+
+            bindingK.btnDesligar.setOnClickListener {
+                try {
+                    mService?.closeAllLamp();
+
+                }catch (e:RemoteException){
+                    e.printStackTrace()
+                }
+            }
+
         }else{
-            setContentView(R.layout.activity_led)
-        }
-        binding.btnVermelho.setOnClickListener {
-            try {
-                mService?.closeAllLamp();
-                mService?.controlLamp(0,"Led-1")
+            setContentView(binding.root)
+            binding.btnVermelho.setOnClickListener {
+                try {
+                    mService?.closeAllLamp();
+                    mService?.controlLamp(0,"Led-1")
 
-            }catch (e:RemoteException){
-                e.printStackTrace()
+                }catch (e:RemoteException){
+                    e.printStackTrace()
+                }
+            }
+
+            binding.btnDesligar.setOnClickListener {
+                try {
+                    mService?.closeAllLamp();
+
+                }catch (e:RemoteException){
+                    e.printStackTrace()
+                }
             }
         }
 
-        binding.btnDesligar.setOnClickListener {
-            try {
-                mService?.closeAllLamp();
-
-            }catch (e:RemoteException){
-                e.printStackTrace()
-            }
-        }
     }
 
     private fun isHaveCamera() : Boolean{
