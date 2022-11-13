@@ -24,7 +24,7 @@ import br.com.tectoy.tectoysunmi.utils.ESCUtil;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.button.ButtonRectangular;
 
-public class TableActivity extends BaseActivity {
+public class TableActivityJava extends BaseActivity {
     ListView mListView;
     TextView mTextView;
     ButtonRectangular footView;
@@ -186,7 +186,7 @@ public class TableActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder v = null;
             if (convertView == null) {
-                convertView = LayoutInflater.from(TableActivity.this).inflate(R.layout.item_table, null);
+                convertView = LayoutInflater.from(TableActivityJava.this).inflate(R.layout.item_table, null);
                 v = new ViewHolder();
                 v.mText = convertView.findViewById(R.id.it_title);
                 v.mText1 = convertView.findViewById(R.id.it_text1);

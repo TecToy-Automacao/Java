@@ -12,7 +12,6 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner
 
 
@@ -20,9 +19,6 @@ import java.util.LinkedList;
 
 import br.com.tectoy.tectoysunmi.R
 import br.com.tectoy.tectoysunmi.databinding.ActivityTableBinding
-import br.com.tectoy.tectoysunmi.utils.BluetoothUtil
-import br.com.tectoy.tectoysunmi.utils.BytesUtil
-import br.com.tectoy.tectoysunmi.utils.ESCUtil
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint
 import sunmi.sunmiui.button.ButtonRectangular
 
@@ -75,8 +71,8 @@ class TableActivity : BaseActivity(){
         val ti = TableItem();
         data.add(ti)
     }
-    //https://kotlinlang.org/docs/nested-classes.html#inner-classes
 
+    //https://kotlinlang.org/docs/nested-classes.html#inner-classes
     inner class TableAdapter(context: Context) : BaseAdapter(){
         private var mInflator: LayoutInflater
             get() {
@@ -171,13 +167,57 @@ class TableActivity : BaseActivity(){
             return position.toLong()
         }
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        /*
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+        val view: View?
+        val vh: ListRowHolder
+        if (convertView == null) {
+            view = this.mInflator.inflate(R.layout.list_row, parent, false)
+            vh = ListRowHolder(view)
+            view.tag = vh
+        } else {
+            view = convertView
+            vh = view.tag as ListRowHolder
+        }
+
+        vh.label.text = sList[position]
+        return view
+    }
+         */
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+            var _position = position
             val view: View?
             val vh: ViewHolder
             if(convertView == null){
                 view = this.mInflator.inflate(R.layout.item_table, null)
                 vh = ViewHolder()
+                if(convertView!=null){
+                    vh.mText = convertView.findViewById(R.id.it_title)
+
+                    vh.mText1 = convertView.findViewById(R.id.it_text1)
+                    vh.mText2 = convertView.findViewById(R.id.it_text2)
+                    vh.mText3 = convertView.findViewById(R.id.it_text3)
+
+                    vh.width1 = convertView.findViewById(R.id.it_width1)
+                    vh.width2 = convertView.findViewById(R.id.it_width2)
+                    vh.width3 = convertView.findViewById(R.id.it_width3)
+
+                    vh.align1 = convertView.findViewById(R.id.it_align1)
+                    vh.align2 = convertView.findViewById(R.id.it_align2)
+                    vh.align3 = convertView.findViewById(R.id.it_align3)
+
+                    vh.setCallback()
+                    convertView.tag = vh
+                }
+
+            } else {
+                vh = convertView.tag as ViewHolder
             }
+            vh.line = _position
+            vh.mText.text = "Row." + (++_position)
+            vh.view.requestFocus()
+            return convertView
         }
     }
     //https://kotlinlang.org/docs/arrays.html#primitive-type-arrays
