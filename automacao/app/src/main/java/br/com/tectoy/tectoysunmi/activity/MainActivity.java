@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(demoDetails.titleId == R.string.function_led){
                             if(getDeviceName().equals("SUNMI K2_MINI") || getDeviceName().equals("SUNMI K2")){
-                                Intent intent = new Intent(MainActivity.this, LedActivity.class);
+                                Intent intent = new Intent(MainActivity.this, LedActivityJava.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
