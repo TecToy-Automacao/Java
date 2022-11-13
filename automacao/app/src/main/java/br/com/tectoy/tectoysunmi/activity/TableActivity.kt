@@ -1,5 +1,6 @@
 package br.com.tectoy.tectoysunmi.activity;
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -58,7 +59,7 @@ class TableActivity : BaseActivity(){
         mListView.addFooterView(footView)
         datalist = LinkedList()
         addOneData(datalist)
-        ta = TableAdapter()
+        ta = TableAdapter(this)
         mListView.adapter = ta
     }
 
@@ -74,61 +75,109 @@ class TableActivity : BaseActivity(){
         val ti = TableItem();
         data.add(ti)
     }
+    //https://kotlinlang.org/docs/nested-classes.html#inner-classes
 
-    class ViewHolder : View.OnFocusChangeListener, AdapterView.OnItemSelectedListener{
-
-        lateinit var mText:TextView
-
-        lateinit var mText1:EditText
-        lateinit var mText2:EditText
-        lateinit var mText3:EditText
-
-        lateinit var width1:EditText
-        lateinit var width2:EditText
-        lateinit var width3:EditText
-
-        lateinit var align1:AppCompatSpinner
-        lateinit var align2:AppCompatSpinner
-        lateinit var align3:AppCompatSpinner
-
-        lateinit var view:EditText
-        var line:Int = 0
-
-        override fun onFocusChange(v: View?, hasFocus: Boolean) {
-            Log.d("Geovani",v?.id.toString()+">>"+hasFocus)
-            if(hasFocus){
-                view = v as EditText
-                return
+    inner class TableAdapter(context: Context) : BaseAdapter(){
+        private var mInflator: LayoutInflater
+            get() {
+                return mInflator
             }
-            val ti:TableItem =
+
+        init {
+            this.mInflator = LayoutInflater.from(context)
         }
 
-        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-            TODO("Not yet implemented")
+        inner class ViewHolder() : View.OnFocusChangeListener, AdapterView.OnItemSelectedListener {
+            lateinit var mText:TextView
+
+            var mText1:EditText? = null
+            var mText2:EditText? = null
+            var mText3:EditText? = null
+
+            var width1:EditText? = null
+            var width2:EditText? = null
+            var width3:EditText? = null
+
+            var align1:AppCompatSpinner? = null
+            var align2:AppCompatSpinner? = null
+            var align3:AppCompatSpinner? = null
+
+            lateinit var view:EditText
+            var line:Int = 0
+
+
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                Log.d("Geovani",v?.id.toString()+">>"+hasFocus)
+                if(hasFocus){
+                    view = v as EditText
+                    return
+                }
+                val ti:TableItem = datalist[line]
+                when(v?.id){
+                    R.id.it_text3  -> {  (ti.text)[2] = ((v as EditText).text.toString())  }
+                    R.id.it_text2  -> {  (ti.text)[1] = ((v as EditText).text.toString())  }
+                    R.id.it_text1  -> {  (ti.text)[0] = ((v as EditText).text.toString())  }
+
+                    R.id.it_width3 -> {  (ti.width)[2] = ((v as EditText).text.toString()).toInt()  }
+                    R.id.it_width2 -> {  (ti.width)[1] = ((v as EditText).text.toString()).toInt()  }
+                    R.id.it_width1 -> {  (ti.width)[0] = ((v as EditText).text.toString()).toInt()  }
+                    else           -> return
+                }
+            }
+
+            fun setCallback(){
+                if (   mText1 == null || mText2 == null || mText3 == null
+                    || width1 == null || width2 == null || width3 == null
+                    || align1 == null || align2 == null || align3 == null) {
+                    return
+                }
+                mText1?.onFocusChangeListener = this
+                mText2?.onFocusChangeListener = this
+                mText3?.onFocusChangeListener = this
+
+                width1?.onFocusChangeListener = this
+                width2?.onFocusChangeListener = this
+                width3?.onFocusChangeListener = this
+
+                align1?.onFocusChangeListener = this
+                align2?.onFocusChangeListener = this
+                align3?.onFocusChangeListener = this
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var ti:TableItem = datalist[line]
+                when(parent?.id){
+                    R.id.it_align3 -> {(ti.align)[2] = position}
+                    R.id.it_align2 -> {(ti.align)[1] = position}
+                    R.id.it_align1 -> {(ti.align)[0] = position}
+                    else           -> return
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
 
-        override fun onNothingSelected(p0: AdapterView<*>?) {
-            TODO("Not yet implemented")
-        }
-
-    }
-
-    //Mocados
-    class TableAdapter : BaseAdapter(){
         override fun getCount(): Int {
-            TODO("Not yet implemented")
+            return datalist.size
         }
 
-        override fun getItem(p0: Int): Any {
-            TODO("Not yet implemented")
+        override fun getItem(position: Int): Int {
+            return position
         }
 
-        override fun getItemId(p0: Int): Long {
-            TODO("Not yet implemented")
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
         }
 
-        override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-            TODO("Not yet implemented")
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val view: View?
+            val vh: ViewHolder
+            if(convertView == null){
+                view = this.mInflator.inflate(R.layout.item_table, null)
+                vh = ViewHolder()
+            }
         }
     }
     //https://kotlinlang.org/docs/arrays.html#primitive-type-arrays
@@ -156,6 +205,4 @@ class TableActivity : BaseActivity(){
         }
 
     }
-
-    //Mocados
 }
