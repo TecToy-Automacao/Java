@@ -10,7 +10,7 @@ import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.ESCUtil;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 
-public class BlackLabelActivity extends BaseActivity{
+public class BlackLabelActivityJava extends BaseActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class BlackLabelActivity extends BaseActivity{
         findViewById(R.id.bl_setting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BlackLabelActivity.this, R.string.toast_11, Toast.LENGTH_LONG).show();
+                Toast.makeText(BlackLabelActivityJava.this, R.string.toast_11, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -35,7 +35,7 @@ public class BlackLabelActivity extends BaseActivity{
                 if(TectoySunmiPrint.getInstance().isBlackLabelMode()){
                     TectoySunmiPrint.getInstance().sendRawData(ESCUtil.gogogo());
                 }else{
-                    Toast.makeText(BlackLabelActivity.this, R.string.toast_10, Toast.LENGTH_LONG).show();
+                    Toast.makeText(BlackLabelActivityJava.this, R.string.toast_10, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -44,7 +44,7 @@ public class BlackLabelActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
                 if(!TectoySunmiPrint.getInstance().isBlackLabelMode()){
-                    Toast.makeText(BlackLabelActivity.this, R.string.toast_10, Toast.LENGTH_LONG).show();
+                    Toast.makeText(BlackLabelActivityJava.this, R.string.toast_10, Toast.LENGTH_LONG).show();
                 }else{
                     TectoySunmiPrint.getInstance().printQr("www.tectoysunmi.com.br", 6, 3);
                     TectoySunmiPrint.getInstance().print3Line();
