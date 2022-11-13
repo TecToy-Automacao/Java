@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(demoDetails.titleId == R.string.function_blackline){
                             if(getDeviceName().equals("SUNMI V2_PRO")){
-                                Intent intent = new Intent(MainActivity.this, BlackLabelActivity.class);
+                                Intent intent = new Intent(MainActivity.this, BlackLabelActivityJava.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (demoDetails.titleId == R.string.function_label){
                             if(getDeviceName().equals("SUNMI V2_PRO")){
-                                Intent intent = new Intent(MainActivity.this, LabelActivity.class);
+                                Intent intent = new Intent(MainActivity.this, LabelActivityJava.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
