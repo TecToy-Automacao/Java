@@ -33,12 +33,12 @@ class AllActivity : BaseActivity(), View.OnClickListener {
         setMyTitle(R.string.all_title)
         setBack()
 
-        binding.multiOne.setOnClickListener{this}
-        binding.multiTwo.setOnClickListener{this}
-        binding.multiThree.setOnClickListener{this}
-        binding.multiFour.setOnClickListener{this}
-        binding.multiFive.setOnClickListener{this}
-        binding.multiSix.setOnClickListener{this}
+        binding.multiOne.setOnClickListener{}
+        binding.multiTwo.setOnClickListener{}
+        binding.multiThree.setOnClickListener{}
+        binding.multiFour.setOnClickListener{}
+        binding.multiFive.setOnClickListener{}
+        binding.multiSix.setOnClickListener{}
     }
 
     /**
