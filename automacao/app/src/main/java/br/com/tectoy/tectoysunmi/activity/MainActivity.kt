@@ -54,7 +54,25 @@ class MainActivity : AppCompatActivity(){
     lateinit var kPrinterPresenter:KTectoySunmiPrinter
 
     private val demos = arrayOf(DemoDetails(R.string.function_all,R.drawable.function_all,null),
-                                DemoDetails(R.string.function_qrcode, R.drawable.function_qr, null)
+                                DemoDetails(R.string.function_qrcode, R.drawable.function_qr, null),
+                                DemoDetails(R.string.function_barcode, R.drawable.function_barcode, null),
+                                DemoDetails(R.string.function_text, R.drawable.function_text, null),
+                                DemoDetails(R.string.function_tab, R.drawable.function_tab, null),
+                                DemoDetails(R.string.function_pic, R.drawable.function_pic, null),
+                                DemoDetails(R.string.function_threeline, R.drawable.function_threeline, null),
+                                DemoDetails(R.string.function_cash, R.drawable.function_cash, null),
+                                DemoDetails(R.string.function_lcd, R.drawable.function_lcd, null),
+                                DemoDetails(R.string.function_status, R.drawable.function_status, null),
+                                DemoDetails(R.string.function_blackline, R.drawable.function_blackline, null),
+                                DemoDetails(R.string.function_label, R.drawable.function_label, null),
+                                DemoDetails(R.string.cut_paper, R.drawable.function_cortar, null),
+                                DemoDetails(R.string.function_scanner, R.drawable.function_scanner, null),
+                                DemoDetails(R.string.function_led, R.drawable.function_led, null),
+                                DemoDetails(R.string.function_paygo, R.drawable.function_payment, Paygo::class.java),
+                                DemoDetails(R.string.function_scan, R.drawable.function_scanner, null),
+                                DemoDetails(R.string.function_nfc, R.drawable.function_nfc, NfcExemplo::class.java),
+                                DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, MSitef::class.java),
+                                DemoDetails(R.string.display, R.drawable.telas, DisplayActivity::class.java)
     )
 
     private class DemoDetails{
