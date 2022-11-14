@@ -25,7 +25,7 @@ class BlackLabelActivity:BaseActivity() {
         }
 
         binding.blCheck.setOnClickListener {
-            if(TectoySunmiPrint.getInstance().isBlackLabelMode){
+            if(TectoySunmiPrint.getInstance().isBlackLabelMode()){
                 TectoySunmiPrint.getInstance().sendRawData(ESCUtil.gogogo());
             }else{
                 Toast.makeText(this@BlackLabelActivity, R.string.toast_10, Toast.LENGTH_LONG).show()
@@ -33,7 +33,7 @@ class BlackLabelActivity:BaseActivity() {
         }
 
         binding.blSample.setOnClickListener {
-            if(!TectoySunmiPrint.getInstance().isBlackLabelMode){
+            if(!TectoySunmiPrint.getInstance().isBlackLabelMode()){
                 Toast.makeText(this@BlackLabelActivity, R.string.toast_10, Toast.LENGTH_LONG).show();
             }else{
                 TectoySunmiPrint.getInstance().printQr("www.tectoysunmi.com.br", 6, 3);

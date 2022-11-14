@@ -507,14 +507,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Alinhamento
         kPrinterPresenter.printStyleBold(false);
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("Alinhamento\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH);
         kPrinterPresenter.text("TecToy Automação\n");
         kPrinterPresenter.print3Line();
 

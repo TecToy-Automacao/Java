@@ -16,7 +16,7 @@ class LabelActivity:BaseActivity() {
         setBack()
     }
     fun testOne(view:View){
-        if(!TectoySunmiPrint.getInstance().isLabelMode){
+        if(!TectoySunmiPrint.getInstance().isLabelMode()){
             Toast.makeText(this@LabelActivity, R.string.toast_12, Toast.LENGTH_LONG).show();
             return
         }
@@ -25,7 +25,7 @@ class LabelActivity:BaseActivity() {
     }
 
     fun testMore(view: View){
-        if(!TectoySunmiPrint.getInstance().isLabelMode){
+        if(!TectoySunmiPrint.getInstance().isLabelMode()){
             Toast.makeText(this, R.string.toast_12, Toast.LENGTH_LONG).show();
             return
         }
