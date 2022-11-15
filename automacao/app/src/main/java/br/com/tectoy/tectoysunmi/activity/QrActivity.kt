@@ -64,8 +64,7 @@ class QrActivity : BaseActivity(){
         setContentView(binding.root)
         setMyTitle(R.string.qr_title)
         setBack()
-        val dm = DisplayMetrics()
-        window.windowManager.defaultDisplay.getRealMetrics(dm)
+        val dm = baseContext.resources.displayMetrics
         val width:Int = dm.widthPixels   //Largura da Tela
         height = dm.heightPixels  //Altura da tela
         isVertical =  height > width

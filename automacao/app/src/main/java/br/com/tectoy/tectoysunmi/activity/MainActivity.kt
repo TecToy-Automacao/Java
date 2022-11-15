@@ -526,7 +526,6 @@ open class MainActivity : AppCompatActivity(){
         val activityClass: Class<out Activity>?
     ) {
         @DrawableRes val iconResID:Int = descriptionId
-        var empty = Array<String>(3) { "it = $it" }
     }
 
 }
