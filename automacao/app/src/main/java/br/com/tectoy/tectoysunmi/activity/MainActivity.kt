@@ -38,6 +38,7 @@ import com.sunmi.extprinterservice.ExtPrinterService
 import java.util.HashMap
 import br.com.tectoy.tectoysunmi.R
 import br.com.tectoy.tectoysunmi.activity.ExemploNFCIdRW.NfcExemplo
+import br.com.tectoy.tectoysunmi.databinding.ActivityMainBinding
 import br.com.tectoy.tectoysunmi.threadhelp.ThreadPoolManageer
 import br.com.tectoy.tectoysunmi.utils.KTectoySunmiPrinter
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint
@@ -74,7 +75,125 @@ class MainActivity : AppCompatActivity(){
                                 DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, MSitef::class.java),
                                 DemoDetails(R.string.display, R.drawable.telas, DisplayActivity::class.java)
     )
+    private var videoDisplay:VideoDisplay? = null
+    private var screenManager:ScreenManager = ScreenManager.getInstance()
 
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupRecyclerView()
+        val dm = DisplayMetrics()
+        window.windowManager.defaultDisplay.getMetrics(dm)
+        val width:Int = dm.widthPixels   //Largura da Tela
+        height = dm.heightPixels  //Altura da tela
+        isVertical =  height > width
+        isK1 = isHaveCamera() && isVertical
+        var deviceName:String = getDeviceName()
+        if(isK1 && (height > 1856)){
+            connectKPrintService()
+        }
+        val mediaRouter:MediaRouter = this.getSystemService(Context.MEDIA_ROUTER_SERVICE) as MediaRouter
+        val route:MediaRouter.RouteInfo? = mediaRouter.getSelectedRoute(1)
+
+        if (route!=null){
+            val presentationDisplay:Display? = route.presentationDisplay
+            if(presentationDisplay != null){
+                val presentation:Presentation = VideoDisplay(this, presentationDisplay, Environment.getExternalStorageDirectory().path+"/video_01.mp4")
+                presentation.show()
+            }
+        }
+    }
+    // Conexão Impressão K2
+    private fun connectKPrintService() {
+        val intent:Intent = Intent()
+        intent.`package` = "com.sunmi.extprinterservice"
+        intent.action = "com.sunmi.extprinterservice.PrinterService"
+        bindService(intent,connService, Context.BIND_AUTO_CREATE)
+    }
+    private var connService:ServiceConnection = object: ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            extPrinterService = ExtPrinterService.Stub.asInterface(service)
+            kPrinterPresenter = KTectoySunmiPrinter(this@MainActivity, extPrinterService)
+        }
+        override fun onServiceDisconnected(name: ComponentName?) {
+            extPrinterService = null
+        }
+    }
+
+    private fun getDeviceName():String{
+        val manufacturer:String = Build.MANUFACTURER
+        val model:String = Build.MODEL
+        if (model.startsWith(manufacturer)){
+            return capitalize(model)
+        }
+        return "${capitalize(manufacturer)} $model"
+    }
+
+    private fun capitalize(str:String):String{
+        if (TextUtils.isEmpty(str)) {
+            return str
+        }
+        var arr:CharArray = str.toCharArray()
+        var capitalizeNext:Boolean = true
+        var phrase:StringBuilder = StringBuilder()
+        for(c:Char in arr){
+            if (capitalizeNext && Character.isLetter(c)){
+                phrase.append(Character.toUpperCase(c))
+                capitalizeNext = false
+                continue
+            } else if(Character.isWhitespace(c)){
+                capitalizeNext = true
+            }
+            phrase.toString()
+        }
+        return phrase.toString()
+    }
+
+    private fun isHaveCamera() : Boolean{
+        val deviceHashMap : HashMap<String, UsbDevice> = (getSystemService(Activity.USB_SERVICE) as UsbManager).deviceList
+        for(entry in deviceHashMap.entries){
+            var usbDevice = entry.value
+            if(!TextUtils.isEmpty(usbDevice.deviceName) && usbDevice.deviceName == "Orb"){
+                return true
+            }
+            if(!TextUtils.isEmpty(usbDevice.deviceName) && usbDevice.deviceName == "Astra"){
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManage:GridLayoutManager = GridLayoutManager(this,2)
+        var mRecyclerView:RecyclerView = binding.worklist
+        mRecyclerView.layoutManager = layoutManage
+        mRecyclerView.adapter= WorkTogetherAdapter()
+    }
+
+    inner class WorkTogetherAdapter: RecyclerView.Adapter<WorkTogetherAdapter.MyViewHolder>() {
+        inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            lateinit var tv:TextView
+            lateinit var demoDetails:DemoDetails
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+            val v:View = LayoutInflater.from(parent.context).inflate(R.layout.work_item, parent,false)
+            return MyViewHolder(v)
+        }
+
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+            holder.demoDetails = demos[position]
+            holder.tv.text = demos[position].titleId // dúvida sobre tipo e referência
+        }
+
+        override fun getItemCount(): Int {
+            return demos.size
+        }
+    }
+    //https://medium.com/android-dev-br/generics-e-variance-em-kotlin-in-out-t-ca5ca07c9fc5
     private fun scaleImage(bitmap : Bitmap) : Bitmap{
         val width = bitmap.width
         val height = bitmap.height
@@ -340,17 +459,14 @@ class MainActivity : AppCompatActivity(){
 
 
 
-    private class DemoDetails{
-        @StringRes   private val titleId:Int
-        @DrawableRes private val iconResID:Int
-        private val activityClass:Activity?
-        constructor(@StringRes titleId:Int,
-                    @DrawableRes descriptionId:Int,
-                    activityClass:Activity?){
-            this.titleId       = titleId
-            this.iconResID     = descriptionId
-            this.activityClass = activityClass
-        }
+    //https://medium.com/android-dev-br/generics-e-variance-em-kotlin-in-out-t-ca5ca07c9fc5
+    class DemoDetails(
+        @StringRes   val titleId: Int,
+        @DrawableRes val descriptionId: Int,
+        val activityClass: Class<out Activity>?
+    ) {
+        @DrawableRes val iconResID:Int = descriptionId
+        var empty = Array<String>(3) { "it = $it" }
     }
 
 }
