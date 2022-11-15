@@ -33,12 +33,12 @@ class AllActivity : BaseActivity(), View.OnClickListener {
         setMyTitle(R.string.all_title)
         setBack()
 
-        binding.multiOne.setOnClickListener{this}
-        binding.multiTwo.setOnClickListener{this}
-        binding.multiThree.setOnClickListener{this}
-        binding.multiFour.setOnClickListener{this}
-        binding.multiFive.setOnClickListener{this}
-        binding.multiSix.setOnClickListener{this}
+        binding.multiOne.setOnClickListener{}
+        binding.multiTwo.setOnClickListener{}
+        binding.multiThree.setOnClickListener{}
+        binding.multiFour.setOnClickListener{}
+        binding.multiFive.setOnClickListener{}
+        binding.multiSix.setOnClickListener{}
     }
 
     /**
@@ -77,18 +77,15 @@ class AllActivity : BaseActivity(), View.OnClickListener {
         rv = BytesUtil.byteMerger(rv, BytesUtil.wordData())
 
         val ascii = ByteArray(96)
-        for(i in ascii){
-            ascii[ascii.indexOf(i)] = (ascii.indexOf(i) + 0x20).toByte()
-        }
-
+        ascii.forEach { ascii[ascii.indexOf(it)] = (ascii.indexOf(it) + 0x20).toByte()}
         ascii[95] = 0x0A
-        rv = BytesUtil.byteMerger(rv, ascii)
-        val tabs = CharArray(116)
-        for(i in tabs){
-            tabs[tabs.indexOf(i)] = (tabs.indexOf(i) + 0x2500).toChar()
-        }
-        val test = String(tabs)
 
+        rv = BytesUtil.byteMerger(rv, ascii)
+
+        val tabs = CharArray(116)
+        tabs.forEach { tabs[tabs.indexOf(it)] = (tabs.indexOf(it) + 0x2500).toChar() }
+
+        val test = String(tabs)
         try{
             rv = BytesUtil.byteMerger(rv, test.toByteArray(charset("gb18030")))
             rv = BytesUtil.byteMerger(rv, ByteArray(1){0x0A})

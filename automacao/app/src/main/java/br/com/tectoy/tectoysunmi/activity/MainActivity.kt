@@ -14,11 +14,7 @@ import android.graphics.Matrix
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
 import android.media.MediaRouter
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
-import android.os.IBinder
-import android.os.RemoteException
+import android.os.*
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.Display
@@ -45,7 +41,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint
 import sunmi.sunmiui.dialog.DialogCreater
 import sunmi.sunmiui.dialog.HintOneBtnDialog
 
-class MainActivity : AppCompatActivity(){
+open class MainActivity : AppCompatActivity(){
     var height = 0
     lateinit var mHintOneBtnDialog:HintOneBtnDialog
     var run:Boolean = false
@@ -55,30 +51,30 @@ class MainActivity : AppCompatActivity(){
     lateinit var kPrinterPresenter:KTectoySunmiPrinter
 
     private val demos = arrayOf(DemoDetails(R.string.function_all,R.drawable.function_all,null),
-                                DemoDetails(R.string.function_qrcode, R.drawable.function_qr, null),
-                                DemoDetails(R.string.function_barcode, R.drawable.function_barcode, null),
-                                DemoDetails(R.string.function_text, R.drawable.function_text, null),
-                                DemoDetails(R.string.function_tab, R.drawable.function_tab, null),
-                                DemoDetails(R.string.function_pic, R.drawable.function_pic, null),
-                                DemoDetails(R.string.function_threeline, R.drawable.function_threeline, null),
-                                DemoDetails(R.string.function_cash, R.drawable.function_cash, null),
-                                DemoDetails(R.string.function_lcd, R.drawable.function_lcd, null),
-                                DemoDetails(R.string.function_status, R.drawable.function_status, null),
-                                DemoDetails(R.string.function_blackline, R.drawable.function_blackline, null),
-                                DemoDetails(R.string.function_label, R.drawable.function_label, null),
-                                DemoDetails(R.string.cut_paper, R.drawable.function_cortar, null),
-                                DemoDetails(R.string.function_scanner, R.drawable.function_scanner, null),
-                                DemoDetails(R.string.function_led, R.drawable.function_led, null),
-                                DemoDetails(R.string.function_paygo, R.drawable.function_payment, Paygo::class.java),
-                                DemoDetails(R.string.function_scan, R.drawable.function_scanner, null),
-                                DemoDetails(R.string.function_nfc, R.drawable.function_nfc, NfcExemplo::class.java),
-                                DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, MSitef::class.java),
-                                DemoDetails(R.string.display, R.drawable.telas, DisplayActivity::class.java)
+        DemoDetails(R.string.function_qrcode, R.drawable.function_qr, null),
+        DemoDetails(R.string.function_barcode, R.drawable.function_barcode, null),
+        DemoDetails(R.string.function_text, R.drawable.function_text, null),
+        DemoDetails(R.string.function_tab, R.drawable.function_tab, null),
+        DemoDetails(R.string.function_pic, R.drawable.function_pic, null),
+        DemoDetails(R.string.function_threeline, R.drawable.function_threeline, null),
+        DemoDetails(R.string.function_cash, R.drawable.function_cash, null),
+        DemoDetails(R.string.function_lcd, R.drawable.function_lcd, null),
+        DemoDetails(R.string.function_status, R.drawable.function_status, null),
+        DemoDetails(R.string.function_blackline, R.drawable.function_blackline, null),
+        DemoDetails(R.string.function_label, R.drawable.function_label, null),
+        DemoDetails(R.string.cut_paper, R.drawable.function_cortar, null),
+        DemoDetails(R.string.function_scanner, R.drawable.function_scanner, null),
+        DemoDetails(R.string.function_led, R.drawable.function_led, null),
+        DemoDetails(R.string.function_paygo, R.drawable.function_payment, Paygo::class.java),
+        DemoDetails(R.string.function_scan, R.drawable.function_scanner, null),
+        DemoDetails(R.string.function_nfc, R.drawable.function_nfc, NfcExemplo::class.java),
+        DemoDetails(R.string.function_m_Sitef, R.drawable.function_payment, MSitef::class.java),
+        DemoDetails(R.string.display, R.drawable.telas, DisplayActivity::class.java)
     )
     private var videoDisplay:VideoDisplay? = null
     private var screenManager:ScreenManager = ScreenManager.getInstance()
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding:ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,7 +189,7 @@ class MainActivity : AppCompatActivity(){
             return demos.size
         }
     }
-    //https://medium.com/android-dev-br/generics-e-variance-em-kotlin-in-out-t-ca5ca07c9fc5
+
     private fun scaleImage(bitmap : Bitmap) : Bitmap{
         val width = bitmap.width
         val height = bitmap.height
@@ -207,7 +203,6 @@ class MainActivity : AppCompatActivity(){
         // 得到新的图片
         return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true)
     }
-
     fun KTesteCompleto (){
 
         // Alinhamento
@@ -259,7 +254,7 @@ class MainActivity : AppCompatActivity(){
         kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH)
         kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0);
         kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT)
-        kPrinterPresenter.printDoubleQRCode("www.tectoyautomacao.com.br","tectoy", 7, 1)0
+        kPrinterPresenter.printDoubleQRCode("www.tectoyautomacao.com.br","tectoy", 7, 1)
         // Imagem
 
 
@@ -273,7 +268,7 @@ class MainActivity : AppCompatActivity(){
         TectoySunmiPrint.getInstance().initPrinter()
         TectoySunmiPrint.getInstance().setSize(24)
 
-    // Alinhamento do texto
+        // Alinhamento do texto
         TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER)
         TectoySunmiPrint.getInstance().printText("Alinhamento\n")
         TectoySunmiPrint.getInstance().printText("--------------------------------\n")
@@ -284,7 +279,7 @@ class MainActivity : AppCompatActivity(){
         TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_RIGTH)
         TectoySunmiPrint.getInstance().printText("TecToy Automação\n")
 
-    // Formas de impressão
+        // Formas de impressão
         TectoySunmiPrint.getInstance().setAlign(TectoySunmiPrint.Alignment_CENTER)
         TectoySunmiPrint.getInstance().printText("Formas de Impressão\n")
         TectoySunmiPrint.getInstance().printText("--------------------------------\n")
@@ -456,9 +451,6 @@ class MainActivity : AppCompatActivity(){
             }
         }
     }
-
-
-
     //https://medium.com/android-dev-br/generics-e-variance-em-kotlin-in-out-t-ca5ca07c9fc5
     class DemoDetails(
         @StringRes   val titleId: Int,
@@ -470,3 +462,4 @@ class MainActivity : AppCompatActivity(){
     }
 
 }
+
