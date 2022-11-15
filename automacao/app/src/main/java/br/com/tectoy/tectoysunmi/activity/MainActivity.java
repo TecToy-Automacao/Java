@@ -520,10 +520,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Formas de impressão
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("Formas de Impressão\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT);
         kPrinterPresenter.printStyleBold(true);
         kPrinterPresenter.text("TecToy Automação\n");
 
@@ -537,7 +537,7 @@ public class MainActivity extends AppCompatActivity {
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 0);
         kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 2);
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH);
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 1);
         kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 3);
@@ -577,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
         // Tabelas
 
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("Tabelas\n");
         kPrinterPresenter.text("--------------------------------\n");
         String[] prod = new String[3];
@@ -588,9 +588,9 @@ public class MainActivity extends AppCompatActivity {
         width[1] = 50;
         width[2] = 50;
 
-        align[0] = kPrinterPresenter.Alignment_LEFT;
-        align[1] = kPrinterPresenter.Alignment_CENTER;
-        align[2] = kPrinterPresenter.Alignment_RIGTH;
+        align[0] = KTectoySunmiPrinter.Alignment_LEFT;
+        align[1] = KTectoySunmiPrinter.Alignment_CENTER;
+        align[2] = KTectoySunmiPrinter.Alignment_RIGTH;
 
         prod[0] = "Produto 001";
         prod[1] = "10 und";
