@@ -155,7 +155,7 @@ class BarCodeActivity : BaseActivity()  {
         }
         //Preciso criar um bitmap e colocar a imagem dele o texto de mTextView
         //Solução em Kotlin : https://stackoverflow.com/questions/9978884/bitmapdrawable-deprecated-alternative
-        val bitmap:Bitmap = BitmapUtil.generateBitmap(text,symbology, 700, 400)
+        val bitmap:Bitmap = BitmapUtil.generateBitmap(text,symbology, 700, 400) //dependendo do encode o código pode jogar um IllegalArgumentException, por causa do tamanho do texto.
         if(bitmap!=null){
             binding.bcImage.setImageDrawable(BitmapDrawable(resources, bitmap))
         }else{

@@ -63,7 +63,7 @@ class BitmapActivity : BaseActivity(){
             bitmap = scaleImage(BitmapFactory.decodeResource(resources, R.drawable.test, options))
         }
 
-        binding.bitmapImageview.setImageDrawable(BitmapDrawable(bitmap))
+        binding.bitmapImageview.setImageDrawable(BitmapDrawable(resources, bitmap))
 
         binding.picStyle.visibility = View.GONE
     }
