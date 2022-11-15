@@ -191,6 +191,23 @@ open class MainActivity : AppCompatActivity(){
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.function, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_setting ->{
+                val intent:Intent=Intent(this,SettingActivity::class.java)
+                startActivity(intent)
+            }else ->{
+                return super.onOptionsItemSelected(item)
+            }
+        }
+        return true
+    }
+
     private fun scaleImage(bitmap : Bitmap) : Bitmap{
         val width = bitmap.width
         val height = bitmap.height
