@@ -19,7 +19,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
  *
  * Página de exibição de informações da impressora
  */
-public class PrinterInfoActivity extends BaseActivity{
+public class PrinterInfoActivityJava extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

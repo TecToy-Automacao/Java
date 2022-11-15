@@ -64,7 +64,9 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
 
     private lateinit var binding: ActivityTextBinding
 
-    private var mStrings = arrayOf<String>("CP437", "CP850", "CP860", "CP863", "CP865", "CP857", "CP737", "Windows-1252", "CP866", "CP852", "CP858", "CP874", "CP855", "CP862", "CP864", "GB18030", "BIG5", "KSC5601", "utf-8")
+    private var mStrings = arrayOf<String>("CP437", "CP850", "CP860", "CP863", "CP865", "CP857",
+        "CP737", "Windows-1252", "CP866", "CP852", "CP858", "CP874", "CP855", "CP862", "CP864",
+        "GB18030", "BIG5", "KSC5601", "utf-8")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +75,10 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
         setContentView(binding.root)
         setMyTitle(R.string.text_title)
         setBack()
-        var dm: DisplayMetrics = DisplayMetrics()
+        val dm = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(dm)
-        var width: Int = dm.widthPixels
-        var height: Int = dm.heightPixels
+        val width: Int = dm.widthPixels
+        val height: Int = dm.heightPixels
         isVertical = height > width
         isK1 = isHaveCamera() && isVertical
 
@@ -98,7 +100,7 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
 
         mLinearLayout.viewTreeObserver.addOnGlobalLayoutListener(object: OnGlobalLayoutListener{
             override fun onGlobalLayout(){
-                var r: Rect = Rect()
+                val r = Rect()
                 mLinearLayout.getWindowVisibleDisplayFrame(r)
                 if (r.bottom < 800){
                     mLayout.setVisibility(View.GONE)
@@ -113,7 +115,9 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
 
         binding.textCharacter.setOnClickListener(object : OnClickListener{
             override fun onClick(v: View?){
-                var listDialog: ListDialog = DialogCreater.createListDialog(this@TextActivity, getResources().getString(R.string.characterset), getResources().getString(R.string.cancel), mStrings)
+                val listDialog: ListDialog = DialogCreater.createListDialog(this@TextActivity,
+                    getResources().getString(R.string.characterset),
+                    getResources().getString(R.string.cancel), mStrings)
                 listDialog.setItemClickListener(object : ListDialog.ItemClickListener{
                     override fun OnItemClick(position: Int) {
                         mTextView1.setText(mStrings[position])
@@ -128,15 +132,16 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
 
         binding.textSize.setOnClickListener(object : OnClickListener{
             override fun onClick(p0: View?) {
-                showSeekBarDialog(this@TextActivity, getResources().getString(R.string.size_text), 12, 36, mTextView2)
+                showSeekBarDialog(this@TextActivity,
+                    getResources().getString(R.string.size_text), 12, 36, mTextView2)
             }
         })
     }
 
-    fun onClick(p0: View?){
-        var content: String = mEditText.getText().toString()
+    fun onClick(view: View?){
+        val content: String = mEditText.getText().toString()
 
-        var size: Float = mTextView2.text.toString().toFloat()
+        val size: Float = mTextView2.text.toString().toFloat()
 
         if (isK1 && height > 1856){
             kPrinterPresenter.printStyleBold(isBold)
@@ -184,32 +189,32 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
         var res: Byte = 0x00
         when(value){
             0 -> res = 0x00
-            1, 2, 3, 4 -> res =  (value + 1) as Byte
-            5, 6, 7, 8, 9, 10, 11 -> res = (value + 8) as Byte
+            1, 2, 3, 4 -> res = (value + 1).toByte()
+            5, 6, 7, 8, 9, 10, 11 -> res = (value + 8).toByte()
             12 -> res = 21
             13 -> res = 33
             14 -> res = 34
             15 -> res = 36
             16 -> res = 37
-            17, 18, 19 -> res = (value - 17) as Byte
-            20 -> res = 0xff as Byte
+            17, 18, 19 -> res = (value - 17).toByte()
+            20 -> res = 0xff.toByte()
         }
-        return res as Byte
+        return res
     }
 
     fun showSeekBarDialog(context: Context, title: String, min: Int, max: Int, set: TextView){
-        var builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        var view: View = LayoutInflater.from(context).inflate(R.layout.widget_seekbar, null)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.widget_seekbar, null)
         builder.setView(view)
         builder.setCancelable(false)
-        var dialog: AlertDialog = builder.create()
-        var tv_title: TextView = view.findViewById(R.id.sb_title)
-        var tv_start: TextView = view.findViewById(R.id.sb_start)
-        var tv_end: TextView = view.findViewById(R.id.sb_end)
-        var tv_result: TextView = view.findViewById(R.id.sb_result)
-        var tv_ok: TextView = view.findViewById(R.id.sb_ok)
-        var tv_cancel: TextView = view.findViewById(R.id.sb_cancel)
-        var sb: SeekBar = view.findViewById(R.id.sb_seekbar)
+        val dialog: AlertDialog = builder.create()
+        val tv_title: TextView = view.findViewById(R.id.sb_title)
+        val tv_start: TextView = view.findViewById(R.id.sb_start)
+        val tv_end: TextView = view.findViewById(R.id.sb_end)
+        val tv_result: TextView = view.findViewById(R.id.sb_result)
+        val tv_ok: TextView = view.findViewById(R.id.sb_ok)
+        val tv_cancel: TextView = view.findViewById(R.id.sb_cancel)
+        val sb: SeekBar = view.findViewById(R.id.sb_seekbar)
         tv_title.setText(title)
         tv_start.setText(min.toString() + "")
         tv_end.setText(max.toString() + "")
@@ -257,9 +262,10 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
     }
 
     fun isHaveCamera(): Boolean{
-        var deviceHashMap: HashMap<String, UsbDevice> = (getSystemService(Activity.USB_SERVICE) as UsbManager).getDeviceList()
+        val deviceHashMap: HashMap<String, UsbDevice> = (getSystemService(Activity.USB_SERVICE)
+                as UsbManager).getDeviceList()
         for (entry in deviceHashMap.entries) {
-            var usbDevice: UsbDevice = entry.value
+            val usbDevice: UsbDevice = entry.value
             if (!TextUtils.isEmpty(
                     usbDevice.getInterface(0).getName()
                 ) && usbDevice.deviceName.contains("Orb")
@@ -277,7 +283,7 @@ class TextActivity: BaseActivity(), CompoundButton.OnCheckedChangeListener{
     }
 
     fun connectKPrintService() {
-        var intent: Intent = Intent()
+        val intent = Intent()
         intent.`package` = "com.sunmi.extprinterservice"
         intent.action = "com.sunmi.extprinterservice.PrinterService"
         bindService(intent, connService, Context.BIND_AUTO_CREATE)
