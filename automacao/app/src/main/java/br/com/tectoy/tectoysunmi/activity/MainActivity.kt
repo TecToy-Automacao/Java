@@ -208,60 +208,128 @@ open class MainActivity : AppCompatActivity(){
 
         // Alinhamento
         kPrinterPresenter.printStyleBold(false)
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.text("Alinhamento\n")
         kPrinterPresenter.text("--------------------------------\n")
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT)
         kPrinterPresenter.text("TecToy Automação\n")
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.text("TecToy Automação\n")
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH)
         kPrinterPresenter.text("TecToy Automação\n")
         kPrinterPresenter.print3Line()
 
         // Formas de impressão
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.text("Formas de Impressão\n")
         kPrinterPresenter.text("--------------------------------\n")
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT)
         kPrinterPresenter.printStyleBold(true)
         kPrinterPresenter.text("TecToy Automação\n")
 
 
         // Barcode
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.text("BarCode\n")
         kPrinterPresenter.text("--------------------------------\n")
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT)
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 0)
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 2)
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH)
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 1)
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 3)
         kPrinterPresenter.print3Line()
         // QrCode
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.text("QrCode\n")
         kPrinterPresenter.text("--------------------------------\n")
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0)
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT)
         kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0)
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH)
         kPrinterPresenter.printQr("www.tectoyautomacao.com.br", 8, 0);
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT)
         kPrinterPresenter.printDoubleQRCode("www.tectoyautomacao.com.br","tectoy", 7, 1)
         // Imagem
 
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER)
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
         kPrinterPresenter.text("Imagem\n")
         kPrinterPresenter.text("--------------------------------\n")
+        val options:BitmapFactory.Options =BitmapFactory.Options();
+        160.also { options.inTargetDensity = it }
+        160.also { options.inDensity = it }
+        var bitmap1: Bitmap? = null
+        if (bitmap1 == null) {
+            bitmap1 = BitmapFactory.decodeResource(getResources(), test1, options)
+            bitmap1 = scaleImage(bitmap1);
+        }
+        kPrinterPresenter.printBitmap(bitmap1,  0)
+        kPrinterPresenter.setAlign(0);
+        kPrinterPresenter.printBitmap(bitmap1,  0)
+        kPrinterPresenter.setAlign(2);
+        kPrinterPresenter.printBitmap(bitmap1,  0)
+
+        // Tabelas
+
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER)
+        kPrinterPresenter.text("Tabelas\n")
+        kPrinterPresenter.text("--------------------------------\n")
+
+        val prod=Array<String>(3){""}
+        val width=IntArray(3)
+        val align=IntArray(3)
+
+        width[0] = 100
+        width[1] = 50
+        width[2] = 50
+
+        align[0] = KTectoySunmiPrinter.Alignment_LEFT
+        align[1] = KTectoySunmiPrinter.Alignment_CENTER
+        align[2] = KTectoySunmiPrinter.Alignment_RIGTH
+
+        prod[0] = "Produto 001"
+        prod[1] = "10 und"
+        prod[2] = "3,98"
+        kPrinterPresenter.printTable(prod, width, align)
+
+        prod[0] = "Produto 002"
+        prod[1] = "10 und"
+        prod[2] = "3,98"
+        kPrinterPresenter.printTable(prod, width, align)
+
+
+        prod[0] = "Produto 003"
+        prod[1] = "10 und"
+        prod[2] = "3,98"
+        kPrinterPresenter.printTable(prod, width, align)
+
+
+        prod[0] = "Produto 004"
+        prod[1] = "10 und"
+        prod[2] = "3,98"
+        kPrinterPresenter.printTable(prod, width, align)
+
+
+        prod[0] = "Produto 005"
+        prod[1] = "10 und"
+        prod[2] = "3,98"
+        kPrinterPresenter.printTable(prod, width, align)
+
+        prod[0] = "Produto 006"
+        prod[1] = "10 und"
+        prod[2] = "3,98"
+        kPrinterPresenter.printTable(prod, width, align)
+
+
+        kPrinterPresenter.print3Line();
+        kPrinterPresenter.cutpaper(KTectoySunmiPrinter.HALF_CUTTING, 10)
     }
 
     // Teste Completo dos Demais Devices
