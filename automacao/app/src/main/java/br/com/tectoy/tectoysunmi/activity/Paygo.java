@@ -50,7 +50,7 @@ public class Paygo extends BaseActivity {
     Button btn_pagar, btn_cancelar, btn_adm;
     Spinner tipo_pagamento;
 
-    private static final String DEBUG_TAG = MainActivity.class.getName();
+    private static final String DEBUG_TAG = MainActivityJava.class.getName();
 
     private Confirmacoes mConfirmacao = new Confirmacoes();
     private DadosAutomacao mDadosAutomacao = null;
