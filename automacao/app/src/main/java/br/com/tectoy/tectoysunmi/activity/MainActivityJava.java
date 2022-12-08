@@ -51,7 +51,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.HintOneBtnDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityJava extends AppCompatActivity {
 
     int height= 0;
     HintOneBtnDialog mHintOneBtnDialog;
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             extPrinterService = ExtPrinterService.Stub.asInterface(service);
-            kPrinterPresenter = new KTectoySunmiPrinter(MainActivity.this, extPrinterService);
+            kPrinterPresenter = new KTectoySunmiPrinter(MainActivityJava.this, extPrinterService);
         }
     };
 
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         if(demoDetails.activityClass != null){
-                            startActivity(new Intent(MainActivity.this, demoDetails.activityClass));
+                            startActivity(new Intent(MainActivityJava.this, demoDetails.activityClass));
                         }
                         if(demoDetails.titleId == R.string.function_all){
                             if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini") || getDeviceName().equals("SUNMI D2mini")){
@@ -322,12 +322,12 @@ public class MainActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }else {
-                                TectoySunmiPrint.getInstance().showPrinterStatus(MainActivity.this);
+                                TectoySunmiPrint.getInstance().showPrinterStatus(MainActivityJava.this);
                             }
                         }
                         if(demoDetails.titleId == R.string.function_multi){
                             if(mHintOneBtnDialog  == null){
-                                mHintOneBtnDialog = DialogCreater.createHintOneBtnDialog(MainActivity.this, null, getResources().getString(R.string.multithread), getResources().getString(R.string.multithread_stop), new View.OnClickListener() {
+                                mHintOneBtnDialog = DialogCreater.createHintOneBtnDialog(MainActivityJava.this, null, getResources().getString(R.string.multithread), getResources().getString(R.string.multithread_stop), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         run = false;
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(demoDetails.titleId == R.string.function_led){
                             if(getDeviceName().equals("SUNMI K2_MINI") || getDeviceName().equals("SUNMI K2")){
-                                Intent intent = new Intent(MainActivity.this, LedActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, LedActivityJava.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
@@ -353,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(demoDetails.titleId == R.string.function_scan){
                             if(getDeviceName().equals("SUNMI L2") || getDeviceName().equals("SUNMI L2K") || getDeviceName().equals("SUNMI P2mini") || getDeviceName().equals("SUNMI V2_PRO")){
-                                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, ScanActivity.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(demoDetails.titleId == R.string.function_lcd){
                             if(getDeviceName().equals("SUNMI T2mini")){
-                                Intent intent = new Intent(MainActivity.this, LcdActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, LcdActivity.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(demoDetails.titleId == R.string.function_blackline){
                             if(getDeviceName().equals("SUNMI V2_PRO")){
-                                Intent intent = new Intent(MainActivity.this, BlackLabelActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, BlackLabelActivityJava.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (demoDetails.titleId == R.string.function_label){
                             if(getDeviceName().equals("SUNMI V2_PRO")){
-                                Intent intent = new Intent(MainActivity.this, LabelActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, LabelActivityJava.class);
                                 startActivity(intent);
                             }else {
                                 Context context = getApplicationContext();
@@ -407,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(context, text, duration);
                                 toast.show();
                             }else {
-                                Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, ScannerActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -420,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
                                 toast.show();
                                 System.out.println("Passo Aqui");
                             }else {
-                                Intent intent = new Intent(MainActivity.this, BarCodeActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, BarCodeActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity {
                                 toast.show();
                                 System.out.println("Passo Aqui");
                             }else {
-                                Intent intent = new Intent(MainActivity.this, QrActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, QrActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
                                 toast.show();
                                 System.out.println("Passo Aqui");
                             }else {
-                                Intent intent = new Intent(MainActivity.this, TextActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, TextActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -459,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
                                 toast.show();
                                 System.out.println("Passo Aqui");
                             }else {
-                                Intent intent = new Intent(MainActivity.this, TableActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, TableActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -472,7 +472,7 @@ public class MainActivity extends AppCompatActivity {
                                 toast.show();
                                 System.out.println("Passo Aqui");
                             }else {
-                                Intent intent = new Intent(MainActivity.this, BitmapActivity.class);
+                                Intent intent = new Intent(MainActivityJava.this, BitmapActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -507,23 +507,23 @@ public class MainActivity extends AppCompatActivity {
 
         // Alinhamento
         kPrinterPresenter.printStyleBold(false);
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("Alinhamento\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("TecToy Automação\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH);
         kPrinterPresenter.text("TecToy Automação\n");
         kPrinterPresenter.print3Line();
 
         // Formas de impressão
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("Formas de Impressão\n");
         kPrinterPresenter.text("--------------------------------\n");
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_LEFT);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_LEFT);
         kPrinterPresenter.printStyleBold(true);
         kPrinterPresenter.text("TecToy Automação\n");
 
@@ -537,7 +537,7 @@ public class MainActivity extends AppCompatActivity {
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 0);
         kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 2);
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_RIGTH);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_RIGTH);
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 1);
         kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
         kPrinterPresenter.printBarcode("7891098010575", 2, 162, 2, 3);
@@ -577,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
         // Tabelas
 
 
-        kPrinterPresenter.setAlign(kPrinterPresenter.Alignment_CENTER);
+        kPrinterPresenter.setAlign(KTectoySunmiPrinter.Alignment_CENTER);
         kPrinterPresenter.text("Tabelas\n");
         kPrinterPresenter.text("--------------------------------\n");
         String[] prod = new String[3];
@@ -588,9 +588,9 @@ public class MainActivity extends AppCompatActivity {
         width[1] = 50;
         width[2] = 50;
 
-        align[0] = kPrinterPresenter.Alignment_LEFT;
-        align[1] = kPrinterPresenter.Alignment_CENTER;
-        align[2] = kPrinterPresenter.Alignment_RIGTH;
+        align[0] = KTectoySunmiPrinter.Alignment_LEFT;
+        align[1] = KTectoySunmiPrinter.Alignment_CENTER;
+        align[2] = KTectoySunmiPrinter.Alignment_RIGTH;
 
         prod[0] = "Produto 001";
         prod[1] = "10 und";

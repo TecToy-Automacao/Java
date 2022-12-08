@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivityJava">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"

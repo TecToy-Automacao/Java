@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 
-public class LabelActivity extends BaseActivity {
+public class LabelActivityJava extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

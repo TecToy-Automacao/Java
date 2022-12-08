@@ -22,7 +22,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
  * Atualmente, apenas o modelo V1 não é compatível com a impressão de transações
  * @author Geovani Santos
  */
-public class BufferActivity extends BaseActivity {
+public class BufferActivityJava extends BaseActivity {
 
     boolean mark;
     TextView mTextView;

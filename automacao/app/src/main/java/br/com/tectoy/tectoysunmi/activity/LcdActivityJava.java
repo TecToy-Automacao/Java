@@ -10,7 +10,7 @@ import br.com.tectoy.tectoysunmi.R;
 import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 
 
-public class LcdActivity extends BaseActivity {
+public class LcdActivityJava extends BaseActivity {
 
 
     @Override

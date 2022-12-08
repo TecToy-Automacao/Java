@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivityJava">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,53 +34,53 @@
         </activity>
         <activity
             android:name=".activity.SettingActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity
             android:name=".activity.PrinterInfoActivity"
             android:parentActivityName=".activity.SettingActivity"/>
         <activity
             android:name=".activity.QrActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity
             android:name=".activity.BarCodeActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity
             android:name=".activity.TextActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.BitmapActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.TableActivity"
             android:windowSoftInputMode="adjustNothing"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.AllActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.BufferActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.BlackLabelActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.LcdActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.LabelActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.ScannerActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.LedActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.Paygo"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.ScanActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.CancelamentoActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.NfcActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.MSitef"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.ExemploNFCIdRW.NfcExemplo"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
         <activity android:name=".activity.DisplayActivity"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivityJava"/>
     </application>
 
 </manifest>

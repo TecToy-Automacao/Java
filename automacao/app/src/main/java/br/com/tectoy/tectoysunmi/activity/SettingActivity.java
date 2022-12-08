@@ -92,7 +92,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             mTextView2.setTextColor(getResources().getColor(R.color.white));
             mTextView2.setEnabled(true);
         }else if(TectoySunmiPrint.getInstance().sunmiPrinter == TectoySunmiPrint.CheckSunmiPrinter){
-            handler.postDelayed(new Runnable() {
+            super.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     setService();

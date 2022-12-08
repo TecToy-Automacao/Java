@@ -24,7 +24,7 @@ import java.util.Map;
 
 import br.com.tectoy.tectoysunmi.R;
 
-public class LedActivity extends BaseActivity{
+public class LedActivityJava extends BaseActivity{
 
     Button  btn_vermelho, btn_desliga, btn_verde, btn_azul, btn_amarelo, btn_roxo, btn_azulclaro;
     private IStateLamp mService;

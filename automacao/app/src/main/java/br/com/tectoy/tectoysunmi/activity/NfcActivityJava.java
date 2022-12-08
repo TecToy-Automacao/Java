@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 import br.com.tectoy.tectoysunmi.R;
 
-public class NfcActivity extends BaseActivity   {
+public class NfcActivityJava extends BaseActivity   {
 
 
     public static final String ERROR_DETECTED = "No NFC tag detected!";

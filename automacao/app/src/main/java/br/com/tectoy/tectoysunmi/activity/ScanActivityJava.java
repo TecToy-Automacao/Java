@@ -22,7 +22,7 @@ import br.com.tectoy.tectoysunmi.utils.TectoySunmiPrint;
 import sunmi.sunmiui.dialog.DialogCreater;
 import sunmi.sunmiui.dialog.ListDialog;
 
-public class ScanActivity extends BaseActivity {
+public class ScanActivityJava extends BaseActivity {
 
     TextView mBtn,txt_tipo_papel, charcter_set_content, prompt_mode_scan, scan_mode_content, scan_trigger_content;
     private  IScanInterface scanInterface;
@@ -52,7 +52,7 @@ public class ScanActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String[] el = new String[]{"Cupom", "Etiqueta"};
-                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivity.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
+                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivityJava.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
                 listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
@@ -71,7 +71,7 @@ public class ScanActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String[] el = new String[]{"UTF-8", "GBK", "ISO-8859-1", "SHIFT-JLS", "Compatibility"};
-                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivity.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
+                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivityJava.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
                 listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
@@ -89,7 +89,7 @@ public class ScanActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String[] el = new String[]{"Beep+Vibrate", "Beep", "Vibrate"};
-                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivity.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
+                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivityJava.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
                 listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
@@ -106,7 +106,7 @@ public class ScanActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String[] el = new String[]{"Trigger mode", "Continuos mode", "Pulse mode"};
-                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivity.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
+                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivityJava.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
                 listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
@@ -123,7 +123,7 @@ public class ScanActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String[] el = new String[]{"none", "On-screen Button"};
-                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivity.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
+                final ListDialog listDialog = DialogCreater.createListDialog(ScanActivityJava.this, getResources().getString(R.string.error_qrcode), getResources().getString(R.string.cancel), el);
                 listDialog.setItemClickListener(new ListDialog.ItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
