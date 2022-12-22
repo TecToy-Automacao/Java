@@ -19,6 +19,9 @@
 &ensp;&ensp;&ensp;. coloque em modo kiosk;<br>
 &ensp;&ensp;&ensp;. Pode ser utilizado qualquer leitor de código de barras, desde que ele esteja configurado pro modo 'BufferTeclado';
 &ensp;&ensp;&ensp;. Os itens estão prédefinidos no fonte, pode ser utilizado o PDF ou as imagens em anexo no .zip, que podem ser lidos da tela de um celular por exemplo;</p>
+<p>&ensp;- <b>T2sBanco</b> - app que simula um terminal de consultas de banco, tem a opção de saldo ou extrato e impressão dos mesmos. Na tela de espera, toca uma música ambiente que pode ser mutada ou ligada, basta clicar no botão de controle. Não é necessário adicionar nenhum outro arquivo ao equipamento.
+&ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
+
 <br><br>
 <p><b>Indicamos colocar a aplicação em modo Kiosk</b>, para isso vá em:<br>
   . Settings/ Configurações -> Lab -> Kiosk/ Quiosq -> habilite o modo kiosk para a aplicação, defina uma senha de 4 dígitos para quando quiser sair do modo kiosk</p>

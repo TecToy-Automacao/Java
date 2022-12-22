@@ -8,8 +8,11 @@
 <p><b>. Demos </b>- Aplicações de exemplo para instalação e demonstração do uso do equipamento.<br>
 &ensp;&ensp;&ensp;- <b>K2Ingresso</b> - app que imprime ingressos para envetos, basta instalar o .apk e utilizar;<br>
 &ensp;&ensp;&ensp;- <b>T2sIngresso</b> - app que imprime ingressos para eventos e também demonstra uso da Tela Cliente com conteúdo especifico. Instale o .apk e coloque o vídeo que será utilizado na pasta Movies da raiz do equipamento com o nome: <i>videoapp.mp4</i></p>
-&ensp;&ensp;&ensp;- <b>D2MiniLanche</b> - app que simula vendas de uma lanchonete, imprime NFCE usando a impressora do D2 Mini Printer.</i></p>
-&ensp;&ensp;&ensp;- <b>T2MiniPosto</b> - app que simula vendas de combustivel, imprime um resumo de venda e NFCE usando a impressora do T2 Mini, utiliza o display de led para mostrar valores e também pode demonstrar o uso do NFC.</i></p>
+&ensp;&ensp;&ensp;- <b>D2MiniLanche</b> - app que simula vendas de uma lanchonete, imprime NFCE usando a impressora do D2 Mini Printer.</p>
+&ensp;&ensp;&ensp;- <b>T2MiniPosto</b> - app que simula vendas de combustivel, imprime um resumo de venda e NFCE usando a impressora do T2 Mini, utiliza o display de led para mostrar valores e também pode demonstrar o uso do NFC.</i><br>
+&ensp;&ensp;&ensp;- <b>D2sMercado</b> - app que simula vendas de um Mercado ou Loja, pode ser utilizado um leitor de código de barras, imprime um resumo de venda e NFCE usando a impressora do D2S.<br>
+&ensp;&ensp;&ensp;- <b>T2sBanco</b> - app que simula um terminal de consultas de Banco, por este motivo é ideal para o T2s de uma tela, com impressora. Demonstra uso do alto-falante.</p>
+
 <p><b>. CAMERA_TECTOY*</b> - Fonte de demonstração para uso da Câmera Face Sense em reconhecimento facial<br>
 Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Automação, e aplicar o serviço cognitivo Microsoft para reconhecimento biométrico facial em tempo de execução!<br>
   <b>Exato!</b> <i>Agora você pode usar toda linha de câmeras Tectoy com reconhecimento biométrico facial.</i><br>
