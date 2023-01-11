@@ -21,6 +21,9 @@
 &ensp;&ensp;&ensp;. Os itens estão prédefinidos no fonte, pode ser utilizado o PDF ou as imagens em anexo no .zip, que podem ser lidos da tela de um celular por exemplo;</p>
 <p>&ensp;- <b>T2sBanco</b> - app que simula um terminal de consultas de banco, tem a opção de saldo ou extrato e impressão dos mesmos. Na tela de espera, toca uma música ambiente que pode ser mutada ou ligada, basta clicar no botão de controle. Não é necessário adicionar nenhum outro arquivo ao equipamento.
 &ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
+<p>&ensp;- <b>V2proPassagem</b> - app voltado para o V2 PRO Label, que simula impressão de passagens de ônibus e permite também ler o QrCode das passagens impressas para visualização das mesmas.<br>
+&ensp;&ensp;&ensp;. baixe o apk e instale;<br>
+&ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
 
 <br><br>
 <p><b>Indicamos colocar a aplicação em modo Kiosk</b>, para isso vá em:<br>

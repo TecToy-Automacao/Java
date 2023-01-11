@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">V2proPASSAGEM</string>
+
+
+    <string-array name="Origem">
+        <item>SP</item>
+        <item>SJC</item>
+        <item>Cotia</item>
+    </string-array>
+
+
+    <string-array name="Destino">
+
+        <item>Manaus</item>
+        <item>SP</item>
+        <item>SJC</item>
+        <item>Cotia</item>
+
+    </string-array>
+
+
+    <string-array name="Horario">
+        <item>6:00</item>
+        <item>9:00</item>
+        <item>12:00</item>
+        <item>15:00</item>
+        <item>18:00</item>
+        <item>23:00</item>
+    </string-array>
+
+
+</resources>
