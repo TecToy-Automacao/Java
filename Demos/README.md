@@ -24,6 +24,10 @@
 <p>&ensp;- <b>V2proPassagem</b> - app voltado para o V2 PRO Label, que simula impressão de passagens de ônibus e permite também ler o QrCode das passagens impressas para visualização das mesmas.<br>
 &ensp;&ensp;&ensp;. baixe o apk e instale;<br>
 &ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
+<p>&ensp;- <b>K2Mini_Lanchonete</b> - app que simula um terminal de auto atendimento para pedidos em Lanchonete, simula uma venda sendo feita, e imprime uma DANFE NFCE a partir de XML pré-definido. Na tela de espera, toca uma música ambiente que pode ser mutada ou ligada, basta clicar no botão de controle. Não é necessário adicionar nenhum outro arquivo ao equipamento.
+&ensp;&ensp;&ensp;. instale o .apk<br>
+&ensp;&ensp;&ensp;. dê permissão de armazenamento para o app: em Settings/ Configurações -> Apps & Notifications -> escolha o app 'LanchoneteK2mini' na lista e clique em Permissions/ Permissões para liberar a permissão de Armazenamento, ou Storage;<br>
+&ensp;&ensp;&ensp;. coloque em modo kiosk;</p>
 
 <br><br>
 <p><b>Indicamos colocar a aplicação em modo Kiosk</b>, para isso vá em:<br>
