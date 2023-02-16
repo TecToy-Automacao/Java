@@ -6,7 +6,7 @@
 ::
 :: SET SDK_DIR=C:\Users\Public\Documents\Embarcadero\Studio\20.0\CatalogRepository\AndroidSDK-2525_20.0.36039.7899\
 :: SET PLATAFORM=32
-:: SET PLATAFORM=26
+SET PLATAFORM=25
 :: SET "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-8.0.362.9-hotspot"
 
 SET DIR_ATUAL=%CD%
