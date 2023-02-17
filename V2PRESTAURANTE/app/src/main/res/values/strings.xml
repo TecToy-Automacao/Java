@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">V2proGARCOM</string>
+
+
+    <string-array name="Mesas">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="Login">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+
+
+
+    strNotaPadrao = "TecToy Automacao – V2Pro\n" +
+    "Saiba mais em:\n" +
+    "www.tectouautomacao.com.br\n" +
+    "=============================\n" +
+    "Comanda/ Mesa: " + strNumMesaPasado +
+    "\nN. Item        xQtde\n" +
+    "1. Cheese Burguer x2\n" +
+    "2. Sorvete        x1\n" +
+    "3. Refrigerante   x1\n" +
+    "Data/Hora pedido: " +/*data*/"-"/*hora*/;
+    txtViewPedido.setText(strNotaPadrao);
+
+
+
+
+
+    strNotaPadrao = "Comanda/ Mesa: " + strNumMesaPasado +
+    "\nN. Item        xQtde\n" +
+    NumLista + "."+ strNotaPedidos + iQuant +
+    "Data/Hora pedido: " +/*data*/"-"/*hora*/;
+    txtViewPedido.setText(strNota);
+
+
+</resources>
+
+

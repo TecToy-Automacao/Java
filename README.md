@@ -12,6 +12,7 @@
 &ensp;&ensp;&ensp;- <b>T2MiniPosto</b> - app que simula vendas de combustivel, imprime um resumo de venda e NFCE usando a impressora do T2 Mini, utiliza o display de led para mostrar valores e também pode demonstrar o uso do NFC.</i><br>
 &ensp;&ensp;&ensp;- <b>D2sMercado</b> - app que simula vendas de um Mercado ou Loja, pode ser utilizado um leitor de código de barras, imprime um resumo de venda e NFCE usando a impressora do D2S.<br>
 &ensp;&ensp;&ensp;- <b>T2sBanco</b> - app que simula um terminal de consultas de Banco, por este motivo é ideal para o T2s de uma tela, com impressora. Demonstra uso do alto-falante.</p>
+&ensp;&ensp;&ensp;- <b>V2RESTAURANTE</b> - app que simula um app de pedidos de restaurante/ lanchonete, demonstra impressão e leitura de código de barras 1D e também impressão de QrCode, além da leitura por aproximação.</p>
 
 <p><b>. CAMERA_TECTOY*</b> - Fonte de demonstração para uso da Câmera Face Sense em reconhecimento facial<br>
 Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Automação, e aplicar o serviço cognitivo Microsoft para reconhecimento biométrico facial em tempo de execução!<br>

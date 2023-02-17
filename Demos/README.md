@@ -28,7 +28,9 @@
 &ensp;&ensp;&ensp;. instale o .apk<br>
 &ensp;&ensp;&ensp;. dê permissão de armazenamento para o app: em Settings/ Configurações -> Apps & Notifications -> escolha o app 'LanchoneteK2mini' na lista e clique em Permissions/ Permissões para liberar a permissão de Armazenamento, ou Storage;<br>
 &ensp;&ensp;&ensp;. coloque em modo kiosk;</p>
-
+<p>&ensp;- <b>V2proGarçom</b> - app voltado para o V2 PRO Label, que simula impressão de pedidos para cozinha ou bar, e também a impressão de conferência de mesa. Demosntra uso de leitor de aproximação e de código de barras.<br>
+&ensp;&ensp;&ensp;. baixe o apk e instale;<br>
+&ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
 <br><br>
 <p><b>Indicamos colocar a aplicação em modo Kiosk</b>, para isso vá em:<br>
   . Settings/ Configurações -> Lab -> Kiosk/ Quiosq -> habilite o modo kiosk para a aplicação, defina uma senha de 4 dígitos para quando quiser sair do modo kiosk</p>
