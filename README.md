@@ -13,12 +13,17 @@
 &ensp;&ensp;&ensp;- <b>D2sMercado</b> - app que simula vendas de um Mercado ou Loja, pode ser utilizado um leitor de código de barras, imprime um resumo de venda e NFCE usando a impressora do D2S.<br>
 &ensp;&ensp;&ensp;- <b>T2sBanco</b> - app que simula um terminal de consultas de Banco, por este motivo é ideal para o T2s de uma tela, com impressora. Demonstra uso do alto-falante.</p>
 &ensp;&ensp;&ensp;- <b>V2RESTAURANTE</b> - app que simula um app de pedidos de restaurante/ lanchonete, demonstra impressão e leitura de código de barras 1D e também impressão de QrCode, além da leitura por aproximação.</p>
-
+&ensp;&ensp;&ensp;- <b>testeWebView</b> - fonte que demonstra como ter um webview sem barra de navegação. Feito para teste no M2 MAX.</p>
+<br>
 <p><b>. CAMERA_TECTOY*</b> - Fonte de demonstração para uso da Câmera Face Sense em reconhecimento facial<br>
 Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Automação, e aplicar o serviço cognitivo Microsoft para reconhecimento biométrico facial em tempo de execução!<br>
   <b>Exato!</b> <i>Agora você pode usar toda linha de câmeras Tectoy com reconhecimento biométrico facial.</i><br>
 <i>* Código desenvolvido em Java Script</i></p>
+
+
 <br>
+
+
 <p>. automacao - Exemplo utilizando AIDL fornecido pela SUNMI para os equipamentos da TecToy Automação (condicionado ao modelo do equipamento).</p>
 
 <br>

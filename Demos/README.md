@@ -31,6 +31,11 @@
 <p>&ensp;- <b>V2proGarçom</b> - app voltado para o V2 PRO Label, que simula impressão de pedidos para cozinha ou bar, e também a impressão de conferência de mesa. Demosntra uso de leitor de aproximação e de código de barras.<br>
 &ensp;&ensp;&ensp;. baixe o apk e instale;<br>
 &ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
+<p>&ensp;- <b>TecToyWebView</b> - demonstração para o M2 MAX, que abre o site da TecToy em um WebView, sem barras de navegação.<br>
+&ensp;&ensp;&ensp;. baixe o apk e instale;<br>
+&ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
+
+
 <br><br>
 <p><b>Indicamos colocar a aplicação em modo Kiosk</b>, para isso vá em:<br>
   . Settings/ Configurações -> Lab -> Kiosk/ Quiosq -> habilite o modo kiosk para a aplicação, defina uma senha de 4 dígitos para quando quiser sair do modo kiosk</p>
