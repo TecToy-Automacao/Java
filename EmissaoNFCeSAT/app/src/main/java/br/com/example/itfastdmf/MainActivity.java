@@ -9,13 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
+import com.phi.gertec.sat.satger.SatGerLib; //quando usando SAT EPSON
 import br.com.daruma.framework.mobile.DarumaMobile;
-import br.com.daruma.framework.mobile.exception.DarumaException;
 
 public class MainActivity extends Activity {
 
@@ -25,6 +20,8 @@ public class MainActivity extends Activity {
         char[] registroSAT = new char[200];
         int numDocs=0;
 
+        String strAux; ///msg de retorno
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -33,6 +30,11 @@ public class MainActivity extends Activity {
             dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
 //          dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(NAME=InnerPrinter;ATTEMPTS=100;TIMEOUT=10000)");
 //          dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(LOGMEMORIA=200;TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@SOCKET(HOST=192.168.210.94;PORT=9100;)")
+
+            //inicializando SAT EPSON
+            SatGerLib objEpson = new SatGerLib(this, null);
+            dmf.iniciarSatEPSON(objEpson);
+
             String strVersao = "";
             strVersao = dmf.retornaVersao();  //versão da biblioteca DMF em uso
             TextView txtVersao = (TextView) findViewById(R.id.txtVersao);
@@ -41,19 +43,16 @@ public class MainActivity extends Activity {
             Button btnImp = (Button) findViewById(R.id.btnImprimi);
             btnImp.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Retorno da impressão:";
                     Thread thrImp;
                     try {
                         thrImp = new Thread(imprimir);
                         thrImp.start();
                         thrImp.join();
-                        Toast.makeText(MainActivity.this, "Comandos Impressão finalizados", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage(strAux);
-                        builder.show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
 
                 };
             });
@@ -62,17 +61,16 @@ public class MainActivity extends Activity {
             btnConfig.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Configurações: ";
                     Thread thrCgf;
                     try {
                         thrCgf = new Thread(configura);
                         thrCgf.start();
                         thrCgf.join();
-                        Toast.makeText(MainActivity.this, "Configurou NFCE", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Erro ao configurar NFCE: "+  strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -80,17 +78,17 @@ public class MainActivity extends Activity {
             btnNFCE.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Imprime DANFE";
                     Thread thrImp;
                     try {
                         thrImp = new Thread(nfceImp);
                         thrImp.start();
                         thrImp.join();
-                        Toast.makeText(MainActivity.this, "Imprimiu NFCE", Toast.LENGTH_SHORT).show();
+
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Erro ao imprimir NFCE: "+  strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -98,17 +96,16 @@ public class MainActivity extends Activity {
             btnVdNFCE.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Venda NFCE";
                     Thread thrVendNFCE;
                     try {
                         thrVendNFCE = new Thread(fazVenda);
                         thrVendNFCE.start();
                         thrVendNFCE.join();
-                        Toast.makeText(MainActivity.this, "Venda NFCE feita com sucesso", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Venda para NFCE apresentou erro: "+ strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -116,7 +113,7 @@ public class MainActivity extends Activity {
             btnCncNFCE.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Cancelar NFCE ";
                     Thread ThrCancNFCE;
                     try {
                         ThrCancNFCE = new Thread(cancVenda);
@@ -124,9 +121,9 @@ public class MainActivity extends Activity {
                         ThrCancNFCE.join();
                         Toast.makeText(MainActivity.this, "NFCE Cancelada com sucesso", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Cancelamento NFCE apresentou erro: "+ strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -134,16 +131,16 @@ public class MainActivity extends Activity {
             btnSAT.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "COnfigura SAT: ";
                     Thread thrSAT;
                     try {
                         thrSAT = new Thread(configura2);
                         thrSAT.start();
                         thrSAT.join();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Configuração SAT apresentou erro: "+ strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -151,16 +148,16 @@ public class MainActivity extends Activity {
             btnImpSAT.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Imprime CFe SAT ";
                     Thread thrImpSAT;
                     try {
                         thrImpSAT = new Thread(satImp);
                         thrImpSAT.start();
                         thrImpSAT.join();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Impressao do cupom SAT apresentou erro: "+ strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -168,7 +165,7 @@ public class MainActivity extends Activity {
             btnVendeSAT.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strAux = "";
+                    strAux = "Venda SAT ";
                     Thread thrVendeSAT;
                     dmf.RegAlterarValor_NFCe("CONFIGURACAO\\HabilitarSAT", "1"); //Ligando tradução de comando NFCE para SAT
                     try {
@@ -176,9 +173,9 @@ public class MainActivity extends Activity {
                         thrVendeSAT.start();
                         thrVendeSAT.join();
                     } catch (Exception e) {
-                        strAux = e.getMessage();
-                        Toast.makeText(MainActivity.this, "Vender SAT apresentou erro: "+ strAux, Toast.LENGTH_LONG).show();
+                        strAux += "ERRO["+ e.getMessage()+"]";
                     }
+                    mensagem(strAux);
                 }
             });
 
@@ -190,8 +187,9 @@ public class MainActivity extends Activity {
                 try {
                     Looper.prepare();
                     configGneToNfce();
-                } catch (DarumaException de) {
-                    throw de;
+                } catch (Exception de) {
+                    strAux += "ERRO: "+ de.getMessage();
+                    return;
                 }
             }
         };
@@ -201,9 +199,9 @@ public class MainActivity extends Activity {
             try {
                 Looper.prepare();
                 configSatTraduzido();
-                Toast.makeText(MainActivity.this, "Configurou SAT", Toast.LENGTH_SHORT).show();
-            } catch (DarumaException de) {
-                throw de;
+            } catch (Exception de) {
+                strAux += "ERRO: "+ de.getMessage();
+                return;
             }
         }
     };
@@ -218,12 +216,12 @@ public class MainActivity extends Activity {
                     try {
                         dmf.iCFImprimirParametrizado_NFCe(strXML,strXML,"",34, 1, "");
                     }catch (Exception e){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage(e.getMessage()).setNeutralButton("Ok", null);
-                        builder.show();
+                        strAux += "ERRO: "+ e.getMessage();
+                        return;
                     }
-                }catch (DarumaException de){
-                    throw de;
+                }catch (Exception de){
+                    strAux += "ERRO: "+ de.getMessage();
+                    return;
                 }
             }
         };
@@ -237,12 +235,11 @@ public class MainActivity extends Activity {
                         dmf.iImprimirCFe_SAT("CFe35211261099008000141599000167120002480289418.xml", "1");
                         Toast.makeText(MainActivity.this, "Imprimiu SAT", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage(e.getMessage()).setNeutralButton("Ok", null);
-                        builder.show();
+                        strAux += "ERRO: "+ e.getMessage();
                     }
-                }catch (DarumaException de){
-                    throw de;
+                }catch (Exception de){
+                    strAux += "ERRO: "+ de.getMessage();
+                    return;
                 }
             }
         };
@@ -256,12 +253,11 @@ public class MainActivity extends Activity {
                 try {
                     venderGenerico();
                 }catch (Exception e){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
-                    builder.show();
+                    strAux += "ERRO: "+ e.getMessage();
                 }
-            } catch (DarumaException de) {
-                throw de;
+            } catch (Exception de) {
+                strAux += "ERRO: "+ de.getMessage();
+                return;
             }
         }
     };
@@ -277,8 +273,9 @@ public class MainActivity extends Activity {
                     builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
                     builder.show();
                 }
-            } catch (DarumaException de) {
-                throw de;
+            } catch (Exception de) {
+                strAux += "ERRO: "+ de.getMessage();
+                return;
             }
         }
     };
@@ -298,12 +295,12 @@ public class MainActivity extends Activity {
                             + "--------------------------------"+ ((char) 0x0A)+ ((char) 0x0A)+((char) 0x0A)+ ((char) 0x0A)+ "");
                     //dmf.fecharComunicacao(); ///opcional se não iniciar, não precisa fechar
                 }catch (Exception e){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
-                    builder.show();
+                    strAux += "ERRO: "+ e.getMessage();
+                    return;
                 }
-            } catch (DarumaException de) {
-                throw de;
+            } catch (Exception de) {
+                strAux += "ERRO: "+ de.getMessage();
+                return;
             }
         }
     };
@@ -345,7 +342,7 @@ public class MainActivity extends Activity {
 
         void configSatTraduzido() {
             /// DADOS ABAIXO SÃO DO SAT DA CSDEVICES - KIT DESENVOLVIMENTO.
-            dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
+            /*dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
             dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "SATCR");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\Impressora", "EPSON");
@@ -354,6 +351,22 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\signAC", "SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\CNPJ", "30832338000170");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\IE", "111111111111");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\cRegTribISSQN", "3");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\indRatISSQN", "N");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\VersaoDadosEnt", "0.07");
+            dmf.RegAlterarValor_NFCe("CONFIGURACAO\\HabilitarSAT", "1");
+            */
+
+            /// DADOS ABAIXO SÃO DO SAT A-10 Epson - KIT DESENVOLVIMENTO.
+            dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
+            dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "EPSON");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\Impressora", "EPSON"); ///Impressora do T2S.
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\codigoDeAtivacao", "00000000");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\CNPJ", "16716114000172");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\signAC", "SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\CNPJ", "03654119000176");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\IE", "000052619494");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\cRegTribISSQN", "3");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\indRatISSQN", "N");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\VersaoDadosEnt", "0.07");
@@ -373,5 +386,9 @@ public class MainActivity extends Activity {
             dmf.aCFTotalizar_NFCe("D$", "0.01");//Totalizando venda
             dmf.aCFEfetuarPagamento_NFCe("Dinheiro", "15.99"); //pagamento pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
             dmf.tCFEncerrar_NFCe("Teste de venda utilizando DMF Android IT FAST.");
+        }
+
+        void mensagem(String msg){
+            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
         }
     }
