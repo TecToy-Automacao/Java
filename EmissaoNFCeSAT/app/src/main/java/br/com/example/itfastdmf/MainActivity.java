@@ -10,31 +10,79 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phi.gertec.sat.satger.SatGerLib; //quando usando SAT EPSON
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import br.com.daruma.framework.mobile.DarumaMobile;
+import br.com.daruma.framework.mobile.SatCallback;
+import br.com.itfast.tectoy.Dispositivo;
+import br.com.itfast.tectoy.TecToy;
 
 public class MainActivity extends Activity {
 
         private DarumaMobile dmf;
+        private TecToy objTecToy;
         int iRet = 0;
         char[] resposta = new char[50];
         char[] registroSAT = new char[200];
         int numDocs=0;
 
-        String strAux; ///msg de retorno
+        ///Formatações de texto
+
+    String centro = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x31);
+    String deslCentro = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x30);
+    String direita = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x32);
+    String deslDireita = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x30);
+    String extra = "" + ((char) 0x1B) + ((char) 0x21) + ((char) 0x16);
+    String deslExtra = "" + ((char) 0x1B) + ((char) 0x21) + ((char) 0x00);
+    String negrito = "" + ((char) 0x1B) + ((char) 0x45) + ((char) 0x31);
+    String deslNegrito = "" + ((char) 0x1B) + ((char) 0x45) + ((char) 0x30);
+    String invetImp = ""+((char) 0x1D) + ((char) 0x42) + ((char) 0x31);
+    String desligInvert= ""+ ((char) 0x1D) + ((char) 0x42) + ((char) 0x30);
+
+    String strAux; ///msg de retorno
+    String cmdHead;
+    String qrcode;
+
+
+    ///Callback que ao encerrar venda SAT pega o conteúdo do XML da venda SAT
+    private SatCallback satCallback = new SatCallback() {
+        @Override
+        public void XmlRetorno(String strXml) {
+            runOnUiThread(new Runnable() {
+                @Override public void run() {
+                    Toast.makeText(MainActivity.this.getBaseContext(), strXml, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    };
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            //instancia a biblioiteca Android e seleciona a impressão via Bluetooth por address default
-            dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
+            // instancia a biblioteca Android para emissão de DOCs fiscais, e seta dispositivo tectoy de impressão.
+            dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@DISPOSITIVO(NAME=T2S)");
+            //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por address default
+            // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
 //          dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(NAME=InnerPrinter;ATTEMPTS=100;TIMEOUT=10000)");
 //          dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(LOGMEMORIA=200;TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@SOCKET(HOST=192.168.210.94;PORT=9100;)")
+
+            //instancia objeto da classe Tectoy usada para impressão de texto livre
+            objTecToy = new TecToy(Dispositivo.T2S, MainActivity.this.getApplicationContext());
+
+
+            //Seta callback para receber XML de retorno de venda e cancelamento do SAT
+            dmf.setSatCallback(satCallback);
 
             //inicializando SAT EPSON
             SatGerLib objEpson = new SatGerLib(this, null);
             dmf.iniciarSatEPSON(objEpson);
 
+
+            //verificando a versão da IT4R utilizada
             String strVersao = "";
             strVersao = dmf.retornaVersao();  //versão da biblioteca DMF em uso
             TextView txtVersao = (TextView) findViewById(R.id.txtVersao);
@@ -43,16 +91,18 @@ public class MainActivity extends Activity {
             Button btnImp = (Button) findViewById(R.id.btnImprimi);
             btnImp.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    strAux = "Retorno da impressão:";
-                    Thread thrImp;
-                    try {
-                        thrImp = new Thread(imprimir);
-                        thrImp.start();
-                        thrImp.join();
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
-                    }
-                    mensagem(strAux);
+
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date date = new Date();
+                    cmdHead = invetImp+ centro + extra + negrito + "          * * * T E C T O Y * * *          " + deslNegrito + deslExtra +"\n"+ desligInvert ;
+                    cmdHead +=  dateFormat.format(date) + "\n";
+                    cmdHead += centro + extra + "Teste formatado" + " / " + "Suporte" + deslExtra + "\n\n";
+                    cmdHead += deslCentro+ extra + "Fonte extra" + " - " + "TecToy Automacao" + deslExtra + "\n\n";
+                    cmdHead += centro + extra + negrito + " Resumo do Pedido " + deslNegrito + deslExtra + "\n\n";
+                    cmdHead += deslCentro+"\n\n\n\n";
+                    objTecToy.imprimir(cmdHead);
+                    objTecToy.imprimirQrCode("https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43230306354976000149650649555659931913106361|2|2|1|DA7D61882BC5BA3965D5AD8556EA8A6208A6FF93", "L", 3);
+                    objTecToy.acionarGuilhotina();
 
                 };
             });
@@ -131,7 +181,7 @@ public class MainActivity extends Activity {
             btnSAT.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    strAux = "COnfigura SAT: ";
+                    strAux = "Configura SAT: ";
                     Thread thrSAT;
                     try {
                         thrSAT = new Thread(configura2);
@@ -172,16 +222,30 @@ public class MainActivity extends Activity {
                         thrVendeSAT = new Thread(fazVenda);
                         thrVendeSAT.start();
                         thrVendeSAT.join();
+                        char strCod[] = new char[5];
+                        char strmsg[] = new char[1024];
+                        dmf.rAvisoErro_NFCe(strCod, strmsg);
+                        mensagem("Mensagem retornada AvisoErro: ["+ new String(strCod).trim()+ "]"+new String(strmsg).trim());
                     } catch (Exception e) {
                         strAux += "ERRO["+ e.getMessage()+"]";
+                        mensagem(strAux);
+                        return;
                     }
-                    mensagem(strAux);
+                }
+            });
+
+            Button btnStatusOPsat = (Button) findViewById(R.id.btnStatusOPsat);
+            btnStatusOPsat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String retSat = dmf.rConsultaStatusOperacional();
+                    mensagem("Status Operacional: " + retSat);
                 }
             });
 
     }
 
-    private Runnable configura = new Runnable() {
+        private Runnable configura = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -193,7 +257,7 @@ public class MainActivity extends Activity {
                 }
             }
         };
-    private Runnable configura2 = new Runnable() {
+        private Runnable configura2 = new Runnable() {
         @Override
         public void run() {
             try {
@@ -205,8 +269,6 @@ public class MainActivity extends Activity {
             }
         }
     };
-
-
         private Runnable nfceImp = new Runnable() {
             @Override
             public void run() {
@@ -225,7 +287,6 @@ public class MainActivity extends Activity {
                 }
             }
         };
-
         private Runnable satImp = new Runnable() {
             @Override
             public void run() {
@@ -233,7 +294,7 @@ public class MainActivity extends Activity {
                     Looper.prepare();
                     try {//colocar um xml de sat na pasta da aplicação e ajustar o seu nome no comando abaixo
                         dmf.iImprimirCFe_SAT("CFe35211261099008000141599000167120002480289418.xml", "1");
-                        Toast.makeText(MainActivity.this, "Imprimiu SAT", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Imprimiu SAT" + iRet, Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         strAux += "ERRO: "+ e.getMessage();
                     }
@@ -243,9 +304,7 @@ public class MainActivity extends Activity {
                 }
             }
         };
-
-
-    private Runnable fazVenda = new Runnable() {
+        private Runnable fazVenda = new Runnable() {
         @Override
         public void run() {
             try {
@@ -254,6 +313,7 @@ public class MainActivity extends Activity {
                     venderGenerico();
                 }catch (Exception e){
                     strAux += "ERRO: "+ e.getMessage();
+                    return;
                 }
             } catch (Exception de) {
                 strAux += "ERRO: "+ de.getMessage();
@@ -261,42 +321,18 @@ public class MainActivity extends Activity {
             }
         }
     };
-    private Runnable cancVenda = new Runnable() {
+        private Runnable cancVenda = new Runnable() {
         @Override
         public void run() {
             try {
                 Looper.prepare();
                 try {
                     dmf.tCFCancelar_NFCe("","","","","");
+
                 }catch (Exception e){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
                     builder.show();
-                }
-            } catch (Exception de) {
-                strAux += "ERRO: "+ de.getMessage();
-                return;
-            }
-        }
-    };
-    private Runnable imprimir = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Looper.prepare();
-                try {
-                    //dmf.iniciarComunicacao(); //opcional
-                    dmf.enviarComando(""+((char) 0x1B)+((char) 0x40)); ////esc @
-                    dmf.enviarComando("--------------------------------"+((char) 0x1B)+""+((char) 0x45)+ "E"+"EXEMPLO IMPRESSAO"
-                            + ((char) 0x1B) +((char) 0x45)+((char) 0x0A)+((char) 0x0A)+ "imprimindo teste 0123456789"
-                            + ((char) 0x0A)+((char) 0x0A)+  ((char) 0x1B) +((char) 0x45)+ "E"+"Exemplo utilizando a DMF ITFast"+((char) 0x0A)
-                            + ((char) 0x1B) +((char) 0x45)+ ((char) 0x0A)+ "Exemplo utilizando a DMF ITFast"+((char) 0x0A)
-                            + ((char) 0x0A)+((char) 0x0A)+ "Exemplo utilizando a DMF ITFast"+((char) 0x0A)
-                            + "--------------------------------"+ ((char) 0x0A)+ ((char) 0x0A)+((char) 0x0A)+ ((char) 0x0A)+ "");
-                    //dmf.fecharComunicacao(); ///opcional se não iniciar, não precisa fechar
-                }catch (Exception e){
-                    strAux += "ERRO: "+ e.getMessage();
-                    return;
                 }
             } catch (Exception de) {
                 strAux += "ERRO: "+ de.getMessage();
@@ -342,10 +378,10 @@ public class MainActivity extends Activity {
 
         void configSatTraduzido() {
             /// DADOS ABAIXO SÃO DO SAT DA CSDEVICES - KIT DESENVOLVIMENTO.
-            /*dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
+           /* dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
             dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "SATCR");
-            dmf.RegAlterarValor_SAT("CONFIGURACAO\\Impressora", "EPSON");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\Impressora", "TECTOY_80");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\codigoDeAtivacao", "12345678");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\CNPJ", "16716114000172");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\signAC", "SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT");
@@ -355,7 +391,13 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\indRatISSQN", "N");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\VersaoDadosEnt", "0.07");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\HabilitarSAT", "1");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\LocalArquivos", "sdcard/SAT"); ///definindo local para gravação dos arquivos.
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
+            dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "1"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
+
             */
+
+
 
             /// DADOS ABAIXO SÃO DO SAT A-10 Epson - KIT DESENVOLVIMENTO.
             dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
@@ -371,6 +413,10 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\indRatISSQN", "N");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\VersaoDadosEnt", "0.07");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\HabilitarSAT", "1");
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\LocalArquivos", "sdcard/SAT"); ///definindo local para gravação dos arquivos, pasta deve existir a IT4R não cria pasta..
+            dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
+            dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "2"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
+
         }
 
         void venderGenerico(){
