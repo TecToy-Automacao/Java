@@ -1,7 +1,9 @@
 package br.com.example.itfastdmf;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
@@ -9,7 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.phi.gertec.sat.satger.SatGerLib; //quando usando SAT EPSON
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.phi.gertec.sat.satger.SatGerLib; //Quando usando SAT EPSON
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,8 +35,7 @@ public class MainActivity extends Activity {
         char[] registroSAT = new char[200];
         int numDocs=0;
 
-        ///Formatações de texto
-
+   ///Formatações de texto
     String centro = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x31);
     String deslCentro = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x30);
     String direita = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x32);
@@ -45,6 +50,29 @@ public class MainActivity extends Activity {
     String strAux; ///msg de retorno
     String cmdHead;
     String qrcode;
+    char strCod[] = new char[5];
+    char strmsg[] = new char[1024];
+
+///Comandos para conferir se tem permissão antes de rodar.
+    private static final int STORAGE_PERMISSION_CODE = 101;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Permissão de armazenado concedida", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Permissão de armazenado negada", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void checkPermission(String permission, int requestCode) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] { permission }, requestCode);
+        }
+    }
 
 
     ///Callback que ao encerrar venda SAT pega o conteúdo do XML da venda SAT
@@ -63,185 +91,199 @@ public class MainActivity extends Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            // instancia a biblioteca Android para emissão de DOCs fiscais, e seta dispositivo tectoy de impressão.
-            dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@DISPOSITIVO(NAME=T2S)");
-            //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por address default
-            // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
-//          dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(NAME=InnerPrinter;ATTEMPTS=100;TIMEOUT=10000)");
-//          dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(LOGMEMORIA=200;TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@SOCKET(HOST=192.168.210.94;PORT=9100;)")
+            try {
 
-            //instancia objeto da classe Tectoy usada para impressão de texto livre
-            objTecToy = new TecToy(Dispositivo.T2S, MainActivity.this.getApplicationContext());
+                /// permissões de leitura e escrita de arquivos.
+                checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+                checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
 
+                // instancia a biblioteca Android para emissão de DOCs fiscais, e seta dispositivo tectoy de impressão.
+                dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@DISPOSITIVO(NAME=T2S)");
+                //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por address default
+                // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
+                 //dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(NAME=InnerPrinter;ATTEMPTS=100;TIMEOUT=10000)");
+                // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(LOGMEMORIA=200;TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@SOCKET(HOST=192.168.210.94;PORT=9100;)")
 
-            //Seta callback para receber XML de retorno de venda e cancelamento do SAT
-            dmf.setSatCallback(satCallback);
-
-            //inicializando SAT EPSON
-            SatGerLib objEpson = new SatGerLib(this, null);
-            dmf.iniciarSatEPSON(objEpson);
+                //instancia objeto da classe Tectoy usada para impressão de texto livre
+                objTecToy = new TecToy(Dispositivo.T2S, MainActivity.this.getApplicationContext());
 
 
-            //verificando a versão da IT4R utilizada
-            String strVersao = "";
-            strVersao = dmf.retornaVersao();  //versão da biblioteca DMF em uso
-            TextView txtVersao = (TextView) findViewById(R.id.txtVersao);
-            txtVersao.setText(strVersao);
+                //Seta callback para receber XML de retorno de venda e cancelamento do SAT
+                dmf.setSatCallback(satCallback);
 
-            Button btnImp = (Button) findViewById(R.id.btnImprimi);
-            btnImp.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                //inicializando SAT EPSON
+                 SatGerLib objEpson = new SatGerLib(this, null);
+                 dmf.iniciarSatEPSON(objEpson);
 
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    Date date = new Date();
-                    cmdHead = invetImp+ centro + extra + negrito + "          * * * T E C T O Y * * *          " + deslNegrito + deslExtra +"\n"+ desligInvert ;
-                    cmdHead +=  dateFormat.format(date) + "\n";
-                    cmdHead += centro + extra + "Teste formatado" + " / " + "Suporte" + deslExtra + "\n\n";
-                    cmdHead += deslCentro+ extra + "Fonte extra" + " - " + "TecToy Automacao" + deslExtra + "\n\n";
-                    cmdHead += centro + extra + negrito + " Resumo do Pedido " + deslNegrito + deslExtra + "\n\n";
-                    cmdHead += deslCentro+"\n\n\n\n";
-                    objTecToy.imprimir(cmdHead);
-                    objTecToy.imprimirQrCode("https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43230306354976000149650649555659931913106361|2|2|1|DA7D61882BC5BA3965D5AD8556EA8A6208A6FF93", "L", 3);
-                    objTecToy.acionarGuilhotina();
 
-                };
-            });
+                //verificando a versão da IT4R utilizada
+                String strVersao = "";
+                strVersao = dmf.retornaVersao();  //versão da biblioteca DMF em uso
+                TextView txtVersao = (TextView) findViewById(R.id.txtVersao);
+                txtVersao.setText(strVersao);
 
-            Button btnConfig = findViewById(R.id.btnCfg); // configura ambiente NFCE
-            btnConfig.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Configurações: ";
-                    Thread thrCgf;
-                    try {
-                        thrCgf = new Thread(configura);
-                        thrCgf.start();
-                        thrCgf.join();
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
+                Button btnImp = (Button) findViewById(R.id.btnImprimi);
+                btnImp.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date date = new Date();
+                        cmdHead = invetImp + centro + extra + negrito + "          * * * T E C T O Y * * *          " + deslNegrito + deslExtra + "\n" + desligInvert;
+                        cmdHead += dateFormat.format(date) + "\n";
+                        cmdHead += centro + extra + "Teste formatado" + " / " + "Suporte" + deslExtra + "\n\n";
+                        cmdHead += deslCentro + extra + "Fonte extra" + " - " + "TecToy Automacao" + deslExtra + "\n\n";
+                        cmdHead += centro + extra + negrito + " Resumo do Pedido " + deslNegrito + deslExtra + "\n\n";
+                        cmdHead += deslCentro + "\n\n\n\n";
+                        objTecToy.imprimir(cmdHead);
+                        objTecToy.imprimirQrCode("https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43230306354976000149650649555659931913106361|2|2|1|DA7D61882BC5BA3965D5AD8556EA8A6208A6FF93", "L", 3);
+                        objTecToy.acionarGuilhotina();
+
                     }
-                    mensagem(strAux);
-                }
-            });
+                });
 
-            Button btnNFCE = findViewById(R.id.btnDanfe); //Imprime DANFE NFCE
-            btnNFCE.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Imprime DANFE";
-                    Thread thrImp;
-                    try {
-                        thrImp = new Thread(nfceImp);
-                        thrImp.start();
-                        thrImp.join();
-
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
-                    }
-                    mensagem(strAux);
-                }
-            });
-
-            Button btnVdNFCE = (Button) findViewById(R.id.btnVendeNFCE);//realiza venda SAT - emissão/geração da venda e impressão
-            btnVdNFCE.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Venda NFCE";
-                    Thread thrVendNFCE;
-                    try {
-                        thrVendNFCE = new Thread(fazVenda);
-                        thrVendNFCE.start();
-                        thrVendNFCE.join();
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
-                    }
-                    mensagem(strAux);
-                }
-            });
-
-            Button btnCncNFCE = (Button) findViewById(R.id.btnCancNFCE);//Cancela venda NFCe
-            btnCncNFCE.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Cancelar NFCE ";
-                    Thread ThrCancNFCE;
-                    try {
-                        ThrCancNFCE = new Thread(cancVenda);
-                        ThrCancNFCE.start();
-                        ThrCancNFCE.join();
-                        Toast.makeText(MainActivity.this, "NFCE Cancelada com sucesso", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
-                    }
-                    mensagem(strAux);
-                }
-            });
-
-            Button btnSAT = findViewById(R.id.btnCfgSAT);//configura ambiente SAT
-            btnSAT.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Configura SAT: ";
-                    Thread thrSAT;
-                    try {
-                        thrSAT = new Thread(configura2);
-                        thrSAT.start();
-                        thrSAT.join();
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
-                    }
-                    mensagem(strAux);
-                }
-            });
-
-            Button btnImpSAT = (Button) findViewById(R.id.btnCfe);//imprime CFe SAT - precisa ter o arquivo na pasta
-            btnImpSAT.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Imprime CFe SAT ";
-                    Thread thrImpSAT;
-                    try {
-                        thrImpSAT = new Thread(satImp);
-                        thrImpSAT.start();
-                        thrImpSAT.join();
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
-                    }
-                    mensagem(strAux);
-                }
-            });
-
-            Button btnVendeSAT = (Button) findViewById(R.id.btnVendeSAT);//realiza venda SAT - emissão/geração da venda e impressão
-            btnVendeSAT.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    strAux = "Venda SAT ";
-                    Thread thrVendeSAT;
-                    dmf.RegAlterarValor_NFCe("CONFIGURACAO\\HabilitarSAT", "1"); //Ligando tradução de comando NFCE para SAT
-                    try {
-                        thrVendeSAT = new Thread(fazVenda);
-                        thrVendeSAT.start();
-                        thrVendeSAT.join();
-                        char strCod[] = new char[5];
-                        char strmsg[] = new char[1024];
-                        dmf.rAvisoErro_NFCe(strCod, strmsg);
-                        mensagem("Mensagem retornada AvisoErro: ["+ new String(strCod).trim()+ "]"+new String(strmsg).trim());
-                    } catch (Exception e) {
-                        strAux += "ERRO["+ e.getMessage()+"]";
+                Button btnConfig = findViewById(R.id.btnCfg); // configura ambiente NFCE
+                btnConfig.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Configurações: ";
+                        Thread thrCgf;
+                        try {
+                            thrCgf = new Thread(configura);
+                            thrCgf.start();
+                            thrCgf.join();
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                        }
                         mensagem(strAux);
-                        return;
                     }
-                }
-            });
+                });
 
-            Button btnStatusOPsat = (Button) findViewById(R.id.btnStatusOPsat);
-            btnStatusOPsat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String retSat = dmf.rConsultaStatusOperacional();
-                    mensagem("Status Operacional: " + retSat);
-                }
-            });
+                Button btnNFCE = findViewById(R.id.btnDanfe); //Imprime DANFE NFCE
+                btnNFCE.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Imprime DANFE";
+                        Thread thrImp;
+                        try {
+                            thrImp = new Thread(nfceImp);
+                            thrImp.start();
+                            thrImp.join();
+
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                        }
+                        mensagem(strAux);
+                    }
+                });
+
+                Button btnVdNFCE = (Button) findViewById(R.id.btnVendeNFCE);//realiza venda SAT - emissão/geração da venda e impressão
+                btnVdNFCE.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Venda NFCE";
+                        Thread thrVendNFCE;
+                        try {
+                            thrVendNFCE = new Thread(fazVendaNFCE);
+                            thrVendNFCE.start();
+                            thrVendNFCE.join();
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                        }
+                        mensagem(strAux);
+                    }
+                });
+
+                Button btnCncNFCE = (Button) findViewById(R.id.btnCancNFCE);//Cancela venda NFCe
+                btnCncNFCE.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Cancelar NFCE ";
+                        Thread ThrCancNFCE;
+                        try {
+                            ThrCancNFCE = new Thread(cancVenda);
+                            ThrCancNFCE.start();
+                            ThrCancNFCE.join();
+                            //Toast.makeText(MainActivity.this, "NFCE Cancelada com sucesso", Toast.LENGTH_SHORT).show();
+                            strCod = new char[5];
+                            strmsg = new char[1024];
+                            dmf.rAvisoErro_NFCe(strCod, strmsg);
+                            mensagem("Mensagem retornada AvisoErro: [" + new String(strCod).trim() + "]" + new String(strmsg).trim());
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                        }
+                        mensagem(strAux);
+                    }
+                });
+
+                Button btnSAT = findViewById(R.id.btnCfgSAT);//configura ambiente SAT
+                btnSAT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Configura SAT: ";
+                        Thread thrSAT;
+                        try {
+                            thrSAT = new Thread(configura2);
+                            thrSAT.start();
+                            thrSAT.join();
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                        }
+                        mensagem(strAux);
+                    }
+                });
+
+                Button btnImpSAT = (Button) findViewById(R.id.btnCfe);//imprime CFe SAT - precisa ter o arquivo na pasta
+                btnImpSAT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Imprime CFe SAT ";
+                        Thread thrImpSAT;
+                        try {
+                            thrImpSAT = new Thread(satImp);
+                            thrImpSAT.start();
+                            thrImpSAT.join();
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                        }
+                        mensagem(strAux);
+                    }
+                });
+
+                Button btnVendeSAT = (Button) findViewById(R.id.btnVendeSAT);//realiza venda SAT - emissão/geração da venda e impressão
+                btnVendeSAT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        strAux = "Venda SAT ";
+                        Thread thrVendeSAT;
+                        dmf.RegAlterarValor_NFCe("CONFIGURACAO\\HabilitarSAT", "1"); //Ligando tradução de comando NFCE para SAT
+                        try {
+                            thrVendeSAT = new Thread(fazVendaSAT);
+                            thrVendeSAT.start();
+                            thrVendeSAT.join();
+                            strCod = new char[5];
+                            strmsg = new char[1024];
+                            dmf.rAvisoErro_NFCe(strCod, strmsg);
+                            mensagem("Mensagem retornada AvisoErro: [" + new String(strCod).trim() + "]" + new String(strmsg).trim());
+                        } catch (Exception e) {
+                            strAux += "ERRO[" + e.getMessage() + "]";
+                            mensagem(strAux);
+                            return;
+                        }
+                    }
+                });
+
+                Button btnStatusOPsat = (Button) findViewById(R.id.btnStatusOPsat);
+                btnStatusOPsat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String retSat = dmf.rConsultaStatusOperacional();
+                        mensagem("Status Operacional: " + retSat);
+                    }
+                });
+            }catch(Exception e){
+                Toast.makeText(MainActivity.this, "APP não tem permissões: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+            }
 
     }
 
@@ -304,13 +346,31 @@ public class MainActivity extends Activity {
                 }
             }
         };
-        private Runnable fazVenda = new Runnable() {
+        private Runnable fazVendaSAT = new Runnable() {
         @Override
         public void run() {
             try {
                 Looper.prepare();
                 try {
-                    venderGenerico();
+                    venderTradSAT();
+                }catch (Exception e){
+                    strAux += "ERRO: "+ e.getMessage();
+                    return;
+                }
+            } catch (Exception de) {
+                strAux += "ERRO: "+ de.getMessage();
+                return;
+            }
+        }
+    };
+
+    private Runnable fazVendaNFCE = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Looper.prepare();
+                try {
+                    venderNFCE();
                 }catch (Exception e){
                     strAux += "ERRO: "+ e.getMessage();
                     return;
@@ -328,7 +388,6 @@ public class MainActivity extends Activity {
                 Looper.prepare();
                 try {
                     dmf.tCFCancelar_NFCe("","","","","");
-
                 }catch (Exception e){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
@@ -378,7 +437,7 @@ public class MainActivity extends Activity {
 
         void configSatTraduzido() {
             /// DADOS ABAIXO SÃO DO SAT DA CSDEVICES - KIT DESENVOLVIMENTO.
-           /* dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
+            dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
             dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "SATCR");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\Impressora", "TECTOY_80");
@@ -395,10 +454,10 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "1"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
 
-            */
 
 
 
+/*
             /// DADOS ABAIXO SÃO DO SAT A-10 Epson - KIT DESENVOLVIMENTO.
             dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
             dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
@@ -416,24 +475,47 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\LocalArquivos", "sdcard/SAT"); ///definindo local para gravação dos arquivos, pasta deve existir a IT4R não cria pasta..
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "2"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
-
+*/
         }
 
-        void venderGenerico(){
+        void venderTradSAT(){
             dmf.aCFAbrir_NFCe("","","","","","","","","");//Abertura de venda sem identificação consumidor e usando numeração automatica de NFCe. No SAT é o equipamento que indica número da venda.
             dmf.aCFConfImposto_NFCe("ICMS00", "0;00;3;;07,00;;;;");//configurando imposto para o proximo item
             dmf.aCFConfPisNT_NFCe(String.valueOf("06"));
             dmf.aCFConfCofinsNT_NFCe(String.valueOf("06"));
             dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "1110", "18063210", "5102", "UN", "CAFE", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
-            dmf.aCFConfImposto_NFCe("ICMS00", "0;00;3;;07,00;;;;");// configurando imposto para mais um item
+            dmf.aCFConfImposto_NFCe("ICMS40", "0;40;;;");// configurando imposto ICMS40 para um item QUANDO TRADUÇÃO SAT
             dmf.aCFConfPisNT_NFCe(String.valueOf("07"));
             dmf.aCFConfCofinsNT_NFCe(String.valueOf("07"));
             dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "2222", "18063210", "5102", "UN", "AGUA", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+            dmf.aCFConfImposto_NFCe("ICMS40", "0;60;;;");// configurando imposto ICMS60 para  um item QUANDO TRADUCAO SAT
+            dmf.aCFConfPisNT_NFCe(String.valueOf("07"));
+            dmf.aCFConfCofinsNT_NFCe(String.valueOf("07"));
+            dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "3333", "18063210", "5102", "UN", "teste", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+
             dmf.aCFTotalizar_NFCe("D$", "0.01");//Totalizando venda
-            dmf.aCFEfetuarPagamento_NFCe("Dinheiro", "15.99"); //pagamento pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
+            dmf.aCFEfetuarPagamento_NFCe("Dinheiro", "35.99"); //pagamento pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
             dmf.tCFEncerrar_NFCe("Teste de venda utilizando DMF Android IT FAST.");
         }
+    void venderNFCE(){
+        dmf.aCFAbrir_NFCe("","","","","","","","","");//Abertura de venda sem identificação consumidor e usando numeração automatica de NFCe. No SAT é o equipamento que indica número da venda.
+        dmf.aCFConfImposto_NFCe("ICMS00", "0;00;3;;07,00;;;;");//configurando imposto para o proximo item
+        dmf.aCFConfPisNT_NFCe(String.valueOf("06"));
+        dmf.aCFConfCofinsNT_NFCe(String.valueOf("06"));
+        dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "1110", "18063210", "5102", "UN", "CAFE", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+        dmf.aCFConfImposto_NFCe("ICMS40", "0;40;;;");// configurando imposto ICMS40 para um item
+        dmf.aCFConfPisNT_NFCe(String.valueOf("07"));
+        dmf.aCFConfCofinsNT_NFCe(String.valueOf("07"));
+        dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "2222", "18063210", "5102", "UN", "AGUA", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+        dmf.aCFConfImposto_NFCe("ICMS60", "0;60;;;;;;;1.00;5.00;2.50;2.00;");// configurando imposto ICMS60 para  um item
+        dmf.aCFConfPisNT_NFCe(String.valueOf("07"));
+        dmf.aCFConfCofinsNT_NFCe(String.valueOf("07"));
+        dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "3333", "18063210", "5102", "UN", "teste", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
 
+        dmf.aCFTotalizar_NFCe("D$", "0.01");//Totalizando venda
+        dmf.aCFEfetuarPagamento_NFCe("Dinheiro", "35.99"); //pagamento pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
+        dmf.tCFEncerrar_NFCe("Teste de venda utilizando DMF Android IT FAST.");
+    }
         void mensagem(String msg){
             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
         }
