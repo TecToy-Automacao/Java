@@ -1,4 +1,4 @@
-#Coletores
+# Coletores
 *Exemplo para Coletores da TECTOY L2s e L2ks, utilizando a biblioteca IT4R.aar*
 
 - Para utilizar esse recurso o objeto TecToy deve ser inicializado com
