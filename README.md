@@ -21,7 +21,4 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 <i>* Código desenvolvido em Java Script</i></p>
 
 
-
-<p>. automacao - Exemplo utilizando AIDL fornecido pela SUNMI para os equipamentos da TecToy Automação (condicionado ao modelo do equipamento).</p>
-
 <br>
