@@ -19,8 +19,7 @@
 Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Automação, e aplicar o serviço cognitivo Microsoft para reconhecimento biométrico facial em tempo de execução!<br>
   <b>Exato!</b> <i>Agora você pode usar toda linha de câmeras Tectoy com reconhecimento biométrico facial.</i><br>
 <i>* Código desenvolvido em Java Script</i></p>
-<b>. Coletores</b> - Fonte de demonstração para uso da IT4R nos Coletores - L2s L2Ks para utilizarem o recurso de leitura de codigo de barrar 1D e 2D e leitura/escrita de NFC<br></p>
-<br>
+
 
 
 <p>. automacao - Exemplo utilizando AIDL fornecido pela SUNMI para os equipamentos da TecToy Automação (condicionado ao modelo do equipamento).</p>
