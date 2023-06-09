@@ -22,7 +22,4 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 <p><b>. BalnacaUranoBA37</b> - Exemplo que comunica com a balança BA37 da Urano via Bluetooth.</p>
 <p><b>. ExemploClasseTecToy</b> - Exemplo para todos os produtos de automação da TECTOY, demonstra recursos disponíveis para cada equipamento: de impressão, ler peso da balança Urano,  à uso de NFC e Câmera (para foto e pra medição de distancia/ presença).</p>
 
-
-<p>. automacao - Exemplo utilizando AIDL fornecido pela SUNMI para os equipamentos da TecToy Automação (condicionado ao modelo do equipamento).</p>
-
 <br>
