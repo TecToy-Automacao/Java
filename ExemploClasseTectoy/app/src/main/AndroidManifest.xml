@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_OWNER_DATA" />
+    <uses-permission android:name="android.permission.WRITE_OWNER_DATA" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ExemploClasseTectoy"
+        tools:targetApi="31">
+        <activity
+            android:name=".ActivityLerdIndicacao"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_LedIndicacao"
+            android:exported="false"
+            android:label="@string/title_activity_led_indicacao"
+            android:theme="@style/Theme.ExemploClasseTectoy" />
+        <activity
+            android:name=".ActivityEscreverNFC"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityBMPDisplay"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityQrCodeDisplay"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityEscreverDisplay"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityImprimirQrCode"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityImprimirImagem"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityImprimir"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

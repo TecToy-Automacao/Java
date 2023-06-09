@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:adjustViewBounds="true"
+            android:maxHeight="130dp"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/tectoy_transire" />
+        <Button
+            android:id="@+id/btnStatusImpressora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Status Impressora"
+            android:layout_marginTop="50px"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <Button
+            android:id="@+id/btnImprimir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Imprimir"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnIniciarCameraProfundidade" />
+
+        <Button
+            android:id="@+id/btnStatusGaveta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Status Gaveta"
+            android:layout_marginTop="50px"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnStatusImpressora" />
+
+        <Button
+            android:id="@+id/btnImprimirImagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Imprimir Imagem"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnStatusImpressora"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnAbrirGaveta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Abrir Gaveta"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnStatusGaveta"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnAcionarGuilhotina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Guilhotina"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnReconhecimentoFacial" />
+
+        <Button
+            android:id="@+id/btnPosicionarEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posicionar Etiqueta"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnImprimirImagem"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnImprimirQrCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Imprimir QrCode"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAbrirGaveta"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnPosicionarFinalEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Final Etiqueta"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnImprimir" />
+
+        <Button
+            android:id="@+id/btnLimparDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpar Display"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPosicionarEtiqueta"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnEscreverDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Escrever Display"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnImprimirQrCode"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnQrCodeDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="QrCode Display"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAcionarGuilhotina" />
+
+        <Button
+            android:id="@+id/btnBmpDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BMP Display"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLimparDisplay"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnEncerrarScanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Encerrar Scanner"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnEscreverDisplay"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnIniciarScanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Iniciar Scanner"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPosicionarFinalEtiqueta" />
+
+        <Button
+            android:id="@+id/btnIniciarNFC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iniciar NFC"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBmpDisplay"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnLerPesoBalanca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ler Peso Balança"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnEncerrarScanner"
+            android:width="320px"
+            android:height="150px"
+            android:layout_margin="5px"/>
+
+        <Button
+            android:id="@+id/btnEscreverNFC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Escrever NFC"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnQrCodeDisplay" />
+
+        <Button
+            android:id="@+id/btnIniciarCameraProfundidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Medir Distância"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnIniciarNFC" />
+
+        <Button
+            android:id="@+id/btnReconhecimentoFacial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Reconhecimento Facial"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLerPesoBalanca" />
+
+        <Button
+            android:id="@+id/btnLerMacBalanca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:text="Ler MAC Balança"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnIniciarScanner" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:text="Selecione dispositivo: "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <Spinner
+            android:id="@+id/spinnerDispositivos"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <Button
+            android:id="@+id/btnIniciar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iniciar"
+            app:layout_constraintStart_toEndOf="@+id/spinnerDispositivos"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <ImageView
+            android:id="@+id/imageViewIT"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxHeight="100dp"
+            android:padding="10dp"
+            android:layout_marginTop="30px"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/itfast_horizontal_logo"
+            app:layout_constraintTop_toBottomOf="@+id/btnEscreverNFC"
+        />
+
+        <TextView
+            android:id="@+id/txtDistancia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="190dp"
+            android:layout_marginEnd="163dp"
+            android:text=""
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewIT" />
+
+        <Button
+            android:id="@+id/btnDesligarLedIndicacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desligar Led Indicação"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLerMacBalanca" />
+
+        <Button
+            android:id="@+id/btnLigarLedIndicacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ligar Led Indicação"
+            android:layout_margin="5px"
+            android:width="320px"
+            android:height="150px"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnEscreverNFC" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

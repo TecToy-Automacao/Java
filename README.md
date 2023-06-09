@@ -19,7 +19,8 @@
 Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Automação, e aplicar o serviço cognitivo Microsoft para reconhecimento biométrico facial em tempo de execução!<br>
   <b>Exato!</b> <i>Agora você pode usar toda linha de câmeras Tectoy com reconhecimento biométrico facial.</i><br>
 <i>* Código desenvolvido em Java Script</i></p>
-
+<p><b>. BalnacaUranoBA37</b> - Exemplo que comunica com a balança BA37 da Urano via Bluetooth.</p>
+<p><b>. ExemploClasseTecToy</b> - Exemplo para todos os produtos de automação da TECTOY, demonstra recursos disponíveis para cada equipamento: de impressão, ler peso da balança Urano,  à uso de NFC e Câmera (para foto e pra medição de distancia/ presença).</p>
 
 
 <p>. automacao - Exemplo utilizando AIDL fornecido pela SUNMI para os equipamentos da TecToy Automação (condicionado ao modelo do equipamento).</p>
