@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.phi.gertec.sat.satger.SatGerLib; //Quando usando SAT EPSON
+import com.phi.gertec.sat.satger.SatGerLib;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -96,17 +96,22 @@ public class MainActivity extends Activity {
                 /// permissões de leitura e escrita de arquivos.
                 checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
                 checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+            }catch(Exception e){
+                Toast.makeText(MainActivity.this, "APP não tem permissões: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+            }
 
                 // instancia a biblioteca Android para emissão de DOCs fiscais, e seta dispositivo tectoy de impressão.
                 dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@DISPOSITIVO(NAME=T2S)");
                 //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por address default
-                // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
-                 //dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(NAME=InnerPrinter;ATTEMPTS=100;TIMEOUT=10000)");
+                //dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
+                //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por Nome do dispositivo
+                //dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(NAME=InnerPrinter;ATTEMPTS=100;TIMEOUT=10000)");
+                //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via IP e Porta (ethernet)
                 // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(LOGMEMORIA=200;TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@SOCKET(HOST=192.168.210.94;PORT=9100;)")
 
                 //instancia objeto da classe Tectoy usada para impressão de texto livre
                 objTecToy = new TecToy(Dispositivo.T2S, MainActivity.this.getApplicationContext());
-
 
                 //Seta callback para receber XML de retorno de venda e cancelamento do SAT
                 dmf.setSatCallback(satCallback);
@@ -226,7 +231,7 @@ public class MainActivity extends Activity {
                             thrSAT.start();
                             thrSAT.join();
                         } catch (Exception e) {
-                            strAux += "ERRO[" + e.getMessage() + "]";
+                            strAux += "ERRO [  " + e.getMessage() + "  ]";
                         }
                         mensagem(strAux);
                     }
@@ -243,7 +248,7 @@ public class MainActivity extends Activity {
                             thrImpSAT.start();
                             thrImpSAT.join();
                         } catch (Exception e) {
-                            strAux += "ERRO[" + e.getMessage() + "]";
+                            strAux += "ERRO imprimir SAT[  " + e.getMessage() + "  ]";
                         }
                         mensagem(strAux);
                     }
@@ -265,7 +270,7 @@ public class MainActivity extends Activity {
                             dmf.rAvisoErro_NFCe(strCod, strmsg);
                             mensagem("Mensagem retornada AvisoErro: [" + new String(strCod).trim() + "]" + new String(strmsg).trim());
                         } catch (Exception e) {
-                            strAux += "ERRO[" + e.getMessage() + "]";
+                            strAux += "retornou ERRO [ " + e.getMessage() + " ]";
                             mensagem(strAux);
                             return;
                         }
@@ -276,14 +281,15 @@ public class MainActivity extends Activity {
                 btnStatusOPsat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String retSat = dmf.rConsultaStatusOperacional();
-                        mensagem("Status Operacional: " + retSat);
+                        try {
+                            String retSat = dmf.rConsultaStatusOperacional();
+                            mensagem("Status Operacional: " + retSat);
+                        }catch (Exception e){
+                            mensagem("Erro ao tentar ler StatusOperacional: [  " + e.getMessage()+ "  ]");
+                            return;
+                        }
                     }
                 });
-            }catch(Exception e){
-                Toast.makeText(MainActivity.this, "APP não tem permissões: "+ e.getMessage(), Toast.LENGTH_LONG).show();
-                finish();
-            }
 
     }
 
@@ -436,7 +442,7 @@ public class MainActivity extends Activity {
         }
 
         void configSatTraduzido() {
-            /// DADOS ABAIXO SÃO DO SAT DA CSDEVICES - KIT DESENVOLVIMENTO.
+/*            /// DADOS ABAIXO SÃO DO SAT DA CSDEVICES - KIT DESENVOLVIMENTO.
             dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
             dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "SATCR");
@@ -453,11 +459,11 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\LocalArquivos", "sdcard/SAT"); ///definindo local para gravação dos arquivos.
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "1"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
+*/
 
 
 
 
-/*
             /// DADOS ABAIXO SÃO DO SAT A-10 Epson - KIT DESENVOLVIMENTO.
             dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
             dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
@@ -475,7 +481,7 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\LocalArquivos", "sdcard/SAT"); ///definindo local para gravação dos arquivos, pasta deve existir a IT4R não cria pasta..
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "2"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
-*/
+
         }
 
         void venderTradSAT(){
@@ -483,18 +489,21 @@ public class MainActivity extends Activity {
             dmf.aCFConfImposto_NFCe("ICMS00", "0;00;3;;07,00;;;;");//configurando imposto para o proximo item
             dmf.aCFConfPisNT_NFCe(String.valueOf("06"));
             dmf.aCFConfCofinsNT_NFCe(String.valueOf("06"));
-            dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "1110", "18063210", "5102", "UN", "CAFE", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+            dmf.aCFVenderCompleto_NFCe("0", "1", "7.00", "D$", "0.00", "1110", "18063210", "5102", "UN", "CAFE", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
             dmf.aCFConfImposto_NFCe("ICMS40", "0;40;;;");// configurando imposto ICMS40 para um item QUANDO TRADUÇÃO SAT
             dmf.aCFConfPisNT_NFCe(String.valueOf("07"));
             dmf.aCFConfCofinsNT_NFCe(String.valueOf("07"));
-            dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "2222", "18063210", "5102", "UN", "AGUA", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+            dmf.aCFVenderCompleto_NFCe("0", "1", "7.00", "D$", "0.00", "2222", "18063210", "5102", "UN", "AGUA", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
             dmf.aCFConfImposto_NFCe("ICMS40", "0;60;;;");// configurando imposto ICMS60 para  um item QUANDO TRADUCAO SAT
             dmf.aCFConfPisNT_NFCe(String.valueOf("07"));
             dmf.aCFConfCofinsNT_NFCe(String.valueOf("07"));
-            dmf.aCFVenderCompleto_NFCe("0", "1", "8.00", "D$", "0.00", "3333", "18063210", "5102", "UN", "teste", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
+            dmf.aCFVenderCompleto_NFCe("0", "1", "10.00", "D$", "0.00", "3333", "18063210", "5102", "UN", "teste", "CEST=1705700;cEAN=7896022204969;cEANTrib=7896022204969;");
 
-            dmf.aCFTotalizar_NFCe("D$", "0.01");//Totalizando venda
-            dmf.aCFEfetuarPagamento_NFCe("Dinheiro", "35.99"); //pagamento pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
+            dmf.aCFTotalizar_NFCe("D$", "0.00");//Totalizando venda
+
+            dmf.aCFEfetuarPagamento_NFCe("03", "20.00"); //pagamento pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
+            dmf.aCFEfetuarPagamento_NFCe("Dinheiro", "10.00"); //Segundo pagamento- pode ser indicado pelo código ou pela descrição conforme a tabela de pagamentos SEFAZ.
+
             dmf.tCFEncerrar_NFCe("Teste de venda utilizando DMF Android IT FAST.");
         }
     void venderNFCE(){

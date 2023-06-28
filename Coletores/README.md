@@ -1,15 +1,17 @@
 # Coletores
 *Exemplo para Coletores da TECTOY L2s e L2ks, utilizando a biblioteca IT4R.aar*
 
-- Para utilizar esse recurso o objeto TecToy deve ser inicializado com
+<p>- Para utilizar esse recurso o objeto TecToy deve ser inicializado com
  o dispositivo L2s ou L2Ks, conforme exemplo abaixo
- tecToy = new TecToy(Dispositivo.L2Ks, context);
-
-- Para acionar o leitor e realizar a leitura chamar o método
+ <br>tecToy = new TecToy(Dispositivo.L2Ks, context);
+</p>
+<p>- Para acionar o leitor e realizar a leitura chamar o método
  iniciarScanner passando como parâmetro o callback de recebimento da
- leitura. OBS.: O método deve ser chamado sempre dentro de uma thread.
+ leitura.<br> OBS.: O método deve ser chamado sempre dentro de uma thread.
+</p>
 
- //implementação do callback, onde após receber o retorno para a  leitura do scanner e retorna o código lido em um text view
+```
+//implementação do callback, onde após receber o retorno para a  leitura do scanner e retorna o código lido em um text view 
     private TecToyScannerCallback scannerCallback = new TecToyScannerCallback() {
          @Override
          public void retornarCodigo(String strCodigo) {
@@ -22,10 +24,8 @@
              });
          }
      };
-
-
- //Runnable chamando o método de iniciar o scanner
-  private Runnable iniciarScanner = new Runnable() {
+ //Runnable chamando o método de iniciar o scanner<br>
+ private Runnable iniciarScanner = new Runnable() {
          @Override
          public void run() {
              try {
@@ -42,14 +42,17 @@
              }
          }
      };
+```
 
-- Para trabalhar com leitura de NFC devem ser feitas as implementações e configuração abaixo
-  - No arquivo manifest da aplicação adicionar permissão para NFC (<uses-permission android:name="android.permission.NFC" />)
-  - Adicionar action NDEF_DISCOVERED
+<p>- Para trabalhar com leitura de NFC devem ser feitas as implementações e configuração abaixo
+  <br>- No arquivo manifest da aplicação adicionar permissão para NFC (<uses-permission android:name="android.permission.NFC" />)
+  <br>- Adicionar action NDEF_DISCOVERED
+  </p>
   
-  
-  Exemplo de arquivo AndroidManifest.xml com as alterações citadas acima
-  <?xml version="1.0" encoding="utf-8"?>
+  Exemplo de arquivo AndroidManifest.xml com as alterações citadas acima<br>
+
+```
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.NFC" />
     <application
@@ -74,9 +77,11 @@
         </activity>
     </application>
 </manifest>
+```
+<p>- Implementar callback TecToyNfcCallback para receber a resposta da leitura NFC, exemplo abaixo
+</p>
 
-- Implementar callback TecToyNfcCallback para receber a resposta da leitura NFC, exemplo abaixo
-
+```
 TecToyNfcCallback callbackNFC = new TecToyNfcCallback() {
         @Override
         public void retornarValor(String strValor) {
@@ -89,19 +94,35 @@ TecToyNfcCallback callbackNFC = new TecToyNfcCallback() {
             });
         }
     };
+```
 
-- no "onCreate" da activity criar o objeto pendingIntent e iniciar a leitura de NFC através do métod iniciarNFC(Intent intent, TecToyNfcCallback), exemplo abaixo
-pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-tecToy.iniciarNFC(getIntent(), callbackNFC);
+<p>- no "onCreate" da activity criar o objeto pendingIntent e iniciar a leitura de NFC através do métod iniciarNFC(Intent intent, TecToyNfcCallback), exemplo abaixo</p>
 
-- Em "onNewIntent" da Activity adicionar chamada ao método onNewIntentNFC(Intent intent), exemplo abaixo
+ ```
+  pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+  tecToy.iniciarNFC(getIntent(), callbackNFC);
+ ```
+
+<p>- Em "onNewIntent" da Activity adicionar chamada ao método onNewIntentNFC(Intent intent), exemplo abaixo</p>
+ 
+ ```
   tecToy.onNewIntentNFC(intent);
+ ```
 
-- Em "onPause" da Activity adicionar chamada ao método onPauseNFC(Activity activity), exemplo abaixo
+<p>- Em "onPause" da Activity adicionar chamada ao método onPauseNFC(Activity activity), exemplo abaixo</p>
+
+ ```
   tecToy.onPauseNFC(this);
+  ```
 
-- Em "onResumeNFC" da Activity adicionar chamada ao método onNewIntentNFC(Activity activity, PendingIntent pendingIntent), exemplo abaixo
-  tecToy.onResumeNFC(this, pendingIntent);
+<p>- Em "onResumeNFC" da Activity adicionar chamada ao método onNewIntentNFC(Activity activity, PendingIntent pendingIntent), exemplo abaixo</p> 
+ 
+ ```
+ tecToy.onResumeNFC(this, pendingIntent);
+ ```
 
-- Para fazer a escrita no NFC utilizar o método escreverNFC(String strValor), exemplo abaixo
-tecToy.escreverNFC(txtGravarNFC.getText().toString());
+<p>- Para fazer a escrita no NFC utilizar o método escreverNFC(String strValor), exemplo abaixo</p>
+
+ ```
+ tecToy.escreverNFC(txtGravarNFC.getText().toString());
+ ```
