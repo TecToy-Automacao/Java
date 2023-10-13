@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -52,7 +53,18 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDesligarLedIndicacao;
     private Button btnLigarLedIndicacao;
     private TextView txtDistancia;
-    TecToyNfcCallback nfcCallback = s -> this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show());
+    TecToyNfcCallback nfcCallbackK2 = s -> this.runOnUiThread(() -> {
+        Log.i ("TECTOY", s) ;
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+    });
+
+  TecToyNfcCallback nfcCallback = new TecToyNfcCallback() {
+      @Override
+      public void retornarValor(String strValor) {
+              txtDistancia.setText(strValor);
+      }
+  };
+
     TectoyBalancaCallback balancaCallback = map -> Toast.makeText(getApplicationContext(), String.valueOf(map.get("peso")), Toast.LENGTH_LONG).show();
     TecToyScannerCallback scannerCallback = s -> Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     TecToyCameraProfundidadeCallback profundidadeCallback = i -> this.runOnUiThread(() -> txtDistancia.setText(String.valueOf(i) + " cm"));
@@ -81,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
         btnStatusImpressora = findViewById(R.id.btnStatusImpressora);
         btnImprimir = findViewById(R.id.btnImprimir);
@@ -147,13 +159,10 @@ public class MainActivity extends AppCompatActivity {
                     goneButtons();
                     tectoy = new TecToy(Dispositivo.D2S, getApplicationContext());
                     btnStatusGaveta.setVisibility(View.VISIBLE);
+                    btnAbrirGaveta.setVisibility(View.VISIBLE);
                     btnStatusImpressora.setVisibility(View.VISIBLE);
                     btnImprimir.setVisibility(View.VISIBLE);
                     btnImprimirImagem.setVisibility(View.VISIBLE);
-                    btnAbrirGaveta.setVisibility(View.VISIBLE);
-                    btnAcionarGuilhotina.setVisibility(View.VISIBLE);
-                    btnEscreverNFC.setVisibility(View.VISIBLE);
-                    btnIniciarNFC.setVisibility(View.VISIBLE);
                     btnImprimirQrCode.setVisibility(View.VISIBLE);
                     btnLerPesoBalanca.setVisibility(View.VISIBLE);
                     break;
@@ -163,8 +172,6 @@ public class MainActivity extends AppCompatActivity {
                     btnStatusImpressora.setVisibility(View.VISIBLE);
                     btnImprimir.setVisibility(View.VISIBLE);
                     btnImprimirImagem.setVisibility(View.VISIBLE);
-                    btnEscreverNFC.setVisibility(View.VISIBLE);
-                    btnIniciarNFC.setVisibility(View.VISIBLE);
                     btnImprimirQrCode.setVisibility(View.VISIBLE);
                     break;
                 case "V2_PRO":
@@ -186,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
                     btnImprimirImagem.setVisibility(View.VISIBLE);
                     btnAcionarGuilhotina.setVisibility(View.VISIBLE);
                     btnIniciarNFC.setVisibility(View.VISIBLE);
-                    //btnImprimirQrCode.setVisibility(View.VISIBLE);
                     btnLerPesoBalanca.setVisibility(View.VISIBLE);
                     btnIniciarCameraProfundidade.setVisibility(View.VISIBLE);
                     btnDesligarLedIndicacao.setVisibility(View.VISIBLE);
@@ -227,8 +233,6 @@ public class MainActivity extends AppCompatActivity {
                     goneButtons();
                     tectoy = new TecToy(Dispositivo.L2Ks, getApplicationContext());
                     btnIniciarNFC.setVisibility(View.VISIBLE);
-                    btnDesligarLedIndicacao.setVisibility(View.VISIBLE);
-                    btnLigarLedIndicacao.setVisibility(View.VISIBLE);
                     btnIniciarScanner.setVisibility(View.VISIBLE);
                     btnEscreverNFC.setVisibility(View.VISIBLE);
                     break;
@@ -236,8 +240,6 @@ public class MainActivity extends AppCompatActivity {
                     goneButtons();
                     tectoy = new TecToy(Dispositivo.L2s, getApplicationContext());
                     btnIniciarNFC.setVisibility(View.VISIBLE);
-                    btnDesligarLedIndicacao.setVisibility(View.VISIBLE);
-                    btnLigarLedIndicacao.setVisibility(View.VISIBLE);
                     btnIniciarScanner.setVisibility(View.VISIBLE);
                     btnEscreverNFC.setVisibility(View.VISIBLE);
                     break;
@@ -376,12 +378,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnIniciarNFC.setOnClickListener(v -> {
-            try{
-                tectoy.iniciarNFC(getIntent(), nfcCallback);
-                NFCIniciado = true;
-                Toast.makeText(getApplicationContext(), "Comando enviado com sucesso", Toast.LENGTH_SHORT).show();
-            }catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+           String dispositivo = spinnerDispositivos.getSelectedItem().toString();
+            if (dispositivo.equals("K2"))
+            {
+                try{
+                    tectoy.iniciarNFC(getIntent(), nfcCallbackK2);
+                    NFCIniciado = true;
+                    Toast.makeText(getApplicationContext(), "Comando enviado com sucesso", Toast.LENGTH_SHORT).show();
+                }catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                try{
+                    tectoy.iniciarNFC(getIntent(), nfcCallback);
+                    NFCIniciado = true;
+                    Toast.makeText(getApplicationContext(), "Comando enviado com sucesso", Toast.LENGTH_SHORT).show();
+                }catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -426,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLigarLedIndicacao.setOnClickListener(view -> {
             try{
-                this.startActivity(new Intent(this, ActivityLerdIndicacao.class));
+                this.startActivity(new Intent(this, ActivityLedIndicacao.class));
             }catch (Exception ex) {
                 Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
