@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -53,15 +52,31 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDesligarLedIndicacao;
     private Button btnLigarLedIndicacao;
     private TextView txtDistancia;
-    TecToyNfcCallback nfcCallbackK2 = s -> this.runOnUiThread(() -> {
-        Log.i ("TECTOY", s) ;
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    });
+    String retornoNFC;
 
+    TecToyNfcCallback nfcCallbackK2 = new TecToyNfcCallback() {
+        @Override
+        public void retornarValor(String strValor) {
+            retornoNFC = "Conteudo do NFC:" + strValor;
+            runOnUiThread(() ->{
+                txtDistancia.setText(retornoNFC);
+            });
+        }
+        @Override
+        public void retornarId(String s) {
+            //Retorno do ID não disponível para o K2
+        }
+    };
   TecToyNfcCallback nfcCallback = new TecToyNfcCallback() {
       @Override
       public void retornarValor(String strValor) {
-              txtDistancia.setText(strValor);
+             retornoNFC = "NFC Valor: " + strValor;
+          txtDistancia.setText(retornoNFC);
+      }
+      @Override
+      public void retornarId(String s) {
+          retornoNFC += "\nNFC ID: " + s;
+          txtDistancia.setText(retornoNFC);
       }
   };
 
@@ -379,6 +394,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnIniciarNFC.setOnClickListener(v -> {
            String dispositivo = spinnerDispositivos.getSelectedItem().toString();
+
             if (dispositivo.equals("K2"))
             {
                 try{
@@ -394,6 +410,7 @@ public class MainActivity extends AppCompatActivity {
                     tectoy.iniciarNFC(getIntent(), nfcCallback);
                     NFCIniciado = true;
                     Toast.makeText(getApplicationContext(), "Comando enviado com sucesso", Toast.LENGTH_SHORT).show();
+
                 }catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
