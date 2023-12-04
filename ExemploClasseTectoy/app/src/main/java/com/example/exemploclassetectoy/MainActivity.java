@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -70,13 +71,16 @@ public class MainActivity extends AppCompatActivity {
   TecToyNfcCallback nfcCallback = new TecToyNfcCallback() {
       @Override
       public void retornarValor(String strValor) {
-             retornoNFC = "NFC Valor: " + strValor;
+             retornoNFC += " | NFC Valor: " + strValor;
           txtDistancia.setText(retornoNFC);
       }
       @Override
-      public void retornarId(String s) {
-          retornoNFC += "\nNFC ID: " + s;
+      public void retornarId(String strID) {
+          retornoNFC += " | NFC ID: " + strID;
           txtDistancia.setText(retornoNFC);
+          Log.i("DEBORA", retornoNFC);
+          Log.i("DEBORA 2", txtDistancia.getText().toString());
+
       }
   };
 

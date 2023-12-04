@@ -16,6 +16,10 @@
         <item>AZUL</item>
         <item>VERDE</item>
         <item>VERMELHO</item>
+        <item>BRANCO</item>
+        <item>CIANO</item>
+        <item>AMARELO</item>
+        <item>MAGENTA</item>
     </string-array>
     <string name="title_activity_led_indicacao">Activity_LedIndicacao</string>
     <!-- Strings used for fragments for navigation -->
