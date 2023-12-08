@@ -22,6 +22,7 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 &ensp;&ensp;&ensp;- <b>D2sMercado</b> - app que simula vendas de um Mercado ou Loja, pode ser utilizado um leitor de código de barras, imprime um resumo de venda e NFCE usando a impressora do D2S.<br>
 &ensp;&ensp;&ensp;- <b>T2sBanco</b> - app que simula um terminal de consultas de Banco, por este motivo é ideal para o T2s de uma tela, com impressora. Demonstra uso do alto-falante.</p>
 &ensp;&ensp;&ensp;- <b>V2RESTAURANTE</b> - app que simula um app de pedidos de restaurante/ lanchonete, demonstra impressão e leitura de código de barras 1D e também impressão de QrCode, além da leitura por aproximação.</p>
+&ensp;&ensp;&ensp;- <b>DemoBnk</b> - app que sugere tela de terminal de consulta de saldo e extrato, e possibilita, impressão dos mesmos. Na tela de espera reproduz áudio.</p>
 &ensp;&ensp;&ensp;- <b>testeWebView</b> - fonte que demonstra como ter um webview sem barra de navegação. Feito para teste no M2 MAX.</p>
 <br>
 
