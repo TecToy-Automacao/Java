@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">T2APP</string>
+
+    <string-array name="numbers">
+        <item>1 - Gasolina</item>
+        <item>2 - Etanol</item>
+        <item>3 - Diesel</item>
+    </string-array>
+
+    <string-array name="numbers2">
+        <item>1 - Normal</item>
+        <item>2 - Aditivado</item>
+    </string-array>
+
+</resources>
+
+

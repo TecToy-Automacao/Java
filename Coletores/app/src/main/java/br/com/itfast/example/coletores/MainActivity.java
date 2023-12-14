@@ -15,10 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//imports para consumir IT4R
-import org.w3c.dom.Text;
-
-import br.com.daruma.framework.mobile.exception.DarumaException;
 import br.com.itfast.tectoy.TecToyNfcCallback;
 import br.com.itfast.tectoy.TecToyScannerCallback;
 import br.com.itfast.tectoy.Dispositivo;
@@ -46,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
                     txtRetornoNFC.setText(strValor);
                 }
             });
+        }
+
+        @Override
+        public void retornarId(String s) {
+
         }
     };
 
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("ERRO", e.getMessage() != null ? e.getMessage() : e.toString());
                 }
 
-            } catch (DarumaException de) {
+            } catch (Exception de) {
                 throw de;
             }
         }

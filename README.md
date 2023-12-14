@@ -3,8 +3,7 @@
 *Exemplos em Java para Android:*
 <p><b>. EmissaoNFCeSAT</b> - Exemplo que utiliza a biblioteca da IT FAST para realizar emissão de vendas NFCe ou de SAT imprimindo na impressora disponivel dos equipamentos TecToy;</p>
 <p><b>. ImpressaoBMP</b> - Exemplo que utiliza a biblioteca da IT FAST para imprimir um BMP (logotipo);</p>
-<p><b>. LerEscreverNFC</b> - Exemplo para V2 PRO, D2Mini e K2 Mini da TecToy Automação que utiliza a biblioteca da IT FAST para realizar leitura e escrita NFC (cartão de aproximação);</p>
-<p><b>. LerNFC_K2</b> - Exemplo para o K2 da TecToy Automação que através da biblioteca da IT FAST realiza leitura NFC (cartão de aproximação);</p>
+<p><b>. LerEscreverNFC</b> - Exemplo para V2 PRO, D2Mini, T2Mini, K2 Mini e K2(apenas leitura) da TecToy Automação que utiliza a biblioteca da IT FAST para realizar leitura e escrita NFC (cartão de aproximação);</p>
 <p><b>. CAMERA_TECTOY*</b> - Fonte de demonstração para uso da Câmera Face Sense em reconhecimento facial<br>
 Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Automação, e aplicar o serviço cognitivo Microsoft para reconhecimento biométrico facial em tempo de execução!<br>
   <b>Exato!</b> <i>Agora você pode usar toda linha de câmeras Tectoy com reconhecimento biométrico facial.</i><br>
@@ -12,6 +11,7 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 <p><b>. BalnacaUranoBA37</b> - Exemplo que comunica com a balança BA37 da Urano via Bluetooth.</p>
 <p><b>. ExemploClasseTecToy</b> - Exemplo para todos os produtos de automação da TECTOY, demonstra recursos disponíveis para cada equipamento: de impressão, ler peso da balança Urano,  à uso de NFC e Câmera (para foto e pra medição de distancia/ presença).</p>
 <b>. Coletores</b> - Fonte de demonstração para uso da IT4R nos Coletores - L2s L2Ks para utilizarem o recurso de leitura de codigo de barrar 1D e 2D e leitura/escrita de NFC<br></p>
+<p><b>. T2MiniPosto</b> - Fonte do exemplo de demonstração T2mPosto.apk, possui configurações mínimas para impressão de DANFE a partir do XML da venda já pronto.</p>
 <br>
 <br>
 <p><b>. Demos </b>- Aplicações de exemplo para instalação e demonstração do uso do equipamento.<br>

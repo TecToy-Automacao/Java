@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
             }
 
                 // instancia a biblioteca Android para emissão de DOCs fiscais, e seta dispositivo tectoy de impressão.
-                dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@DISPOSITIVO(NAME=T2S)");
+                dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@DISPOSITIVO(NAME=K2_MINI)");
                 //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por address default
                 //dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(TRATAEXCECAO=TRUE;LOGMEMORIA=25;TIMEOUTWS=10000;);@BLUETOOTH(ADDRESS=00:11:22:33:44:55;ATTEMPTS=100;TIMEOUT=10000)");
                 //instancia a biblioiteca Android pra emissão de DOCs fiscais e seleciona a impressão via Bluetooth por Nome do dispositivo
@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
                 // dmf = DarumaMobile.inicializar(MainActivity.this, "@FRAMEWORK(LOGMEMORIA=200;TRATAEXCECAO=TRUE;TIMEOUTWS=10000;);@SOCKET(HOST=192.168.210.94;PORT=9100;)")
 
                 //instancia objeto da classe Tectoy usada para impressão de texto livre
-                objTecToy = new TecToy(Dispositivo.T2S, MainActivity.this.getApplicationContext());
+                objTecToy = new TecToy(Dispositivo.K2_MINI, MainActivity.this.getApplicationContext());
 
                 //Seta callback para receber XML de retorno de venda e cancelamento do SAT
                 dmf.setSatCallback(satCallback);
@@ -341,7 +341,7 @@ public class MainActivity extends Activity {
                 try {
                     Looper.prepare();
                     try {//colocar um xml de sat na pasta da aplicação e ajustar o seu nome no comando abaixo
-                        dmf.iImprimirCFe_SAT("CFe35211261099008000141599000167120002480289418.xml", "1");
+                        dmf.iImprimirCFe_SAT("CFe29230903654119000176599000081580000989849811.xml", "1");
                         Toast.makeText(MainActivity.this, "Imprimiu SAT" + iRet, Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         strAux += "ERRO: "+ e.getMessage();
@@ -465,13 +465,13 @@ public class MainActivity extends Activity {
 
 
             /// DADOS ABAIXO SÃO DO SAT A-10 Epson - KIT DESENVOLVIMENTO.
-            dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
-            dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
-            dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "EPSON");
+            //dmf.RegAlterarValor_SAT("PROD\\indRegra", "A");
+            //dmf.RegAlterarValor_SAT("IDENTIFICACAO_CFE\\numeroCaixa", "001");
+            //dmf.RegAlterarValor_SAT("CONFIGURACAO\\marcaSAT", "EPSON");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\Impressora", "EPSON"); ///Impressora do T2S.
-            dmf.RegAlterarValor_SAT("CONFIGURACAO\\codigoDeAtivacao", "00000000");
-            dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\CNPJ", "16716114000172");
-            dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\signAC", "SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT");
+            //dmf.RegAlterarValor_SAT("CONFIGURACAO\\codigoDeAtivacao", "00000000");
+            //dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\CNPJ", "16716114000172");
+            /*dmf.RegAlterarValor_SAT("CONFIGURACAO\\IDENTIFICACAO_CFE\\signAC", "SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\CNPJ", "03654119000176");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\IE", "000052619494");
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\EMIT\\cRegTribISSQN", "3");
@@ -481,7 +481,7 @@ public class MainActivity extends Activity {
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\LocalArquivos", "sdcard/SAT"); ///definindo local para gravação dos arquivos, pasta deve existir a IT4R não cria pasta..
             dmf.RegAlterarValor_SAT("CONFIGURACAO\\CopiaSeguranca", "1");
             dmf.RegAlterarValor_NFCe("CONFIGURACAO\\ImpressaoCompleta", "2"); //o valor 1 imprime completo, e o valor 2 não imprime. Valor 0 imprime reduzido (sem bloco de itens)
-
+*/
         }
 
         void venderTradSAT(){
