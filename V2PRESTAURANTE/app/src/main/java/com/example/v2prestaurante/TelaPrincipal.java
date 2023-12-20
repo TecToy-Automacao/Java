@@ -2,44 +2,26 @@ package com.example.v2prestaurante;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import br.com.daruma.framework.mobile.comunicacao.exception.DarumaException;
-import br.com.itfast.tectoy.Dispositivo;
-import br.com.itfast.tectoy.TecToy;
-import br.com.itfast.tectoy.TecToyException;
-import br.com.itfast.tectoy.TecToyScannerCallback;
-
-
-
 public class TelaPrincipal extends AppCompatActivity {
 
     private Button btnSair, btnFazerPedido, btnFecharConta, btnMaisQnt, btnMenosQnt,btnOk;
-    private TecToy tectoy2;
     private TextView txtViewPedido, txtQntBatata, txtQntHamb1 ,txtQntHamb2, txtQntNuggets, txtQntRefri, txtQntTortinha1, txtQntTortinha2, txtQntSorvete, txtQntSuco;
     private TextView txtViewGarcon;
-    private String strGarconSelecionado = "0", strNotaPadrao, strNotaPedidos, strNota1, strNota2, strConferenciaMesa, strItemConferenciaMesa;
+    private String strGarconSelecionado = "0", strNotaPadrao, strNota1, strNota2, strConferenciaMesa;
     private String strNotaPedidosBatata, strNotaPedidosHamb1, strNotaPedidosHamb2, strNotaPedidosNuggets, strNotaPedidosRefri, strNotaPedidosTortinha1, strNotaPedidosTortinha2, strNotaPedidosSorvete, strNotaPedidosSuco;
     private String strItemConferenciaMesaBatata, strItemConferenciaMesaHamb1, strItemConferenciaMesaHamb2, strItemConferenciaMesaNuggets, strItemConferenciaMesaRefri, strItemConferenciaMesaTortinha1, strItemConferenciaMesaTortinha2, strItemConferenciaMesaSorvete, strItemConferenciaMesaSuco;
-
-
 
     int CtrlImg = 0;
     int iQuantBatata = 0,  iQuantHamb1 = 0,  iQuantHamb2 = 0,  iQuantNuggets = 0,  iQuantRefri = 0,  iQuantTortinha1 = 0,  iQuantTortinha2 = 0,  iQuantSorvete = 0,  iQuantSuco = 0;
@@ -52,28 +34,13 @@ public class TelaPrincipal extends AppCompatActivity {
     int Control = 1;
     int iQuantMais = 1, iQuantMenos = 0;
 
-
-
-    String reinicImp = "" + ((char) 0x1B) + ((char) 0x40); //Ajuda o desempenhho da  impressão da impressora
-    String cmdCanModoChines = "" + ((char) 0x1C) + ((char) 0x2E); //Desativa o modo chines
+   // String reinicImp = "" + ((char) 0x1B) + ((char) 0x40); //Ajuda o desempenhho da  impressão da impressora
     String centro = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x31); //Ativa alinhamento centro
     String deslCentro = "" + ((char) 0x1B) + ((char) 0x61) + ((char) 0x30);
-    String extra = "" + ((char) 0x1B) + ((char) 0x21) + ((char) 0x01);
-    String deslExtra = "" + ((char) 0x1B) + ((char) 0x21) + ((char) 0x00);
-    String qrcode;
-    String strCod;
-
-
-
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
-        tectoy2 = new TecToy(Dispositivo.V2_PRO, TelaPrincipal.this.getApplicationContext());
-
-
 
         btnOk = findViewById(R.id.btnOk);
         btnSair = findViewById(R.id.btnSair);
@@ -130,9 +97,7 @@ public class TelaPrincipal extends AppCompatActivity {
         NomeGarcons();
 
         if(strStatusMesa[0].equals("STATUS DA MESA : FECHADA")) {// Comparando string com string
-
             txtViewPedido.setVisibility(View.INVISIBLE);
-
         } //deixa o txtview invisivel no começo da aplicação
 
         if (strNumMesaPasado != null) {
@@ -166,10 +131,7 @@ public class TelaPrincipal extends AppCompatActivity {
         btnFecharConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 if (Control == 1) {
-
                     AlertDialog.Builder alrtImpressaoPedido = new AlertDialog.Builder(TelaPrincipal.this);
                     alrtImpressaoPedido.setTitle("IMPRESSÃO PEDIDO");
                     alrtImpressaoPedido.setMessage("Ainda não foram adicionados itens na conta");
@@ -182,16 +144,13 @@ public class TelaPrincipal extends AppCompatActivity {
                     });
                     alrtImpressaoPedido.create().show();
                 } else {
-
-
                     AlertDialog.Builder alrtImpressaoPedido = new AlertDialog.Builder(TelaPrincipal.this);
                     alrtImpressaoPedido.setTitle("FECHAR PEDIDO");
-                    alrtImpressaoPedido.setMessage("Deseja visualizar o pedido antes de imprimir ?");
+                    alrtImpressaoPedido.setMessage("Deseja imprimir ou visualizar ?");
 
-                    alrtImpressaoPedido.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    alrtImpressaoPedido.setPositiveButton("VER", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
                             CtrlImg = 0;
                             ControleImagemDesaparecer();
                             txtViewPedido.setText(strNota1);
@@ -233,13 +192,12 @@ public class TelaPrincipal extends AppCompatActivity {
                                 iQuantSuco = 0;
                                 txtQntSuco.setText(String.valueOf(0));
                             }
-
+                        Toast.makeText(TelaPrincipal.this, "Feche novamente e imprima para fechar a mesa.", Toast.LENGTH_LONG).show();
                         }
                     });
-                    alrtImpressaoPedido.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    alrtImpressaoPedido.setNegativeButton("IMPRIMIR", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
                             Calculos();
                             Toast.makeText(TelaPrincipal.this, "STATUS DA MESA : FECHADA", Toast.LENGTH_SHORT).show();
                             finish();
@@ -258,7 +216,6 @@ public class TelaPrincipal extends AppCompatActivity {
                 if (iQuantBatata != 0) {
 
                     NumLista++;
-
 
                         strNotaPadrao = NumLista + ".  " + strNotaPedidosBatata;
                         strNotaPadrao += "x" + iQuantBatata + "\n";
@@ -533,9 +490,8 @@ public class TelaPrincipal extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         strNota1 += "\n";
-                        tectoy2.imprimir(reinicImp);
-                        tectoy2.imprimir(cmdCanModoChines);
-                        tectoy2.imprimir(strNota1);
+                        //Standby.tectoyV2.imprimir(reinicImp);
+                        Standby.tectoyV2.imprimir(strNota1);
                         Toast.makeText(TelaPrincipal.this, "STATUS DA MESA : ABERTA", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -896,14 +852,13 @@ public class TelaPrincipal extends AppCompatActivity {
         strNota2 +="SubTotal :             " +   "R$ " + iSubTotal + ".00\n";
         strNota2 +="Servico R$ 5.00 :      R$  5.00\n";
         strNota2 +="Total :                " +   "R$ " +iTotalReal + ".00\n\n";
-        strNota2 +="Obrigada pela sua visita\n\n";
-        strNota2 += "Agora voce pode pagar com PIX\n\n";
-        strNota2 +="\n\n\n";
+        strNota2 +="Obrigada pela sua visita!\n\n";
+        strNota2 += centro+"Agora você pode pagar com PIX\n\n\n";
 
-        tectoy2.imprimir(reinicImp);
-        tectoy2.imprimir(cmdCanModoChines);
-        tectoy2.imprimir(strNota2);
-        tectoy2.imprimirQrCode("https://www.tectoyautomacao.com.br", "M", 3);
+
+       // Standby.tectoyV2.imprimir(reinicImp);
+        Standby.tectoyV2.imprimir(strNota2);
+        Standby.tectoyV2.imprimirQrCode("https://www.tectoyautomacao.com.br", "H", 5);
     }
 
 }//Tela Principal

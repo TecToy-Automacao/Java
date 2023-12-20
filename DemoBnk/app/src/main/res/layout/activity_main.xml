@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/banco"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnImprimi"
+        android:layout_width="300dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginBottom="224dp"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:text="Imprimir"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSaldo"
+        android:layout_width="300dp"
+        android:layout_height="215dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="215dp"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnExtrato"
+        android:layout_width="300dp"
+        android:layout_height="215dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="215dp"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtTela"
+        android:layout_width="508dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="20dp"
+        android:bufferType="spannable"
+        android:fontFamily="monospace"
+        android:gravity="fill_vertical"
+        android:paddingLeft="40sp"
+        android:paddingTop="25sp"
+        android:paddingBottom="30sp"
+        android:scrollbars="vertical"
+        android:text="Bem vindo ao Banking,  clique na opção desejada..."
+        android:textColor="@color/black"
+
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.036" />
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginBottom="36dp"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:text="SAIR"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

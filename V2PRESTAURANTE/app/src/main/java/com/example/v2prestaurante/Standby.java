@@ -2,50 +2,38 @@ package com.example.v2prestaurante;
 
 import androidx.appcompat.app.AlertDialog;
 import  androidx.appcompat.app.AppCompatActivity;
-
-
 import android.app.PendingIntent;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import br.com.itfast.tectoy.Dispositivo;
 import br.com.itfast.tectoy.TecToy;
-import br.com.itfast.tectoy.TecToyException;
 import br.com.itfast.tectoy.TecToyNfcCallback;
 import br.com.itfast.tectoy.TecToyScannerCallback;
 
 public class Standby extends AppCompatActivity {
+    public static TecToy tectoyV2;
     Button btnImpCracha, btnLoginGarcon;
-    TecToy tectoy;
     String strNumMesa;
     String strGarconSelecionadoPassado = "0";
     String strStatusMesa = "STATUS DA MESA : FECHADA";
     TextView mesaSelecionada;
     private PendingIntent pendingIntent;
 
-
-
-
-
-
-    TecToyScannerCallback callbackCod = new TecToyScannerCallback() {
+   TecToyScannerCallback callbackCod = new TecToyScannerCallback() {
         @Override
         public void retornarCodigo(String s) {
             strGarconSelecionadoPassado = s;
+
         }
     };
-
-
-
 
 
     TecToyNfcCallback  callback = new TecToyNfcCallback() {
@@ -75,7 +63,11 @@ public class Standby extends AppCompatActivity {
                 });
                 alrtLoginInvalido.create().show();
 
-        }else{startActivity(intentEnviadora);}
+            }else{startActivity(intentEnviadora);}
+        }
+
+        @Override
+        public void retornarId(String s) {
 
         }
     };
@@ -85,18 +77,14 @@ public class Standby extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-////////////////////////Endereçando//////////////////////////////////////////////////
+        tectoyV2 = new TecToy(Dispositivo.V2_PRO, Standby.this.getApplicationContext());
+        ////////////////////////Endereçando//////////////////////////////////////////////////
         mesaSelecionada = findViewById(R.id.mesaSelecionada);
         btnImpCracha = findViewById(R.id.btnImpCracha);
         btnLoginGarcon = findViewById(R.id.btnLoginGarcon);
-/////////////////////////////////////////////////////////////////////////////////////
-
-        tectoy = new TecToy(Dispositivo.V2_PRO, Standby.this.getApplicationContext());
 
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-        tectoy.iniciarNFC(getIntent(), callback);
-
+        tectoyV2.iniciarNFC(getIntent(), callback);
 
         btnImpCracha.setOnClickListener(new View.OnClickListener() { // BOTÃO DE IMPRIMIR CRACHA
             public void onClick(View view) {
@@ -117,7 +105,7 @@ public class Standby extends AppCompatActivity {
                               +((char) 0x1B)+((char) 0x45)+((char) 0x30)+"BALCAO\n"
                               +((char) 0x1D)+((char) 0x6B)+((char) 0x02)+"0000000000031"+((char) 0x00) // adicionar 1 no final
                               +"\n\n\n\n\n";
-                tectoy.imprimir(strCracha);
+                tectoyV2.imprimir(strCracha);
             }
         });
 
@@ -126,67 +114,51 @@ public class Standby extends AppCompatActivity {
             public void onClick(View view) {
                 Thread thrTest;
                 try {
-                    btnImpCracha.setVisibility(View.INVISIBLE);
                     thrTest = new Thread(threadLerScan);
                     thrTest.start();
                     thrTest.join();
-                } catch (TecToyException e) {
-                    Log.e("TECTOY_V2", e.getMessage());
                 } catch (Exception e) {
                     Log.e("TECTOY_V2", e.getMessage());
+                    return;
                 }
-                btnImpCracha.setVisibility(View.VISIBLE);
             }
         });
 
-
     }//onCreate
-
-
-
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        tectoy.onNewIntentNFC(intent);
+        tectoyV2.onNewIntentNFC(intent);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        tectoy.onPauseNFC(this);
+        tectoyV2.onPauseNFC(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        tectoy.onResumeNFC(this, pendingIntent);
+        tectoyV2.onResumeNFC(this, pendingIntent);
     }
-
-
 
     private Runnable threadLerScan = new Runnable() {
         @Override
         public void run() {
             try{
                 Looper.prepare();
-                try{
-                    tectoy.iniciarScanner(callbackCod);
-                } catch (Exception er) {
-                    Log.e("ERRO", er.getMessage() != null ? er.getMessage() : er.toString());
-                }
+                tectoyV2.iniciarScanner(callbackCod);
             } catch (Exception er) {
                 Log.e("ERRO", er.getMessage() != null ? er.getMessage() : er.toString());
+                Toast.makeText(Standby.this, "Erro ao ler codigo : "+ er.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
             }
-
-
         }
     };
 
-
-
     void ItemSelecionado(){
-
         if (strNumMesa.equals("1")){
             mesaSelecionada.setText("MESA SELECIONADA : 1");
         }else if (strNumMesa.equals("2")){
