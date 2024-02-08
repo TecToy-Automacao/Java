@@ -27,9 +27,6 @@
         tools:targetApi="31">
         <activity
             android:name=".ActivityLedIndicacao"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_LedIndicacao"
             android:exported="false"
             android:label="@string/title_activity_led_indicacao"
             android:theme="@style/Theme.ExemploClasseTectoy" />
