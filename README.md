@@ -13,6 +13,7 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 <b>. Coletores</b> - Fonte de demonstração para uso da IT4R nos Coletores - L2s L2Ks para utilizarem o recurso de leitura de codigo de barrar 1D e 2D e leitura/escrita de NFC<br></p>
 <p><b>. T2MiniPosto</b> - Fonte do exemplo de demonstração T2mPosto.apk, possui configurações mínimas para impressão de DANFE a partir do XML da venda já pronto.</p>
 <p><b>. TesteBalanca</b> - Fonte de exemplo que mostra como comunicar com balanças via porta Serial (RJ9 nos equipamentos TECTOY). Pode ser utilizado para testar a comunicação. Compatível com balança Elgin BP, Prix3 e 9094 prt3.</p>
+<p><b>. CamApp</b> - Fonte que demonstra como virar a imagem da câmera(apenas do K2 primeiras versões de SunmiOS (anterior a 1.5.3) isso é necessário) e capturar imagem.</p>
 <br>
 <br>
 <p><b>. Demos </b>- Aplicações de exemplo para instalação e demonstração do uso do equipamento.<br>
