@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import br.com.daruma.framework.mobile.exception.DarumaException;
 import br.com.itfast.tectoy.Dispositivo;
 import br.com.itfast.tectoy.StatusImpressora;
 import br.com.itfast.tectoy.TecToy;
@@ -58,14 +57,17 @@ public class MainActivity extends AppCompatActivity {
     TecToyNfcCallback nfcCallbackK2 = new TecToyNfcCallback() {
         @Override
         public void retornarValor(String strValor) {
-            retornoNFC = "Conteudo do NFC:" + strValor;
+            retornoNFC += " | NFC Valor: " + strValor;
             runOnUiThread(() ->{
                 txtAuxiliar.setText(retornoNFC);
             });
         }
         @Override
-        public void retornarId(String s) {
-            //Retorno do ID não disponível para o K2
+        public void retornarId(String strID) {
+            retornoNFC += " |NFC ID:" + strID + "\n";
+            runOnUiThread(() ->{
+                txtAuxiliar.setText(retornoNFC);
+            });
         }
     };
   TecToyNfcCallback nfcCallback = new TecToyNfcCallback() {
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
       }
       @Override
       public void retornarId(String strID) {
-          retornoNFC += " | NFC ID: " + strID;
+          retornoNFC += " | NFC ID: " + strID + "\n";
           txtAuxiliar.setText(retornoNFC);
       }
   };
@@ -457,8 +459,6 @@ public class MainActivity extends AppCompatActivity {
                 thrCamProf = new Thread(iniciarCamProfundidade);
                 thrCamProf.start();
                 thrCamProf.join();
-                this.runOnUiThread(() -> Toast.makeText(MainActivity.this, "Câmera iniciada com sucesso", Toast.LENGTH_SHORT).show());
-
             }catch (Exception ex) {
                 Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -511,13 +511,18 @@ public class MainActivity extends AppCompatActivity {
                 Looper.prepare();
                 try {
                     tectoy.iniciarCameraProfundidade(profundidadeCallback);
-                } catch (Exception e) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
-                    builder.show();
+                    runOnUiThread(() -> {
+                        Toast.makeText(MainActivity.this, "Camera iniciada com sucesso.", Toast.LENGTH_SHORT).show();
+                    });
+                    } catch (Exception e) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage(e.getMessage()).setNeutralButton("OK", null);
+                        builder.show();
+                    });
                 }
 
-            } catch (DarumaException de) {
+            } catch (Exception de) {
                 throw de;
             }
         }
