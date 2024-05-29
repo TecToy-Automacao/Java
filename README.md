@@ -15,6 +15,9 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 <p><b>. TesteBalanca</b> - Fonte de exemplo que mostra como comunicar com balanças via porta Serial (RJ9 nos equipamentos TECTOY). Pode ser utilizado para testar a comunicação. Compatível com balança Elgin BP, Prix3 e 9094 prt3.</p>
 <p><b>. CamApp</b> - Fonte que demonstra como virar a imagem da câmera(apenas do K2 primeiras versões de SunmiOS (anterior a 1.5.3) isso é necessário) e capturar imagem.</p>
 <br>
+<p><b>. buscaPreco</b> - Fonte que o uso do leitor de código de barras do D2 MINI como buffer teclado, também mostra como utilizar a tela cliente(segunda tela) para mostrar uma imagegm fixa.</p>
+
+<br>
 <br>
 <p><b>. Demos </b>- Aplicações de exemplo para instalação e demonstração do uso do equipamento.<br>
 &ensp;&ensp;&ensp;- <b>K2Ingresso</b> - app que imprime ingressos para envetos, basta instalar o .apk e utilizar;<br>
@@ -26,6 +29,7 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 &ensp;&ensp;&ensp;- <b>V2RESTAURANTE</b> - app que simula um app de pedidos de restaurante/ lanchonete, demonstra impressão e leitura de código de barras 1D e também impressão de QrCode, além da leitura por aproximação.</p>
 &ensp;&ensp;&ensp;- <b>DemoBnk</b> - app que sugere tela de terminal de consulta de saldo e extrato, e possibilita, impressão dos mesmos. Na tela de espera reproduz áudio.</p>
 &ensp;&ensp;&ensp;- <b>testeWebView</b> - fonte que demonstra como ter um webview sem barra de navegação. Feito para teste no M2 MAX.</p>
+&ensp;&ensp;&ensp;- <b>buscaPreco</b> - app demonstração para D2 MINI SCANNER, simla terminal de consulta preços.</p>
 <br>
 
 <br>

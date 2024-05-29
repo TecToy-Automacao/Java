@@ -34,7 +34,10 @@
 <p>&ensp;- <b>TecToyWebView</b> - demonstração para o M2 MAX, que abre o site da TecToy em um WebView, sem barras de navegação.<br>
 &ensp;&ensp;&ensp;. baixe o apk e instale;<br>
 &ensp;&ensp;&ensp;. coloque em modo kiosk;<br></p>
-
+<br/>
+<p>&ensp;- <b>buscaPreco</b> - demonstração para o D2 MINI SCANNER, funciona como terminal de consulta, mostrando logo tectoy na tela cliente, e vídeo institucional quando em espera. Instale o .apk e utilize.<br>
+Opcional: Pode virar o sentido do display (Configurações >Display> Avançadas > Direção do Display > escolha o de ponta cabeça, para simular o D2 preso na parede.)<br>
+&ensp;&ensp;&ensp;. Baixe o .apk e instale;<br>
 
 <br><br>
 <p><b>Indicamos colocar a aplicação em modo Kiosk</b>, para isso vá em:<br>
