@@ -16,6 +16,7 @@ Neste código fonte é demonstrado como capturar a imagem das Cameras Tectoy Aut
 <p><b>. CamApp</b> - Fonte que demonstra como virar a imagem da câmera(apenas do K2 primeiras versões de SunmiOS (anterior a 1.5.3) isso é necessário) e capturar imagem.</p>
 <br>
 <p><b>. buscaPreco</b> - Fonte que o uso do leitor de código de barras do D2 MINI como buffer teclado, também mostra como utilizar a tela cliente(segunda tela) para mostrar uma imagegm fixa.</p>
+<p><b>. L2SatualPreco</b> - Fonte de app para o coletor de dados L2s que utiliza a API de etiquetas para ler o código de barras de produtos e atualizar o preço dos mesmos. Veja as instruções de uso do app no arquivo PDF junto aos arquivos do projeto.</p>
 
 <br>
 <br>
