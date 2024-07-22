@@ -98,7 +98,19 @@ public class MainActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-
+                    codLido = txtEtiqueta.getText().toString();
+                    Log.i("DEMO Coletor", "Código pra consulta: " + codLido);
+                    if (codLido.length()!=0 ) {
+                        try {
+                            JSONObject jsonObject2 = new JSONObject();
+                            jsonObject2.put("product_id", codLido);
+                            jsonObject2.put("shop_id", idLoja);
+                            String jsonString2 = jsonObject2.toString();
+                            new PostDataConsulta().execute(jsonString2);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     mostrarAtualiza();
 
                     return false;
