@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tela2"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/txtItens"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="00"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/btnSobremesa" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="45dp"
+        android:text="Total de Itens:   "
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtItens"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSorvete" />
+
+    <TextView
+        android:id="@+id/txtSobremesa"
+        android:layout_width="155dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnSobremesa"
+        app:layout_constraintStart_toEndOf="@+id/txtSorvete" />
+
+    <TextView
+        android:id="@+id/txtSorvete"
+        android:layout_width="155dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnSorvete"
+        app:layout_constraintStart_toEndOf="@+id/txtSuco" />
+
+    <TextView
+        android:id="@+id/txtSuco"
+        android:layout_width="81dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnSuco2"
+        app:layout_constraintStart_toEndOf="@+id/txtRefri" />
+
+    <TextView
+        android:id="@+id/txtRefri"
+        android:layout_width="81dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnRefri2"
+        app:layout_constraintStart_toEndOf="@+id/txtSService" />
+
+    <TextView
+        android:id="@+id/txtSService"
+        android:layout_width="155dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnSService"
+        app:layout_constraintStart_toEndOf="@+id/txtBatata" />
+
+    <Button
+        android:id="@+id/btnLanche"
+        android:layout_width="74dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSService"
+        android:layout_width="155dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnBatata2" />
+
+    <Button
+        android:id="@+id/btnBatata2"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnBatata" />
+
+    <Button
+        android:id="@+id/btnSobremesa"
+        android:layout_width="155dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginBottom="258dp"
+        android:background="?attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSorvete" />
+
+    <Button
+        android:id="@+id/btnRefri"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSService" />
+
+    <Button
+        android:id="@+id/btnSorvete"
+        android:layout_width="155dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSuco2" />
+
+    <Button
+        android:id="@+id/btnSuco2"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSuco" />
+
+    <Button
+        android:id="@+id/btnBatata"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnLanche2" />
+
+    <Button
+        android:id="@+id/btnRefri2"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnRefri" />
+
+    <Button
+        android:id="@+id/btnSuco"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnRefri2" />
+
+    <Button
+        android:id="@+id/btnLanche2"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="258dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text=""
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnLanche" />
+
+    <TextView
+        android:id="@+id/txtLanche"
+        android:layout_width="81dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnLanche2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtBatata"
+        android:layout_width="81dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginBottom="100dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnBatata2"
+        app:layout_constraintStart_toEndOf="@+id/txtLanche" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="2dp"
+        android:text="Valor Total:  R$  "
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtValor"
+        app:layout_constraintTop_toBottomOf="@+id/btnSobremesa" />
+
+    <TextView
+        android:id="@+id/txtValor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="300dp"
+        android:text="00,00"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSobremesa" />
+
+    <Button
+        android:id="@+id/btnVolta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="48dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="Cancelar\nVoltar"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="370dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnEncerra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="40dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="Pagar"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="427dp"
+        android:layout_height="330dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/ProgressBarTheme"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
