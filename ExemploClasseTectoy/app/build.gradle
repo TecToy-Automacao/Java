@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.example.exemploclassetectoy'
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.example.exemploclassetectoy"
-        minSdk 21
-        targetSdk 32
+        minSdk 24
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -37,8 +37,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    //biblioteca para uso da classe TECTOY de comandos
+    implementation fileTree(dir: 'libs', include: ['it4r*.aar'])
 }

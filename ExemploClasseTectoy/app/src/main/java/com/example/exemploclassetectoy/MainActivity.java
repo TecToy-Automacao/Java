@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void retornarValor(String strValor) {
             retornoNFC += " | NFC Valor: " + strValor;
+            Log.i("exemploclassetectoy",retornoNFC);
             runOnUiThread(() ->{
                 txtAuxiliar.setText(retornoNFC);
             });
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void retornarId(String strID) {
             retornoNFC += " |NFC ID:" + strID + "\n";
+            Log.i("exemploclassetectoy",retornoNFC);
             runOnUiThread(() ->{
                 txtAuxiliar.setText(retornoNFC);
             });
@@ -74,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void retornarValor(String strValor) {
              retornoNFC += " | NFC Valor: " + strValor;
-          txtAuxiliar.setText(retornoNFC);
+          txtAuxiliar.setText("teste: "+retornoNFC);
+          Log.i("exemploclassetectoy",retornoNFC);
       }
       @Override
       public void retornarId(String strID) {
           retornoNFC += " | NFC ID: " + strID + "\n";
           txtAuxiliar.setText(retornoNFC);
+          Log.i("exemploclassetectoy",retornoNFC);
       }
   };
 
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, new Intent(this.getApplicationContext(), getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, new Intent(this.getApplicationContext(), getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_MUTABLE);
 
         btnStatusImpressora = findViewById(R.id.btnStatusImpressora);
         btnImprimir = findViewById(R.id.btnImprimir);
@@ -274,6 +278,44 @@ public class MainActivity extends AppCompatActivity {
                     btnEncerrarScanner.setVisibility(View.VISIBLE);
                     btnEscreverNFC.setVisibility(View.VISIBLE);
                     break;
+                case "D3_MINI":
+                    goneButtons();
+                    tectoy = new TecToy(Dispositivo.D3_MINI, getApplicationContext());
+                    btnStatusGaveta.setVisibility(View.VISIBLE);
+                    btnStatusImpressora.setVisibility(View.VISIBLE);
+                    btnImprimir.setVisibility(View.VISIBLE);
+                    btnImprimirImagem.setVisibility(View.VISIBLE);
+                    btnAbrirGaveta.setVisibility(View.VISIBLE);
+                    btnEscreverNFC.setVisibility(View.VISIBLE);
+                    btnIniciarNFC.setVisibility(View.VISIBLE);
+                    btnImprimirQrCode.setVisibility(View.VISIBLE);
+                    btnLerPesoBalanca.setVisibility(View.VISIBLE);
+                    break;
+                case "V2_SE":
+                    goneButtons();
+                    tectoy = new TecToy(Dispositivo.V2_SE, getApplicationContext());
+                    btnStatusImpressora.setVisibility(View.VISIBLE);
+                    btnImprimir.setVisibility(View.VISIBLE);
+                    btnImprimirImagem.setVisibility(View.VISIBLE);
+                    btnImprimirQrCode.setVisibility(View.VISIBLE);
+                    btnEscreverNFC.setVisibility(View.VISIBLE);
+                    btnIniciarNFC.setVisibility(View.VISIBLE);
+                    btnPosicionarEtiqueta.setVisibility(View.VISIBLE);
+                    btnPosicionarFinalEtiqueta.setVisibility(View.VISIBLE);
+                    break;
+                case "V3_MIX":
+                    goneButtons();
+                    tectoy = new TecToy(Dispositivo.V3_MIX, getApplicationContext());
+                    btnStatusImpressora.setVisibility(View.VISIBLE);
+                    btnImprimir.setVisibility(View.VISIBLE);
+                    btnImprimirImagem.setVisibility(View.VISIBLE);
+                    btnImprimirQrCode.setVisibility(View.VISIBLE);
+                    btnEscreverNFC.setVisibility(View.VISIBLE);
+                    btnIniciarNFC.setVisibility(View.VISIBLE);
+                    btnPosicionarEtiqueta.setVisibility(View.VISIBLE);
+                    btnPosicionarFinalEtiqueta.setVisibility(View.VISIBLE);
+                    break;
+
             }
         });
 

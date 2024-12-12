@@ -11,6 +11,10 @@
         <item>T2S</item>
         <item>L2Ks</item>
         <item>L2s</item>
+        <item>D3_MINI</item>
+        <item>V2_SE</item>
+        <item>V3_MIX</item>
+
     </string-array>
     <string-array name="coresLed">
         <item>AZUL</item>
